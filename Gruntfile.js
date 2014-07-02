@@ -4,11 +4,12 @@ module.exports=function(grunt){
     grunt.initConfig({
         //默认文件目录在这里
         paths:{
-            assets:'./assets',//输出的最终文件assets里面
-            scss:'./css/sass',//推荐使用Sass
-            css:'./css', //若简单项目，可直接使用原生CSS，同样可以grunt watch:base进行监控
-            js:'./js', //js文件相关目录
-            img:'./img' //图片相关
+            static:'./static',//输出的最终文件static里面
+            scss:'./build/css/sass',//推荐使用Sass
+            less:'./build/css/less',//推荐使用Less
+            css:'./build/css', //若简单项目，可直接使用原生CSS，同样可以grunt watch:base进行监控
+            js:'./build/js', //js文件相关目录
+            img:'./build/images' //图片相关
         },
         buildType:'Build',
         pkg: grunt.file.readJSON('package.json'),
@@ -26,7 +27,7 @@ module.exports=function(grunt){
             },
             dist: {
                  files: {
-                     '<%= paths.assets %>/js/min.v.js': '<%= paths.js %>/base.js'
+                     '<%= paths.static %>/js/min.v.js': '<%= paths.js %>/base.js'
                  }
             }
         },
@@ -47,18 +48,18 @@ module.exports=function(grunt){
         copy:{
             main:{
                 files:[
-                    {expand: true, src: ['assets/css/**'], dest: 'build/'},
-                    {expand: true, src: ['assets/images/**'], dest: 'build/'},
-                    {expand: true, src: ['assets/js/**'], dest: 'build/'},
+                    {expand: true, src: ['static/css/**'], dest: 'build/'},
+                    {expand: true, src: ['static/images/**'], dest: 'build/'},
+                    {expand: true, src: ['static/js/**'], dest: 'build/'},
                     {expand: true, src: ['*', '!.gitignore', '!.DS_Store','!Gruntfile.js','!package.json','!node_modules/**','!go.sh','!.ftppass','!<%= archive_name %>*.zip'], dest: 'build/'},
                 ]
             },
 
             images:{
                         expand: true,
-                        cwd:'img/',
+                        cwd:'build/images/',
                         src: ['**','!github.png'],
-                        dest: 'assets/images/',
+                        dest: 'static/images/',
                         flatten:true,
                         filter:'isFile',
             },
@@ -83,6 +84,19 @@ module.exports=function(grunt){
                 }
             }
         },
+		
+		//Less 预处理
+        less:{
+            admin:{
+                options:{
+                    sourcemap:true,
+                    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                },
+                files:{
+                    '<%= paths.css %>/style.css':'<%= paths.scss %>/style.less',
+                }
+            }
+        },
 
         //压缩 css
         cssmin:{
@@ -91,7 +105,7 @@ module.exports=function(grunt){
               },
               compress:{
                     files:{
-                     '<%= paths.assets %>/css/min.style.css': [
+                     '<%= paths.static %>/css/min.style.css': [
                      '<%= paths.css %>/style.css'
                  ]
                  }
@@ -124,10 +138,19 @@ module.exports=function(grunt){
                     grunt.log.writeln('Wating for more changes...');
                 }
             },
-            //css
+			bower: {
+                files: ['bower.json'],
+                tasks: ['bowerInstall']
+            },
+            //scss
             sass:{
                 files:'<%= paths.scss %>/**/*.scss',
                 tasks:['sass:admin','cssmin']
+            },
+			//less
+            less:{
+                files:'<%= paths.scss %>/**/*.less',
+                tasks:['less:admin','cssmin']
             },
             css:{
                 files:'<%= paths.css %>/**/*.css',
@@ -139,7 +162,7 @@ module.exports=function(grunt){
             },
             //若不使用Sass，可通过grunt watch:base 只监测style.css和js文件
             base:{
-                files:['<%= paths.css %>/**/*.css','<%= paths.js %>/**/*.js','img/**'],
+                files:['<%= paths.css %>/**/*.css','<%= paths.js %>/**/*.js','build/images/**'],
                 tasks:['cssmin','uglify','copy:images']
             }
 
@@ -171,12 +194,14 @@ module.exports=function(grunt){
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
     grunt.registerTask('default', ['cssmin','uglify','htmlmin','copy:images']);
     grunt.registerTask('sass', ['sass:admin','cssmin']);
+    grunt.registerTask('less', ['less:admin','cssmin']);
     //执行 grunt bundle --最终输出的文件 < name-生成日期.zip > 文件
     grunt.registerTask('bundle', ['clean:pre','copy:images', 'copy:main','cssmin','copy:archive', 'clean:post','htmlmin','compress',]);
     //执行 grunt publish 可以直接上传项目文件到指定服务器FTP目录

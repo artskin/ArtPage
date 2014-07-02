@@ -28,6 +28,7 @@ Makefile.in
 
 #忽略以下文件夹
 .sass-cache/
+.idea/
 node_modules/
 build/
 #忽略服务器hook

@@ -1,7 +1,7 @@
 {
-  "name": "StaticPage",
-  "version": "0.0.1",
-  "author": "luolei",
+  "name": "artStatic",
+  "version": "0.0.0",
+  "author": "artskin",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-clean": "~0.5.0",
@@ -11,6 +11,7 @@
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-contrib-sass": "~0.5.0",
+	"grunt-contrib-less": "~0.11.3",
     "grunt-contrib-watch": "~0.5.0",
     "grunt-contrib-uglify": "~0.2.2",
     "time-grunt": "^0.2.9",
