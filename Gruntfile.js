@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports=function(grunt){
     require('time-grunt')(grunt);//Grunt处理任务进度条提示
 
@@ -5,6 +7,7 @@ module.exports=function(grunt){
         //默认文件目录在这里
         paths:{
             static:'./static',//输出的最终文件static里面
+            build:'./build',//生产目录
             scss:'./build/css/sass',//推荐使用Sass
             less:'./build/css/less',//推荐使用Less
             css:'./build/css', //若简单项目，可直接使用原生CSS，同样可以grunt watch:base进行监控
@@ -13,7 +16,7 @@ module.exports=function(grunt){
         },
         buildType:'Build',
         pkg: grunt.file.readJSON('package.json'),
-        archive_name: grunt.option('name') || 'StaticPage项目名称',//此处可根据自己的需求修改
+        archive_name: grunt.option('name') || 'artStatic项目名称',//此处可根据自己的需求修改
 
         //清理掉开发时才需要的文件
         clean: {
@@ -80,7 +83,7 @@ module.exports=function(grunt){
                     banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
                 },
                 files:{
-                    '<%= paths.css %>/style.css':'<%= paths.scss %>/style.scss',
+                    '<%= paths.css %>/style.css':'<%= paths.build %>/css/sass/style.scss',
                 }
             }
         },
@@ -93,7 +96,7 @@ module.exports=function(grunt){
                     banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
                 },
                 files:{
-                    '<%= paths.css %>/style.css':'<%= paths.scss %>/style.less',
+                    '<%= paths.css %>/style.css':'<%= paths.build %>/css/less/style.less',
                 }
             }
         },
@@ -125,7 +128,48 @@ module.exports=function(grunt){
                 }
             }
         },
-
+		
+		// The actual grunt server settings
+        connect: {
+            options: {
+                port: 9000,
+                open: true,
+                livereload: 35729,
+                // Change this to '0.0.0.0' to access the server from outside
+                hostname: 'localhost'
+            },
+            livereload: {
+                options: {
+                    middleware: function(connect) {
+                        return [
+                            connect.static('.temp'),
+                            connect().use('/bower_components', connect.static('./bower_components')),
+                            connect.static(config.app)
+                        ];
+                    }
+                }
+            },
+            test: {
+                options: {
+                    open: false,
+                    port: 9001,
+                    middleware: function(connect) {
+                        return [
+                            connect.static('.temp'),
+                            connect.static('test'),
+                            connect().use('/bower_components', connect.static('./bower_components')),
+                            connect.static(config.app)
+                        ];
+                    }
+                }
+            },
+            dist: {
+                options: {
+                    base: '<%= config.dist %>',
+                    livereload: false
+                }
+            }
+        },
 
         //监听变化 默认grunt watch 监测所有开发文件变化
         watch:{
@@ -144,12 +188,12 @@ module.exports=function(grunt){
             },
             //scss
             sass:{
-                files:'<%= paths.scss %>/**/*.scss',
+                files:'<%= paths.build %>/css/sass/**/*.scss',
                 tasks:['sass:admin','cssmin']
             },
 			//less
             less:{
-                files:'<%= paths.scss %>/**/*.less',
+                files:'<%= paths.build %>/css/less/**/*.less',
                 tasks:['less:admin','cssmin']
             },
             css:{

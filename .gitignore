@@ -15,6 +15,7 @@ Makefile.in
 
 
 #Ê¼ÖÕºöÂÔ
+
 *.swp
 *.swo
 *.err
