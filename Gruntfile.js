@@ -1,19 +1,26 @@
 'use strict';
 
 module.exports=function(grunt){
-    require('time-grunt')(grunt);//Grunt处理任务进度条提示
 
-    grunt.initConfig({
-        //默认文件目录在这里
-        paths:{
+	// Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+	
+    require('time-grunt')(grunt);//Grunt处理任务进度条提示
+	
+	// Configurable paths
+    var paths:{
             static:'./static',//输出的最终文件static里面
             build:'./build',//生产目录
+            temp:'./.temp/',//生产目录
             scss:'./build/css/sass',//推荐使用Sass
             less:'./build/css/less',//推荐使用Less
             css:'./build/css', //若简单项目，可直接使用原生CSS，同样可以grunt watch:base进行监控
             js:'./build/js', //js文件相关目录
             img:'./build/images' //图片相关
         },
+
+    grunt.initConfig({
+        
         buildType:'Build',
         pkg: grunt.file.readJSON('package.json'),
         archive_name: grunt.option('name') || 'artStatic项目名称',//此处可根据自己的需求修改
@@ -51,18 +58,18 @@ module.exports=function(grunt){
         copy:{
             main:{
                 files:[
-                    {expand: true, src: ['static/css/**'], dest: 'build/'},
-                    {expand: true, src: ['static/images/**'], dest: 'build/'},
-                    {expand: true, src: ['static/js/**'], dest: 'build/'},
+                    {expand: true, src: ['<%= paths.static %>/css/**'], dest: '<%= paths.build %>/css/'},
+                    {expand: true, src: ['<%= paths.static %>/images/**'], dest: 'build/images/'},
+                    {expand: true, src: ['<%= paths.static %>/js/**'], dest: 'build/js/'},
                     {expand: true, src: ['*', '!.gitignore', '!.DS_Store','!Gruntfile.js','!package.json','!node_modules/**','!go.sh','!.ftppass','!<%= archive_name %>*.zip'], dest: 'build/'},
                 ]
             },
 
             images:{
                         expand: true,
-                        cwd:'build/images/',
+                        cwd:'<%= paths.build %>/images/',
                         src: ['**','!github.png'],
-                        dest: 'static/images/',
+                        dest: '<%= paths.static %>/images/',
                         flatten:true,
                         filter:'isFile',
             },
