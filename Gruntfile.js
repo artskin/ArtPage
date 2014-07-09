@@ -1,142 +1,80 @@
+// Generated on 2014-07-07 using generator-webapp 0.4.9
 'use strict';
 
-module.exports=function(grunt){
+// # Globbing
+// for performance reasons we're only matching one level down:
+// 'test/spec/{,*/}*.js'
+// use this if you want to recursively match all subfolders:
+// 'test/spec/**/*.js'
 
-	// Load grunt tasks automatically
+module.exports = function (grunt) {
+
+    // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
-	
-    require('time-grunt')(grunt);//Grunt处理任务进度条提示
-	
-	// Configurable paths
-    var paths:{
-            static:'./static',//输出的最终文件static里面
-            build:'./build',//生产目录
-            temp:'./.temp/',//生产目录
-            scss:'./build/css/sass',//推荐使用Sass
-            less:'./build/css/less',//推荐使用Less
-            css:'./build/css', //若简单项目，可直接使用原生CSS，同样可以grunt watch:base进行监控
-            js:'./build/js', //js文件相关目录
-            img:'./build/images' //图片相关
-        },
 
+    // Time how long tasks take. Can help when optimizing build times
+    require('time-grunt')(grunt);
+
+    // Configurable paths
+    var config = {
+        app: 'app',
+        dist: 'dist',
+        public: 'Public'
+    };
+
+    // Define the configuration for all the tasks
     grunt.initConfig({
-        
-        buildType:'Build',
-        pkg: grunt.file.readJSON('package.json'),
-        archive_name: grunt.option('name') || 'artStatic项目名称',//此处可根据自己的需求修改
 
-        //清理掉开发时才需要的文件
-        clean: {
-            pre: ['dist/', 'build/'],//删除掉先前的开发文件
-            post: ['<%= archive_name %>*.zip'] //先删除先前生成的压缩包
-        },
+        // Project settings
+        config: config,
 
-        uglify:{
-            options:{
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n' //js文件打上时间戳
+        // Watches files for changes and runs tasks based on the changed files
+        watch: {
+            bower: {
+                files: ['bower.json'],
+                tasks: ['bowerInstall']
             },
-            dist: {
-                 files: {
-                     '<%= paths.static %>/js/min.v.js': '<%= paths.js %>/base.js'
-                 }
-            }
-        },
-
-        //压缩最终Build文件夹
-        compress:{
-            main:{
-                options:{
-                    archive:'<%= archive_name %>-<%= grunt.template.today("yyyy") %>年<%= grunt.template.today("mm") %>月<%= grunt.template.today("dd") %>日<%= grunt.template.today("h") %>时<%= grunt.template.today("TT") %>.zip'
-                },
-                expand:true,
-                cwd:'build/',
-                src:['**/*'],
-                dest:''
-            }
-        },
-
-        copy:{
-            main:{
-                files:[
-                    {expand: true, src: ['<%= paths.static %>/css/**'], dest: '<%= paths.build %>/css/'},
-                    {expand: true, src: ['<%= paths.static %>/images/**'], dest: 'build/images/'},
-                    {expand: true, src: ['<%= paths.static %>/js/**'], dest: 'build/js/'},
-                    {expand: true, src: ['*', '!.gitignore', '!.DS_Store','!Gruntfile.js','!package.json','!node_modules/**','!go.sh','!.ftppass','!<%= archive_name %>*.zip'], dest: 'build/'},
-                ]
-            },
-
-            images:{
-                        expand: true,
-                        cwd:'<%= paths.build %>/images/',
-                        src: ['**','!github.png'],
-                        dest: '<%= paths.static %>/images/',
-                        flatten:true,
-                        filter:'isFile',
-            },
-
-
-            archive:{
-                files:[
-                        {expand: true, src: ['<%= archive_name %>.zip'], dest: 'dist/'}
-                ]
-            }
-        },
-
-        //Sass 预处理
-        sass:{
-            admin:{
-                options:{
-                    sourcemap:true,
-                    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-                },
-                files:{
-                    '<%= paths.css %>/style.css':'<%= paths.build %>/css/sass/style.scss',
-                }
-            }
-        },
-		
-		//Less 预处理
-        less:{
-            admin:{
-                options:{
-                    sourcemap:true,
-                    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-                },
-                files:{
-                    '<%= paths.css %>/style.css':'<%= paths.build %>/css/less/style.less',
-                }
-            }
-        },
-
-        //压缩 css
-        cssmin:{
-            options:{
-                  keepSpecialComments: 0
-              },
-              compress:{
-                    files:{
-                     '<%= paths.static %>/css/min.style.css': [
-                     '<%= paths.css %>/style.css'
-                 ]
-                 }
-              }
-        },
-
-        // 格式化和清理html文件
-        htmlmin: {
-            dist: {
+            js: {
+                files: ['<%= config.app %>/scripts/{,*/}*.js'],
+                tasks: ['jshint'],
                 options: {
-                removeComments: true,
-                //collapseWhitespace: true //压缩html:根据情况开启与否
-            },
-
-            files: {
-                'build/index.html': 'build/index.html',//清除html中的注释
+                    livereload: true
                 }
+            },
+            jstest: {
+                files: ['test/spec/{,*/}*.js'],
+                tasks: ['test:watch']
+            },
+            gruntfile: {
+                files: ['Gruntfile.js']
+            },
+            //css
+            less:{
+                files:'<%= config.app %>/styles/master.less',
+                tasks:['less']
+            },
+            //css
+            //sass:{
+            //    files:'<%= config.app %>/**/*.scss',
+            //    tasks:['sass:admin','cssmin']
+            //},
+            styles: {
+                files: ['<%= config.app %>/styles/{,*/}*.css'],
+                tasks: ['newer:copy:styles', 'autoprefixer']
+            },
+            livereload: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
+                },
+                files: [
+                    '<%= config.app %>/{,*/}*.html',
+                    '.tmp/styles/{,*/}*.css',
+                    '<%= config.app %>/images/{,*/}*'
+                ]
             }
         },
-		
-		// The actual grunt server settings
+
+        // The actual grunt server settings
         connect: {
             options: {
                 port: 9000,
@@ -149,7 +87,7 @@ module.exports=function(grunt){
                 options: {
                     middleware: function(connect) {
                         return [
-                            connect.static('.temp'),
+                            connect.static('.tmp'),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect.static(config.app)
                         ];
@@ -162,7 +100,7 @@ module.exports=function(grunt){
                     port: 9001,
                     middleware: function(connect) {
                         return [
-                            connect.static('.temp'),
+                            connect.static('.tmp'),
                             connect.static('test'),
                             connect().use('/bower_components', connect.static('./bower_components')),
                             connect.static(config.app)
@@ -178,84 +116,314 @@ module.exports=function(grunt){
             }
         },
 
-        //监听变化 默认grunt watch 监测所有开发文件变化
-        watch:{
-            options:{
-                //开启 livereload
-                livereload:true,
-                //显示日志
-                dateFormate:function(time){
-                    grunt.log.writeln('编译完成,用时'+time+'ms ' + (new Date()).toString());
-                    grunt.log.writeln('Wating for more changes...');
+        // Empties folders to start fresh
+        clean: {
+            dist: {
+                files: [{
+                    dot: true,
+                    src: [
+                        '.tmp',
+                        '<%= config.dist %>/*',
+                        '!<%= config.dist %>/.git*'
+                    ]
+                }]
+            },
+            server: '.tmp'
+        },
+        
+        //Sass 预处理
+        //sass:{
+        //    admin:{
+        //        options:{
+        //            sourcemap:true,
+        //            banner: '/*! <%= config.app %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        //        },
+        //        files:{
+        //            '<%= config.app %>/styles/news.css':'<%= config.app %>/styles/news.scss',
+        //        }
+        //    }
+        //},
+
+        //Less 预处理
+        less:{
+			production:{
+                options:{
+                    sourcemap:true,
+                    banner: '/*!auto Static <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                },
+                files:{
+                    '<%= config.app %>/styles/master.css':'<%= config.app %>/styles/master.less'
                 }
             },
-			bower: {
-                files: ['bower.json'],
-                tasks: ['bowerInstall']
-            },
-            //scss
-            sass:{
-                files:'<%= paths.build %>/css/sass/**/*.scss',
-                tasks:['sass:admin','cssmin']
-            },
-			//less
-            less:{
-                files:'<%= paths.build %>/css/less/**/*.less',
-                tasks:['less:admin','cssmin']
-            },
-            css:{
-                files:'<%= paths.css %>/**/*.css',
-                tasks:['cssmin']
-            },
-            js:{
-                 files:'<%= paths.js %>/**/*.js',
-                 tasks:['uglify']
-            },
-            //若不使用Sass，可通过grunt watch:base 只监测style.css和js文件
-            base:{
-                files:['<%= paths.css %>/**/*.css','<%= paths.js %>/**/*.js','build/images/**'],
-                tasks:['cssmin','uglify','copy:images']
+            dist:{
+                options:{
+                    sourcemap:false,
+                    banner: '/*!auto Static <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                },
+                files:{
+                    '<%= config.dist %>/styles/master.css':'<%= config.app %>/styles/master.less'
+                }
             }
-
         },
 
-        //发布到FTP服务器 : 请注意密码安全，ftp的帐号密码保存在主目录 .ftppass 文件
-        'ftp-deploy': {
-          build: {
-            auth: {
-              host: 'yourftp.domain.com',
-              port: 21,
-              authKey: 'key1'
+        // Make sure code styles are up to par and there are no obvious mistakes
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
             },
-            src: 'build',
-            dest: '/home/ftp/demo',
-            exclusions: ['path/to/source/folder/**/.DS_Store', 'path/to/source/folder/**/Thumbs.db', 'path/to/dist/tmp']
-          }
-        }
+            all: [
+                'Gruntfile.js',
+                '<%= config.app %>/scripts/{,*/}*.js',
+                '!<%= config.app %>/scripts/vendor/*',
+                'test/spec/{,*/}*.js'
+            ]
+        },
 
+        // Mocha testing framework configuration options
+        mocha: {
+            all: {
+                options: {
+                    run: true,
+                    urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
+                }
+            }
+        },
+
+        // Add vendor prefixed styles
+        autoprefixer: {
+            options: {
+                browsers: ['last 1 version']
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/styles/',
+                    src: '{,*/}*.css',
+                    dest: '.tmp/styles/'
+                }]
+            }
+        },
+
+        // Automatically inject Bower components into the HTML file
+        bowerInstall: {
+            app: {
+                src: ['<%= config.app %>/index.html'],
+                exclude: ['bower_components/bootstrap/dist/js/bootstrap.js']
+            }
+        },
+
+        // Renames files for browser caching purposes
+        rev: {
+            dist: {
+                files: {
+                    src: [
+                        '<%= config.dist %>/scripts/{,*/}*.js',
+                        '<%= config.dist %>/styles/{,*/}*.css',
+                        '<%= config.dist %>/images/{,*/}*.*',
+                        '<%= config.dist %>/styles/fonts/{,*/}*.*',
+                        '<%= config.dist %>/*.{ico,png}'
+                    ]
+                }
+            }
+        },
+
+        // Reads HTML for usemin blocks to enable smart builds that automatically
+        // concat, minify and revision files. Creates configurations in memory so
+        // additional tasks can operate on them
+        useminPrepare: {
+            options: {
+                dest: '<%= config.dist %>'
+            },
+            html: [
+                '<%= config.app %>/index.html',
+                '<%= config.app %>/ylb-logo.html'
+            ]
+        },
+
+        // Performs rewrites based on rev and the useminPrepare configuration
+        usemin: {
+            options: {
+                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
+            },
+            html: ['<%= config.dist %>/{,*/}*.html'],
+            css: ['<%= config.dist %>/styles/{,*/}*.css']
+        },
+
+        // The following *-min tasks produce minified files in the dist folder
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.app %>/images',
+                    src: '{,*/}*.{gif,jpeg,jpg,png}',
+                    dest: '<%= config.dist %>/images'
+                }]
+            }
+        },
+
+        svgmin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.app %>/images',
+                    src: '{,*/}*.svg',
+                    dest: '<%= config.dist %>/images'
+                }]
+            }
+        },
+
+        htmlmin: {
+            dist: {
+                options: {
+                    collapseBooleanAttributes: true,
+                    collapseWhitespace: true,
+                    removeAttributeQuotes: false,//true
+                    removeCommentsFromCDATA: true,
+                    removeEmptyAttributes: true,
+                    removeOptionalTags: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= config.dist %>',
+                    src: '{,*/}*.html',
+                    dest: '<%= config.dist %>'
+                }]
+            }
+        },
+
+        // By default, your `index.html`'s <!-- Usemin block --> will take care of
+        // minification. These next options are pre-configured if you do not wish
+        // to use the Usemin blocks.
+        // cssmin: {
+        //     dist: {
+        //         files: {
+        //             '<%= config.dist %>/styles/main.css': [
+        //                 '.tmp/styles/{,*/}*.css',
+        //                 '<%= config.app %>/styles/{,*/}*.css'
+        //             ]
+        //         }
+        //     }
+        // },
+        // uglify: {
+        //     dist: {
+        //         files: {
+        //             '<%= config.dist %>/scripts/scripts.js': [
+        //                 '<%= config.dist %>/scripts/scripts.js'
+        //             ]
+        //         }
+        //     }
+        // },
+        // concat: {
+        //     dist: {}
+        // },
+
+        // Copies remaining files to places other tasks can use
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= config.app %>',
+                    dest: '<%= config.dist %>',
+                    src: [
+                        '*.{ico,png,txt}',
+                        '.htaccess',
+                        'images/{,*/}*.webp',
+                        '{,*/}*.html',
+                        'styles/fonts/{,*/}*.*'
+                    ]
+                }, {
+                    expand: true,
+                    dot: true,
+                    cwd: 'bower_components/bootstrap/dist',
+                    src: ['fonts/*.*'],
+                    dest: '<%= config.dist %>'
+                }]
+            },
+            styles: {
+                expand: true,
+                dot: true,
+                cwd: '<%= config.app %>/styles',
+                dest: '.tmp/styles/',
+                src: '{,*/}*.css'
+            }
+        },
+
+        // Run some tasks in parallel to speed up build process
+        concurrent: {
+            server: [
+                'copy:styles'
+            ],
+            test: [
+                'copy:styles'
+            ],
+            dist: [
+                'copy:styles',
+                'imagemin',
+                'svgmin'
+            ]
+        }
     });
 
-  //输出进度日志
-  grunt.event.on('watch', function(action, filepath, target) {
-    grunt.log.writeln(target + ': ' + '文件: '+filepath + ' 变动状态: ' + action);
-  });
+	grunt.registerTask('serve', function (target) {
+        if (target === 'dist') {
+            return grunt.task.run(['build', 'connect:dist:keepalive']);
+        }
 
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-compress');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-sass');
+        grunt.task.run([
+            'clean:server',
+            'concurrent:server',
+            'autoprefixer',
+            'connect:livereload',
+            'watch'
+        ]);
+    });
+
+    grunt.registerTask('server', function (target) {
+        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
+        grunt.task.run([target ? ('serve:' + target) : 'serve']);
+    });
+
+    grunt.registerTask('test', function (target) {
+        if (target !== 'watch') {
+            grunt.task.run([
+                'clean:server',
+                'concurrent:test',
+                'autoprefixer'
+            ]);
+        }
+
+        grunt.task.run([
+            'connect:test',
+            'mocha'
+        ]);
+    });
+
+    grunt.registerTask('build', [
+        'clean:dist',
+        'useminPrepare',
+        'concurrent:dist',
+        'autoprefixer',
+        'concat',
+        'cssmin',
+        'uglify',
+        'copy:dist',
+        'rev',
+        'usemin',
+        'htmlmin'
+    ]);
+    
 	grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    //grunt.registerTask('less', ['less','cssmin']);
 
-    grunt.registerTask('default', ['cssmin','uglify','htmlmin','copy:images']);
-    grunt.registerTask('sass', ['sass:admin','cssmin']);
-    grunt.registerTask('less', ['less:admin','cssmin']);
-    //执行 grunt bundle --最终输出的文件 < name-生成日期.zip > 文件
-    grunt.registerTask('bundle', ['clean:pre','copy:images', 'copy:main','cssmin','copy:archive', 'clean:post','htmlmin','compress',]);
-    //执行 grunt publish 可以直接上传项目文件到指定服务器FTP目录
-    grunt.registerTask('publish', ['ftp-deploy']);
 
+    grunt.registerTask('default', [
+        'newer:jshint',
+        'test',
+        'less',
+        'build'
+    ]);
 };
