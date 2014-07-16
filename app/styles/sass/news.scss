@@ -2,7 +2,6 @@
 Author:GLQ
 Date:2013-12-23
 ************************/
-@import url(normalize.css);
 
 //sass style---------------
 $bodyBgColor:           #fff !default;
@@ -12,6 +11,7 @@ $baseFontFamily:"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu,helvetica
 $marginSize: 10px;
 
 //css------
+
 body,input,button,textarea,select{
   font:normal 14px/1.5 $baseFontFamily;
   -webkit-text-size-adjust:none;
@@ -28,6 +28,7 @@ p{
   line-height:1.5em;
   color:$textColor;
   font-size:$baseFontSize+2;
+
 }
 p.img{text-align:center;text-indent:0;}
 p.img img{max-width:98%;}

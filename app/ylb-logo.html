@@ -39,5 +39,28 @@
             <span>http://www.yonglibao.com</span>
         </div>
     </div>
+    <div id="time">3</div>
+    <!-- bower:js -->
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- endbower -->
+    <script type="text/javascript">
+        //var timeNum = 10;
+        var timeNum = 10;
+        function delayURL(url) {
+            var domTime = document.getElementById("time");
+            domTime.innerHTML =timeNum;
+            var href = url;
+            console.log(url);
+            setTimeout("delayURL()",1000);
+            timeNum--;
+            if (timeNum == 0) {
+                window.opener = null;
+                window.location.href = href;
+            }
+        }
+        delayURL("/error/html");
+        //delayURL("time",10,"url");
+
+    </script>
 </body>
 </html>
