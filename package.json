@@ -1,6 +1,13 @@
 {
   "name": "autostatic",
+  "title": "artskin",
+  "description": "Web auto package",
   "version": "0.0.0",
+  "author": "artcss",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artskin/artStatic.git"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
