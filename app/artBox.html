@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<title>淘前程</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="artcss,GLQ">
+	<link rel="stylesheet" type="text/css" href="style/artBox.css">
+</head>
+<body>
+
+<a href="javascript:" rel="artBox" data-pTitle="标题文字">弹出层</a>
+
+<div class="artBox-con" style="display:none">
+	<h3>欢迎来到永利宝</h3>
+	<p>
+	ArtPage是基于Grunt的扩展库,由前端思考( http://www.artcss.com )发起。
+提供一系列方法，帮助我们快速构建前端自动化工具。
+	</p>
+
+</div>
+
+	
+<!-- Le javascript==================================================-->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/artBox.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("a[rel='artBox']").click(function(){
+		var artBoxtitle = $(this).attr('data-pTitle');
+		artBox(".artBox-con",artBoxtitle,500,false);
+	});
+})
+
+</script>
+</body>
+</html>

@@ -1,19 +1,19 @@
-# ArtStatic
+# ArtPage
 
-ArtStatic是基于Grunt的扩展库,由前端思考( http://www.artcss.com )发起。<br>
+ArtPage是基于Grunt的扩展库,由前端思考( http://www.artcss.com )发起。<br>
 提供一系列方法，帮助我们快速构建前端自动化工具。
 
 ## 使用方法
 
-安装
+### 安装
 
-	npm install -g artweb
+	npm install -g ArtPage
 
-初始化目录:
+### 初始化目录:
 
-	ArtStatic -init ./myfolder
+	ArtPage -init ./myfolder
 
-下载Plugin:
+### 下载Plugin:
 
 	cd ./myfolder
 	npm install
@@ -25,7 +25,7 @@ ArtStatic是基于Grunt的扩展库,由前端思考( http://www.artcss.com )发�
 	./myfolder/bower_components/
 	./myfolder/bower_components/
 
-举个栗子：
+### 举个栗子：
 
 	我的项目目录：/mysite
 	我的前端资源文件：/mysite/assets
@@ -33,12 +33,13 @@ ArtStatic是基于Grunt的扩展库,由前端思考( http://www.artcss.com )发�
 	sudo npm install -g veryless
 	cd /mysite/assets/
 	# 初始化 目录
-	autoweb -init lib
+	ArtPage -init lib
 	# 下载Plugin css3
 	cd lib
-	veryless -use css3
 
-code demo
+### Demo
+
+scss:
 ```scss
 $blue: #3bbfce;
 $margin: 16px;
@@ -56,6 +57,7 @@ $font-md:12px;
   font-size:$font-md;
 }
 ```
+javascript:
 ```javascript
 var aa = document.getElementById("aa");
 aa.innerHTML = "hello ";

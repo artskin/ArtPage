@@ -77,7 +77,7 @@ module.exports = function (grunt) {
         // The actual grunt server settings
         connect: {
             options: {
-                port: 9000,
+                port: 9010,
                 open: true,
                 livereload: 35729,
                 // Change this to '0.0.0.0' to access the server from outside
@@ -96,8 +96,9 @@ module.exports = function (grunt) {
             },
             test: {
                 options: {
-                    open: false,
-                    port: 9001,
+                    open: true,
+                    port: 9011,
+                    hostname: '127.0.0.1',
                     middleware: function(connect) {
                         return [
                             connect.static('.tmp'),
@@ -181,6 +182,7 @@ module.exports = function (grunt) {
         },
 
         // Mocha testing framework configuration options
+        /**/
         mocha: {
             all: {
                 options: {
@@ -189,6 +191,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+        /**/
 
         // Add vendor prefixed styles
         autoprefixer: {
@@ -417,6 +420,7 @@ module.exports = function (grunt) {
     ]);
     
 	grunt.loadNpmTasks('grunt-contrib-less');
+	//grunt.loadNpmTasks('grunt-mocha');
     //grunt.registerTask('less', ['less','cssmin']);
 
 
