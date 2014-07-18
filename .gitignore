@@ -1,4 +1,4 @@
-#始终忽略
+#濮嬬粓蹇界暐
 
 *.swp
 *.swo
@@ -8,10 +8,10 @@
 *.ruby-version
 *.db
 *.zip
-#OSX系统下忽略
+#OSX蹇界暐
 .DS_Store
 
-#忽略以下文件夹
+#蹇界暐浠ヤ笅鏂囦欢
 .idea/
 .tmp/
 .sass-cache/
@@ -21,5 +21,5 @@ test/bower_components
 dist/
 build/
 
-#忽略服务器hook
+#蹇界暐鏈嶅姟鍣╤ook
 update.php
