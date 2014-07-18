@@ -37,3 +37,27 @@ ArtStatic是基于Grunt的扩展库,由前端思考( http://www.artcss.com )发�
 	# 下载Plugin css3
 	cd lib
 	veryless -use css3
+
+code demo
+```scss
+$blue: #3bbfce;
+$margin: 16px;
+$font-md:12px;
+
+.content_navigation {
+  border-color: $blue;
+  color: darken($blue, 10%);
+}
+
+.border {
+  padding: $margin / 2;
+  margin: $margin / 2;
+  border-color: $blue;
+  font-size:$font-md;
+}
+```
+```javascript
+var aa = document.getElementById("aa");
+aa.innerHTML = "hello ";
+```
+
