@@ -6,10 +6,11 @@
   "author": "artcss",
   "repository": {
     "type": "git",
-    "url": "https://github.com/artskin/artStatic.git"
+    "url": "https://github.com/artskin/artPage.git"
   },
   "dependencies": {},
   "devDependencies": {
+	//"express": "3.x",
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.7.2",
     "grunt-bower-install": "~1.4.0",
