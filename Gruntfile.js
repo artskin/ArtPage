@@ -96,7 +96,7 @@ module.exports = function (grunt) {
             },
             test: {
                 options: {
-                    open: true,
+                    open: false,
                     port: 9011,
                     hostname: '127.0.0.1',
                     middleware: function(connect) {
@@ -129,6 +129,7 @@ module.exports = function (grunt) {
                     ]
                 }]
             },
+			tests: ['tmp'],
             server: '.tmp'
         },
         
@@ -368,7 +369,27 @@ module.exports = function (grunt) {
                 'imagemin',
                 'svgmin'
             ]
-        }
+        },
+		
+		//control the cache of assets by appending md5 hash to asset url
+		cache: {
+			js: {
+				options: {
+				},
+				assetUrl:'<%= config.app %>/demo/js/hello.js',
+				files: {
+				  'tmp': ['<%= config.app %>/demo/index.html']
+				}
+			},
+			css: {
+				options: {
+				},
+				assetUrl:'<%= config.app %>/demo/css/hello.css',
+				files: {
+				  'tmp': ['<%= config.app %>/demo/index.html']
+				}
+			}
+		}
     });
 
 	grunt.registerTask('serve', function (target) {
@@ -420,6 +441,7 @@ module.exports = function (grunt) {
     ]);
     
 	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('asset-cache-control');
 	//grunt.loadNpmTasks('grunt-mocha');
     //grunt.registerTask('less', ['less','cssmin']);
 
