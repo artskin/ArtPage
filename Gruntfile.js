@@ -370,26 +370,33 @@ module.exports = function (grunt) {
                 'svgmin'
             ]
         },
-		
-		//control the cache of assets by appending md5 hash to asset url
-		cache: {
-			js: {
-				options: {
-				},
-				assetUrl:'<%= config.app %>/demo/js/hello.js',
-				files: {
-				  'tmp': ['<%= config.app %>/demo/index.html']
-				}
-			},
-			css: {
-				options: {
-				},
-				assetUrl:'<%= config.app %>/demo/css/hello.css',
-				files: {
-				  'tmp': ['<%= config.app %>/demo/index.html']
-				}
-			}
-		}
+
+        // Before generating any new files, remove any previously-created files.
+
+        // Configuration to be run (and then tested).
+        cache: {
+            js: {
+                options: {
+                },
+                assetUrl:'<%= config.app %>/demo/js/hello.js',
+                files: {
+                    'tmp': ['<%= config.app %>/demo/index.html']
+                }
+            },
+            css: {
+                options: {
+                },
+                assetUrl:'<%= config.app %>/demo/css/hello.css',
+                files: {
+                    'tmp': ['<%= config.app %>/demo/index.html']
+                }
+            }
+        },
+
+        // Unit tests.
+        nodeunit: {
+            tests: ['test/*_test.js']
+        }
     });
 
 	grunt.registerTask('serve', function (target) {
