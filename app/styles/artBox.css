@@ -1,3 +1,4 @@
+
 .artBox{width:300px;background:#fff;z-index:1986;display:none;*position:absolute;position:fixed;border-radius:4px;overflow:hidden;background:#fff;}
 .artBox-close{position:absolute;right:8px;top:10px;display:block;width:20px;height:20px;text-align:center;line-height:20px;cursor:pointer;font-style:normal;color:#666;font-size:16px;}
 .artBox-close:hover{color:#999;}
@@ -15,6 +16,4 @@
 /*IE6 fixed*/
 *html,*html body{background:url(about:blank) fixed;height:100%;}
 *html .artBox-overlay{position:absolute;top:expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight);}
-/*visibility:hidden;-
-
-*/
+/*visibility:hidden;-*/
