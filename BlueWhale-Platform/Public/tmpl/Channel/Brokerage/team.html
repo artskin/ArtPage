@@ -1,0 +1,144 @@
+<extend name="./Public/channel_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+</style>
+</block>
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Brokerage">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li class=""><a href="/Channel/Brokerage">我的业绩</a></li>
+                        <if condition ="$user.isSenior eq 1"> 
+                        <li class="active"><a href="/Channel/Brokerage/team">团队业绩</a></li>
+                        
+                        <if condition="$super eq 1">
+                        <li ><a href="/Channel/Brokerage/getBrokerage">推广佣金</a></li>
+                        </if>
+                        
+                        </if>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+<div class="container">
+    <!--start: Row -->
+    <div class="row">
+        <!--start: Span6 -->
+        <div class="span6 wall">
+            <div class="widget">  
+                <div style="position:relative">
+                    <h3 >我的团队</h3>
+                </div>
+                <hr class="dashed" />
+                <div class="widget-content payment-account" style="padding-bottom: 30px; padding-top: 0px; margin-bottom: 10px;">
+
+                    <table class="table table-hover"  >
+                        <thead>
+                            <tr>
+                                <th>账号</th>
+                                <th>投资总金额(元)</th>
+                                <th>人数</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <foreach name="recommend" item="v" >
+                            <tr>
+                                <td ><span >{$v.account}</span></td> 
+                                <td ><span  >{$v.total}</span></td>
+                                <td> {$v.count} </td>
+                                <td><a class="" id="act_user_open" href="/Channel/Brokerage?id={$v.id}"   target=_blank>查看业绩</a>	</td>
+                                <td><a name="getChild" myid="{$v.id}" class="" my="{$v.account}" style="margin-left: 0;cursor:pointer;">查看团队--></a></td>
+                            </tr>
+                            </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--end: Span6 -->
+
+        <!--start: Span6 -->
+        <div class="span6 wall">
+            <div class="widget">
+                <div style="position:relative">
+                    <h3 id="second_title">团队业绩</h3>
+                </div>
+                <hr class="dashed" />
+                <div class="widget-content payment-account" style="padding-top: 0px; ">
+                    <table class="table table-hover"  >
+                        <thead>
+                            <tr>
+                                <th>账号</th>
+                                <th>投资总金额</th>
+                                <th>人数</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="third_users"> </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--end: Span6 -->
+    </div>
+    <!--end: Row -->
+</div><!--end: Container -->
+</block>
+
+ <block name="custom_bottom_js" >
+ <script type="text/javascript">
+ $("a[name='getChild']").click(function() {
+         
+         var title = "<span  class='important'><b>" + $(this).attr('my')  + "</b></span>"+ "的团队成员";
+         $.get("/Channel/Brokerage/getMembers?id=" + $(this).attr('myid'), function(data){
+             
+              $('#second_title').html(title);
+             if (data.status == 1) {
+                    $("#third_users").html(' ');
+                if(data.count < 1) return;
+                $.each(data.members,function(n, value){
+                    
+                    var now = $("#third_users").html();
+                    $("#third_users").html(now 
+                   + " <tr><td ><span >" + value.account + "</span></td>"
+                   + "	<td ><span>" + value.total + "</span></td>"
+                   + "	<td><span> " + value.count + "</span>"
+                   + "	</td>"
+                   + "	 <td >"
+                  
+                   + "        <a class='' id='act_user_open' href='/Channel/Brokerage?id=" +value.id+ "' target=_blank>查看业绩</a>"
+                   + "	</td>"
+                   + "    </tr> "
+                   );
+                })
+             }
+             //$("div").html(result);
+           });
+         });
+ </script>
+ </block>
+
+
+

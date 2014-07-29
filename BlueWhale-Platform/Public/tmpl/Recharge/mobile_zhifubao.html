@@ -1,0 +1,107 @@
+<extend name="./Public/app_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+
+<block name="custom_header" >
+
+</block>
+
+<block name="custom_content" >
+
+<!--start: Container -->
+<div class="container">
+    <!--start: Row -->
+    <div class="row">
+                            <div class="alert alert-danger">
+                                充值码是用来识别您在永利宝账户充值的身份, 请在打款时务必在备注栏填写。如果您未填写，请您在充值后及时联系客服：400-8217-918， 验证身份后为您充值！
+                            </div>
+        <!--start: Span6 -->
+        <div class="span8 offset2 ">
+            <div class="widget">
+                <div class="widget-content">
+                    <h2> 支付宝代充 </h2>
+                    <form action="/Recharge/Index/Check" method="post" >    
+                        <div class="row-fluid form-horizontal" id="form">
+                            <if condition="$rerr eq 1">
+                            <div class="validation-summary-errors alert alert-error"><ul><li>{$err}</li></ul></div>
+                            </if>
+                            <div class="control-group">
+                                <label class="control-label" for="UserName">支付宝</label> 
+                                <div class="controls">请您使用支付宝的第三方付款功能存款到
+                                    <h3 style="color:#fe7200;"> 
+                                        <span>
+                                            zhifu@yonglibao.com
+                                        </span> 
+                                    </h3>
+												<a href="http://www.yonglibao.com/Index/News/Info?id=121&n=100076" target="_blank">如何代充</a>
+                                </div>
+                            </div>
+                            <!--
+                            <hr />
+                            <div class="control-group">
+                                <label class="control-label" for="UserName">财付通</label> 
+                                <div class="controls">请您使用财付通/微信的第三方付款功能存款到
+                                    <h3 style="color:#fe7200;"> 
+                                        <span>
+                                            zhifu@yonglibao.com
+                                        </span> 
+                                    </h3>
+												<a href="http://www.yonglibao.com/Index/News/Info?id=122&n=100076" target="_blank">如何代充</a>
+                                </div>
+                            </div>
+                            -->
+                            <hr />
+                            <div class="control-group" style="position: relative">
+                                <label class="control-label" for="rcNumber"></label>
+                                <div class="controls">
+                                    <h3 style="color:#fe7200;"> 
+                                        <span>
+                                            请在打款时输入您的专属充值码：800{$user.id}
+                                        </span> 
+                                    </h3>
+
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label class="checkbox" style="*left: 70px; *position: absolute; *margin-bottom:30px">
+                                        使用代充值功能表示您已经同意:
+                                        <a href="/xieyi/money.html" id="act_register_licence" role="button" data-toggle="modal"  target="_blank">《永利宝资金管理规定》</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr />
+                            <h5>
+                                充值时间为：9:30-18:30之间充值，将在一小时内到达您的永利宝账户，18:30-22:30之间充值，将在两个小时内到达您的永利宝账户，其余时间内充值将在10:00前到达您的永利宝账户。
+                            </h5>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end: Span6 -->
+
+    </div>
+    <!--end: Row -->
+
+</div>
+<!--end: Container -->
+</block>
+
+<block name="custom_footer" >
+
+</block>
+
+<block name="custom_bottom_js" > </block> 

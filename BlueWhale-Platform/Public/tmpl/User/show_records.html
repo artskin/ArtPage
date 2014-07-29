@@ -1,0 +1,109 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">累计生息</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/>
+<link href="__PUBLIC__/fullcalendar/css/fullcalendar.css" rel="stylesheet"/>  
+<link href="__PUBLIC__/fullcalendar/css/fullcalendar.print.css" rel="stylesheet"/>
+</block>
+<block name="custom_content">
+    <!--start: breadcrumb -->
+    <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/User">个人中心</a></li>
+                <li class="active"><a href="">债权转让记录</a></li>
+            </ol>
+    </div>
+    <!--end: breadcrumb -->
+    <div class="container">
+        <div class="ucenter clearfix">
+            <aside class="col-xs-2 col-md-2 aside" sup="Account">
+                <div class="aside-body">
+                    <dl class="box-shadow">
+                        <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-invest" />
+                    </dl>
+                </div>
+            </aside>
+            <article class="col-xs-10 col-md-10 article">
+                <div class="article-body box-shadow">
+                    <div class="padding-lg">
+                        <h4>&nbsp;近30天永利宝共为您带来累计收益为{$money}元</h4>
+                        <hr class="dashed"/>
+                        <!--<div class="data-earning">loading...</div>-->
+                        <div id='calendar'></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</block>
+
+<block name="custom_bottom_js" >
+<script src="__PUBLIC__/fullcalendar/js/jquery-ui.custom.min.js"></script>
+<script src="__PUBLIC__/fullcalendar/js/fullcalendar.min.js"></script>
+<script src="__PUBLIC__/site/bundles/highcharts.js"></script>
+<script>
+	$(document).ready(function() {
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		$('#calendar').fullCalendar({
+			editable: false,
+			events: [
+            <foreach name="list" item="p">
+				{
+					title: '¥{$p.earnings}',
+					start: new Date({$p.date|date='Y', ###}, {$p.date|date='m', ###}-1, {$p.date|date='d', ###}-1 )
+				},
+            </foreach>
+			]
+		});
+
+        $('.data-earning').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: ''
+            },
+            subtitle: {
+                text: '每日收益曲线'
+            },
+            xAxis: {
+                categories: [
+                    <foreach name="list" item="p">
+                    {$p.date|date='d', ###}-1,
+                    </foreach>null
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: '每日收益（元）'
+                }
+            },
+            tooltip: {
+                enabled: false,
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+this.x +': '+ this.y +'°C';
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            series: [{
+                name: '每日收益（元）',
+                data: [
+                    <foreach name="list" item="p">{$p.earnings},</foreach>null
+                ]
+            }]
+        });
+	});
+</script>
+</block>
+
+

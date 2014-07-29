@@ -1,0 +1,67 @@
+<present name="check_uid">
+    <dt>我的永利宝</dt>
+    <dd>
+        <ul class="nav">
+            <li id="side-menu-index"><a href="/User?xx={$check_uid}">账户一览<i class="icon-arr"></i></a></li>
+            <if condition="$is_planner eq 1">
+            <li id="side-menu-planner"><a href="/User/planner?xx={$check_uid}">人人理财师<i class="icon-arr"></i></a></li>
+            <else/>
+            <li id="side-menu-planner"><a href="/User/Show/reward?xx={$check_uid}">奖励记录<i class="icon-arr"></i></a></li>  
+            </if>
+            <li id="side-menu-safelv"><a href="/User/Index/safe?xx={$check_uid}">账号安全<i class="icon-arr"></i></a></li>
+        </ul>
+    </dd>
+    <dt>我的资金</dt>
+    <dd>
+        <ul class="nav">
+            <li id="side-menu-money"><a href="/User/Show/money?xx={$check_uid}">资金记录<i class="icon-arr"></i></a></li>
+            <li id="side-menu-invest"><a href="/User/Show/invest?xx={$check_uid}">投资/收益<i class="icon-arr"></i></a></li>
+            <li id="side-menu-transfer"><a href="/User/Show/transfer?xx={$check_uid}">债权转让<i class="icon-arr"></i></a></li>
+        </ul>
+    </dd>
+    <dt>我的消费</dt>
+    <dd>
+        <ul class="nav">
+            <li id="side-menu-mobcharge"><a href="/User/Show/listMobCharge?xx={$check_uid}">话费充值<i class="icon-arr"></i></a></li>
+            <li id="side-menu-vip"><a href="/User/Show/vipZone?xx={$check_uid}">S-VIP专区<i class="icon-arr"></i></a></li>
+        </ul>
+    </dd>
+<else />
+    <dt>我的永利宝</dt>
+    <dd>
+        <ul class="nav">
+            <li id="side-menu-index"><a href="/User">账户一览<i class="icon-arr"></i></a></li>
+            <li id="side-menu-recharge"><a href="/Recharge">充值/提现<i class="icon-arr"></i></a></li>
+            <li id="side-menu-withdrawcash"><a href="/WithdrawCash/Index">银行卡<i class="icon-arr"></i></a></li>
+            <if condition="$is_planner eq 1">
+            <li id="side-menu-planner"><a href="/User/planner">人人理财师<i class="icon-arr"></i></a></li>
+            <else/>
+            <li id="side-menu-planner"><a href="/User/Show/reward">奖励记录<i class="icon-arr"></i></a></li> 
+            </if>
+            <li id="side-menu-safelv"><a href="/User/Index/safe">账号安全<i class="icon-arr"></i></a></li>
+        </ul>
+    </dd>
+    <dt>我的资金</dt>
+    <dd>
+        <ul class="nav">
+            <li id="side-menu-money"><a href="/User/Show/money">资金记录<i class="icon-arr"></i></a></li>
+            <li id="side-menu-invest"><a href="/User/Show/invest">投资/收益<i class="icon-arr"></i></a></li>
+            <li id="side-menu-transfer"><a href="/User/Show/transfer">债权转让<i class="icon-arr"></i></a></li>
+        </ul>
+    </dd>
+    <dt>我的消费</dt>
+    <dd>
+        <ul class="nav">
+            <li id="side-menu-mobcharge"><a href="/User/Show/listMobCharge">话费充值<i class="icon-arr"></i></a></li>
+            <li id="side-menu-vip"><a href="/User/Show/vipZone">S-VIP专区<i class="icon-arr"></i></a></li>
+            <!--<li id="side-svip"><a href="/User/Show/svip"><i class="glyphicon glyphicon-bookmark"></i>S-VIP专区<i class="icon-arr"></i></a></li>-->
+        </ul>
+    </dd>
+</present>
+<script type="text/javascript">
+  window.onload = function(){
+    (function($){
+        $('#[keywords]').attr('class','active');
+    })(window.jQuery);
+  };
+</script>

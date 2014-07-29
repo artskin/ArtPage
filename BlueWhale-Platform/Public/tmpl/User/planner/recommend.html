@@ -1,0 +1,159 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">手动推荐</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/></block>
+<block name="custom_top_js"></block>
+<block name="custom_content" >
+    <!--start: breadcrumb -->
+    <div class="container">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/User">个人中心</a></li>
+                <li class="active"><a href="">人人理财师</a></li>
+            </ol>
+        </div>
+    </div>
+    <!--end: breadcrumb -->
+    <div class="container">
+        <div class="ucenter clearfix">
+            <aside class="col-xs-2 col-md-2 aside">
+                <div class="aside-body">
+                    <dl class="box-shadow" sup="Account">
+                        <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-planner" />
+                    </dl>
+                </div>
+            </aside>
+            <article class="col-xs-10 col-md-10 article">
+                <div class="article-body box-shadow">
+                    <div class="padding-lg">
+                        <!--start: padding-lg -->
+                        <h2>人人理财师</h2>
+                        <hr />
+                        <present name="check_uid">
+                    <ul class="nav nav-tabs">
+                      <li><a href="/User/planner?xx={$Think.get.xx}">活动规则</a></li>
+                      <li><a href="/User/planner/invite?xx={$Think.get.xx}">邀请朋友</a></li>
+                      <li  class="active" ><a href="/User/planner/recommend?xx={$Think.get.xx}">手动推荐</a></li>
+                      <li><a href="/User/planner/reward?xx={$Think.get.xx}">我的奖励</a></li>
+                      <li><a href="/User/planner/rank?xx={$Think.get.xx}">排行榜</a></li>
+                    </ul>
+                    <else/>
+                    <ul class="nav nav-tabs">
+                      <li><a href="/User/planner">活动规则</a></li>
+                      <li><a href="/User/planner/invite">邀请朋友</a></li>
+                      <li  class="active" ><a href="/User/planner/recommend">手动推荐</a></li>
+                      <li><a href="/User/planner/reward">我的奖励</a></li>
+                      <li><a href="/User/planner/rank">排行榜</a></li>
+                    </ul>
+
+                    </present>
+
+
+                        <div class="tab-pane clearfix">
+                            <present name="allowAdd">
+                                <section>
+                                    <p>如果您的朋友没有使用您的邀请码（或邀请链接），但已经注册 ，您可以这里手动将他添加到您的名下。</p>
+                                </section>
+                                <section class="tables">
+                                    <form class="form-horizontal" name="autoRecommendForm" action="" method="post">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="realname">他的姓名：</label>
+                                            <div class="col-md-4 controls">
+                                                <input class="form-control" id="realname" type="text" name="realname" data-val="true"
+                                                       data-val-regex="请填写正确的姓名。"
+                                                       data-val-regex-pattern="[\u4e00-\u9fa5]*"
+                                                       data-val-required="请填真实姓名。" tabindex="1" value="" placeholder="请填真实姓名" />
+                                                <span class="help-block">
+                                                    <span class="field-validation-valid" data-valmsg-for="realname" data-valmsg-replace="true"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="phone">他的手机号：</label>
+                                            <div class="col-md-4 controls">
+                                                <input class="form-control" type="text" name="phone"
+                                                       autocomplete="off" data-val="true"
+                                                       data-val-regex="请您填写有效的手机号码。"
+                                                       data-val-regex-pattern="^[1][0-9]{10}$"
+                                                       data-val-required="请填写手机号码。"
+                                                       id="phone" type="text" value="" placeholder="请填写手机号码" />
+                                                <span class="help-block">
+                                                    <span class="field-validation-valid" data-valmsg-for="phone" data-valmsg-replace="true"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label" for="phone">验证码：</label>
+                                            <div class="col-md-4 controls">
+                                                <input id="CaptchaDeText" name="CaptchaDeText" type="hidden" value="BE4hhfHWlDII+tILpHnubA=="><input data-val="true" data-val-length="必须为4位" data-val-length-max="4" data-val-required="验证码不可为空。" id="CaptchaInputText" name="CaptchaInputText" style="ime-mode:disabled;" type="text" value="" class="valid form-control">
+                                                <img id="CaptchaImage" src="about:blank" data-href="/CaptchaImage/NewCaptchaJson?l=4" title="点击刷新" onclick="this.src='/User/auth/verify/1?t='+(new Date).getTime()">
+                                                <span class="help-block"><span class="field-validation-valid" data-valmsg-for="CaptchaInputText" data-valmsg-replace="true"></span></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls col-md-offset-3">
+                                                <input type="submit" value="添加" class="btn btn-primary col-xs-2" />
+                                                <present name="result">
+                                                    <font color="blue">{$result}</font>
+                                                </present>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <else/>
+                                    <p>您已经达到推荐上限，您可以等待您推荐的用户注册并实名认证或者删除一些推荐信息。</p>
+                            </present>
+                            <div class="">您最多可以手动添加10个尚未注册或未实名认证的朋友，已被您推荐成功的朋友不计算在内，您还可以添加{$left}个朋友。</div>
+                            </section>
+                            <section class="tables">
+                                <present name="empty">
+                                    <else/>
+                                    <table class="table table-ylb">
+                                        <caption>
+                                            <p>推荐列表</p>
+                                        </caption>
+                                        <tr>
+                                            <th>姓名</th>
+                                            <th>手机号</th>
+                                            <th>添加时间</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        <foreach name="rList" item="r">
+                                            <tr id="rList_{$r.id}">
+                                                <td>{$r.r_realname}</td>
+                                                <td>{$r.r_phone}</td>
+                                                <td>{$r.add_date}</td>
+                                                <td>{$r.status}</td>
+                                                <td><a href="javascript:void(0);" onclick="delRecommend({$r.id});">删除</a></td>
+                                            </tr>
+                                        </foreach>
+                                    </table>
+                                </present>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</block>
+
+
+<block name="custom_bottom_js" >
+<script>
+    $(document).ready( function(){
+        window.delRecommend = function( id ){
+          window.delId = id;
+          $.post('/User/planner/del?', 'id=' + id + '&__ylb_=' + $('input[name="__ylb_"]').val(), function(data){
+            if( data == "1" ){
+              $( '#rList_' + window.delId ).fadeOut();
+            }else{
+              location.href += '?';
+            }
+          });
+          return false;
+        };
+        $('#CaptchaImage').click();
+    });
+</script>
+</block>

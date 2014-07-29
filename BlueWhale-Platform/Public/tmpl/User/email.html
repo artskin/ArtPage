@@ -1,0 +1,88 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">绑定您的邮箱</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/></block>
+<block name="custom_content">
+    <!--start: breadcrumb -->
+    <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/User">个人中心</a></li>
+                <li class="active"><a href="">绑定您的邮箱</a></li>
+            </ol>
+    </div>
+    <!--end: breadcrumb -->
+    <div class="container">
+        <div class="ucenter clearfix">
+            <aside class="col-xs-2 col-md-2 aside" sup="Account">
+                <div class="aside-body">
+                    <dl class="box-shadow">
+                        <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-safelv" />
+                    </dl>
+                </div>
+            </aside>
+            <article class="col-xs-10 col-md-10 article">
+                <div class="article-body box-shadow">
+                    <div class="padding-lg">
+                        <h2>绑定您的邮箱 <a href="/User/Index/safe" class="more"><i class="glyphicon glyphicon-share-alt"></i>返回</a></h2>
+                        <hr />
+                        <notpresent name="succ">
+                            <form action="/User/Index/emailSend" method="post" novalidate="novalidate" class="form-horizontal">
+                                <div class="padding-md">
+                                    <if condition="$rerr eq 1">
+                                        <div class="validation-summary-errors alert alert-error"><ul><li>{$err}</li></ul></div>
+                                    </if>
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-3 control-label" for="Email">邮箱地址</label>
+                                        <div class="col-xs-12 col-sm-4 controls">
+                                            <input class="col-xs-6 form-control"
+                                                   data-val="true"
+                                                   data-val-regex="请您填写有效的邮件地址。"
+                                                   data-val-regex-pattern=".*"
+                                                   data-val-required="请填写邮件地址。"
+                                                   id="Email" name="Email" type="text" value="">
+                                            <span class="help-block">
+                                                <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-3 control-label">验证码</label>
+                                        <div class="col-xs-12  col-sm-4 controls">
+                                            <input id="CaptchaDeText" name="CaptchaDeText" type="hidden" value="BE4hhfHWlDII+tILpHnubA=="><input class="col-xs-6 form-control" data-val="true" data-val-length="必须为4位" data-val-length-max="4" data-val-required="验证码不可为空。" id="CaptchaInputText" name="CaptchaInputText" style="ime-mode:disabled;" type="text" value="">
+                                            <img id="CaptchaImage" src="/User/auth/verifynew/{$a|time}" title="点击刷新">
+                                            <span class="help-block"><span class="field-validation-valid" data-valmsg-for="CaptchaInputText" data-valmsg-replace="true"></span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-offset-3 col-xs-4 col-sm-4 controls">
+                                            <button type="submit" id="act_login" class="btn btn-primary col-xs-12" tabindex="4">绑定</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <else />
+                            <div class="validation-summary-errors alert alert-info"><ul><li>
+                                {$smsg}
+                            </li></ul></div>
+                        </notpresent>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</block>
+
+ <block name="custom_bottom_js" >
+ <script type="text/javascript">
+     $("#CaptchaImage").click(function() {
+             var timestamp = new Date();
+             $("#CaptchaImage").attr("src", "/User/auth/verifynew/" + timestamp.getTime());
+             });
+</script>
+ </block>
+
+
+

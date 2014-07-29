@@ -1,0 +1,434 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">{$project.title}</block>
+<block name="custom_top_css" ></block>
+
+<block name="custom_content" >
+<!--start: breadcrumb -->
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/Project/List">项目列表</a></li>
+        <li class="active hidden-xs"><a href="">{$project.title}</a></li>
+    </ol>
+</div>
+<!--end: breadcrumb -->
+<div class="container">
+    <div class="project-detail">
+        <div class="center pd-title">
+            <h2>
+                <if condition="$project.3rd_source eq 1"><span class="label label-info">尊选</span></if>
+                <if condition="$project.3rd_source eq 2"><span class="label label-info">橙旗</span></if>
+                <if condition="$project.3rd_source eq 3"><span class="label label-info">押车宝</span></if>
+                {$project.title}
+            </h2>
+            <span class="fontsize-xs">（{$project.pro_id} {$project.str_refund_type}）
+                <if condition="$user">
+                    <a class="label label-default" href="/xieyi/{$xieyi}" target="_blank">投资协议</a>
+                </if>
+            </span>
+        </div>
+        <div class="wall clearfix">
+            <div class="row">
+                <div class="col-sm-8 border-r-dashed">
+                    <table class="table table-noborder table-pd-info">
+                        <tr>
+                            <td>
+                                <em class="fontsize-lg text-orange">
+                                    {$project.int_pro_rate}
+                                </em>%
+                            </td>
+                            <td>
+                                <em class="fontsize-lg text-orange">
+                                    {$project.days}
+                                </em>天
+                            </td>
+                            <td>{$project.int_pro_fund}万</td>
+                            <td>{$project.str_left_refund_time}</td>
+                        </tr>
+                        <tr>
+                            <th><span class="text-gray data-tips"  title="" data-original-title="" data-content="可以使用年化收益率计算器（页面右下方浮动工具条）来计算您的收益。" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">年化收益 <i class="icon-info-sign icon-gray"></i></span></th>
+                            <th><span class="text-gray data-tips" title="" data-original-title="" data-content="该项目还款日期为 {$project.str_refund_end}" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">项目期限 <i class="icon-info-sign icon-gray"></i></span></th>
+                            <th><span class="text-gray">项目总额</span></th>
+                            <th><span class="text-gray">剩余时间</span></th>
+                        </tr>
+                    </table>
+    
+                    <hr class="dashed" />
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <if condition="$project.fund_process lt 100">
+                                <div class="col-sm-3 col-xs-3"><div class="row">投资进度：</div></div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="project-progress">
+                                        <div class="progress progress-striped active">
+                                            <div class="progress-bar" style="width:{$project.fund_process}%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-xs-3">{$project.fund_process}%</div>
+                            <else />
+                                <div class="col-sm-3 col-xs-3"><div class="row">投资进度：</div></div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="project-progress">
+                                        <div class="progress progress-striped">
+                                            <div class="progress-bar" style="width: {$project.fund_process}%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3 col-xs-3">{$project.fund_process}%</div>
+                            </if>
+                        </div>
+                        <div class="row text-gray fontsize-xs">
+                            今日投资，明日计息，投资越早，收益越高。 <br/> <em class="text-gray">预期还款日期：{$project.str_refund_end}</em>
+                            <p class="project-progress-desc hidden-xs hide">已投资 {$project.str_funded_money} 元</p>
+                            <p style="margin-bottom: 0; margin-top: 10px" class="hide">
+                                <i class="icon-red icon-star" style="margin-top: 3px"></i>
+    
+                                每万元预期收益
+                                即刻投资收益自 {$project.str_refund_start} 起算。
+                                <span style="font-size: 16px; color: #ff8f24">1000</span>
+                                元
+                            </p>
+
+                        </div>
+    
+                        <div class="row">
+                            <div class="project-tags" style="margin-top:10px;">
+                                <switch name="project.status" >
+                                    <case value="1" break="1">
+                                        <span class="label label-success">{$project.str_status}</span>
+                                    </case>
+                                    <case value="2" break="2">
+                                        <span class="label label-info">{$project.str_status}</span>
+                                    </case>
+                                    <case value="3" break="3">
+                                        <span class="label label-info">{$project.str_status}</span>
+                                    </case>
+                                    <case value="4" break="4">
+                                        <span class="label ">{$project.str_status}</span>
+                                    </case>
+                                    <default />
+                                    <span class="label label-info">项目准备中</span>
+                                </switch>
+                            <span class="label label-default tag" data-toggle="popover" data-placement="right"
+                                  data-content="{$project.str_pro_type_info}"
+                                  data-trigger="hover" data-html="true">
+                                <switch name="project.pro_type" >
+                                    <case value="16"><i class="glyphicon glyphicon-screenshot"></i></case>
+                                    <case value="17"><i class="glyphicon glyphicon-bookmark"></i></case>
+                                    <case value="18"><i class="glyphicon glyphicon-check"></i> </case>
+                                    <case value="19"><i class="glyphicon glyphicon-leaf"></i> </case>
+                                    <case value="20"><i class="glyphicon glyphicon-user"></i></case>
+                                </switch>
+                                {$project.str_pro_type}
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 hidden-xs">
+                        <div class="row">
+                            产品类型
+                            <div class="tags">
+                              <!--显示borrower_type 为借款人的类型-->
+                              <if condition="$project.borrower_type eq 2">
+                              <span class="tag-round bgcolor-blue">个</span>
+                              <else/>
+                              <span class="tag-round bgcolor-green">企</span>
+                              </if>
+                              <!--<span class="tag-round bgcolor-yellow">转</span>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-horizontal" id="form">
+                        <div class="form-group">
+                            <label class="form-label col-sm-4 col-xs-4">可投金额</label>
+                            <div class="col-sm-8 col-xs-8 controls">
+                                <em class="important">{$project.str_fund_left_money}</em> 元
+                            </div>
+                        </div>
+                        <if condition="$max_fund AND $max_fund neq '0.00'">
+                        <div class="form-group">
+                            <label class="form-label col-sm-4 col-xs-4">投资限额</label>
+                            <div class="col-sm-8 col-xs-8 controls">
+                                {$max_fund}元/每位客户
+                            </div>
+                        </div>
+                        </if>
+                    </div>
+                    <hr style="margin:10px 0"/>
+                    <if condition="$user && $project.ispass eq 1">
+                        <form action="/Project/Info/invest" method="post" id="invest_form">
+                            <div class="form-horizontal" id="form">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4 col-xs-4">帐户余额</label>
+                                    <div class="col-sm-8 col-xs-8 controls">
+                                        <strong class="important" id="yue">{$usercash}</strong> 元
+                                        <span id="yue-tips">余额不足，<a href="/Recharge">点击充值</a></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4 col-xs-4" for="cash">投资金额</label>
+                                    <div class="col-sm-8 col-xs-8 controls">
+                                        <input autocomplete="off" class="col-md-6 form-control input-sm" style="width:80px" data-val="true"
+                                               data-val-regex="请输入一个金额数字。"
+                                               data-val-regex-pattern="[0-9.]*"
+                                               data-val-remote-additionalfields="*.cash"
+                                               data-val-remote-url="/Project/Info/check?pid={$project.id}"
+                                               data-val-required="请输入您要投资的金额。"
+                                               min='100'
+                                        <if condition="$max_fund AND $max_fund neq '0.00'">
+                                            data-val-remote="<s><i></i></s>1.项目金额或您的余额可能不足; <br />2.投资金额需要为100的整数倍; <br /> 3.此项目每个用户的投资限额度为{$max_fund}元。"
+                                            max='{$max_fund}'
+                                            <else/>
+                                            data-val-remote="<s><i></i></s>1.项目金额或您的余额可能不足; <br />2.投资金额需要为100的整数倍; "
+                                        </if>
+                                        data-val-min="<s><i></i></s>请输入您要投资的金额。"
+                                        id="cash" name="cash" type="text" value="{$account|default=''}" <if condition="$project.status gt 1">disabled</if>> &nbsp; 元
+                                        <span class="help-block">
+                                            <!--<s><i></i></s>-->
+                                            <span class="field-validation-valid" data-valmsg-for="cash" data-valmsg-replace="true">
+
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="projectId" value="{$project.id}" />
+                                 <div class="">
+                                    <!--
+                                    <div class="text-tips text-important">注：投资赢iPad Air <a href="/Event/duanwu" target="_blank" title="投资赢iPad Air">详情点击</a></div>
+                                    -->
+                                     <div class="col-sm-offset-1 col-xs-offset-3">
+                                        <if condition="$project.status gt 1">
+                                            <button type="submit" id="act_register" class="btn btn-defaul col-sm-8" style="margin:0 auto" disabled>项目已投满，请关注其他项目</button>
+                                            <else />
+                                            <button type="submit" id="act_register" class="btn btn-primary col-md-7" style="margin:0 auto" data-loading-text="提交投资中...">确认投资</button>
+                                        </if>
+                                     </div>
+                                </div>
+                            </div>
+                        </form>
+                        <else />
+                        <div>
+                            <if condition="$project.ispass eq 1">
+                                请先 <a class="btn btn-warning btn-sm" href="/User/Login" id="act_project_login">登录</a> 后投资
+                                <else />
+                            </if>
+                        </div>
+                    </if>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="title3">项目认证</h3>
+        <div class="pd-body cards-list padding-md clearfix">
+            <div class="row">
+                <!--显示认证ICON-->
+                <volist id="v" name="auth_list">
+                <!--小图标-->
+
+                <dl>
+                  <dd>
+                      <i class="icon-card-{$v.auth_key}" rel='artBox' data-title="{$v.auth_type}" data-pdid="{$v.auth_key}" title="点击查看认证详情"></i>
+                      <div class="card-item-con-{$v.auth_key} hide">
+                          <div class="loading center"><img src="__PUBLIC__/static/lib/clearbox/config/default/pic/loading.gif" alt=""/> 正在加载...</div>
+                          <div class="alert alert-warning card-item-user-tips"></div>
+                          <if condition="$userstatus eq 2">
+                          <ul class="card-item-con-pic list-unstyled">
+                            <volist id="l" name='v.auth_details'>
+                            <li><img src="/Index/index/getfilename?key={$l.fileKey}" alt="" onload="AutoResizeImage()" /></li>
+                            </volist>
+                          </ul>
+                          </if>
+                      </div>
+                  </dd>
+                  <dt>{$v.auth_type}<i class="text-green">√</i></dt>
+                </dl>
+               </volist>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs">
+            <li class="active" ><a data-toggle="tab" href="#pd-pic">项目图片</a></li>
+            <li><a data-toggle="tab" href="#pd-info" rel="{$userstatus}">项目详情</a></li>
+            <li><a data-toggle="tab" href="#pd-safelv">风险控制</a></li>
+            <li><a data-toggle="tab" href="#pd-history">投资记录</a></li>
+            <li><a data-toggle="tab" href="#pd-payplane">还款计划</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane " id="pd-info">
+                <div class="padding-md clearfix">
+                    <div id="CompanyInfo" class="row">
+                        <div class="col-sm-6">
+                            <h4 class="title4">项目简介</h4>
+                            <hr>
+                            {$project.str_content}
+                            <h4 class="title4">资金用途</h4>
+                            <hr>
+                            {$project.str_fund_use}
+
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 class="title4">借款人信息</h4>
+                            <hr>
+                            {$project.str_bor_info}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="pd-safelv">
+                <div class="padding-md clearfix">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4 class="title4">还款来源</h4><hr>
+                            {$project.str_fund_from}
+                            <if condition="$project.str_guarantee_info ">
+                                <h4 class="title4">担保机构</h4>
+                                <hr />
+                                {$project.str_guarantee_info}
+                            </if>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 class="title4">风险控制措施</h4>
+                            <hr>
+                            {$project.str_safeguard}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active" id="pd-pic">
+                <div class="padding-md clearfix">
+                    <if condition="$userstatus eq 0">
+                        请 <a class="btn btn-warning btn-sm" href="/User/Login" id="act_project_login">登录</a> 后查看项目图片
+                        <elseif condition="$userstatus eq 1"/>
+                        为保护借款人隐私,只有投资用户可以查看
+                        <else/>
+                        <ul class="img-list clearfix list-unstyled row">
+
+                        <foreach name="auth_pic" item="p" >
+                        <li>
+                          <a href="/Index/index/getfilename?key={$p.fileKey}.jpg" title="项目图片" rel="clearbox[gallery=相关资料]">
+                            <img src="/Index/index/getfilename?key={$p.fileKey}.jpg" title="点击查看大图">
+                          </a>
+                          <em class="document-name"></em>
+                        </li>
+                        </foreach>
+
+                      </ul>
+                    </if>
+                </div>
+            </div>
+            <div class="tab-pane" id="pd-history">
+                <div class="padding-md row clearfix">
+                   <ul class="ul-table list-unstyled row">
+                        <li class="col-sm-6 li-th">
+                            <span class="td-name">投标人</span><span class="text-right">投标金额</span><span class="td-end text-right">预计收益</span>
+                        </li>
+                        <li class="col-sm-6 li-th hidden-xs">
+                           <span class="td-name">投标人</span><span class="text-right">投标金额</span><span class="td-end text-right">预计收益</span>
+                        </li>
+                        <volist name="project.users" id="u" offset="0" length="30" empty="{$userempty}">
+                        <li class="col-sm-6">
+                            <span class="td-name">{$u.account}</span><span class="text-right">{$u.affirm_moeny}</span><span class="td-end text-right">{$u.interest}</span>
+                        </li>
+                        </volist>
+                   </ul>
+                </div>
+            </div>
+            <div class="tab-pane" id="pd-payplane">
+                <div class="padding-md row clearfix">
+                    <table class="table table-striped">
+                        <tr>
+                            <th class="hidden-xs">序号</th>
+                            <th>还款时间</th>
+                            <th class="text-right">应还本息</th>
+                            <th class="text-right">应还本金</th>
+                            <th class="text-right">应还利息</th>
+                        </tr>
+                        <volist id="v" name="moneyback">
+                        <tr>
+                            <td class="hidden-xs">{$v.id}</td>
+                            <td>{$v.time}</td>
+                            <td class="text-right">{$v.earnings}</td>
+                            <td class="text-right">{$v.money}</td>
+                            <td class="text-right">{$v.fees}</td>
+                        </tr>
+                        </volist>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--end: Container -->
+</block>
+
+<block name="custom_bottom_js" >
+<script src="__PUBLIC__/static/lib/bxSlider/js/jquery.bxslider.js"></script>
+<script type="text/javascript">
+    //定义中文消息
+    var cnmsg = {
+
+        min: jQuery.format("单次最少投资 100 元")<if condition="$max_fund AND $max_fund neq '0.00'">,
+        max: jQuery.format("单次最多投资 {$max_fund} 元")
+                </if>
+    };
+    jQuery.extend(jQuery.validator.messages, cnmsg);
+  /*
+  $('#investment-list').bxSlider({
+    mode: 'vertical',
+    controls: false,
+    pager: false,
+    auto: true,
+    maxSlides: 10,
+    moveSlides: 1,
+    viewportHeight: 800,
+    slideMargin:5
+  });
+  */
+
+  $(document).ready(function(){
+
+      var yue = parseInt($("#yue").text());
+      if(yue < 100){
+          $("#yue-tips").show();
+      }
+
+      $("i[rel='artBox']").click(function(){
+          var status = {$userstatus};
+          var projectTitle = $(this).attr('data-title');
+          var pid = $(this).attr('data-pdid');
+
+          switch(status){
+              case 0:
+                  $(".loading").hide();
+                  $(".card-item-user-tips").html("请登录后查看"+projectTitle+"认证").next("ul").hide();
+                  oShow(".card-item-con-"+pid,460,projectTitle,false,180);
+                  break;
+              case 1:
+                  $(".loading").hide();
+                  $(".card-item-user-tips").html("为保护借款人隐私，只有投资用户可以查看"+projectTitle+"。").next("ul").hide();
+                  oShow(".card-item-con-"+pid,460,projectTitle,false,180);
+                  break;
+              default:
+                  $(".card-item-user-tips").hide();
+                  oShow(".card-item-con-"+pid,660,projectTitle,false,460)
+          }
+      });
+
+      $('#act_register').click(function () {
+              var btn = $(this)
+              btn.button('loading');
+              setTimeout(function(){
+                  btn.button('reset');
+                  }, 3000); // I don'T know how to triger this function onlu if there is submit post requsting, so tmp using a setTimeout...
+      });
+
+  });
+</script>
+
+</block>

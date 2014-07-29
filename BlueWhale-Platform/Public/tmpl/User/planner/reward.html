@@ -1,0 +1,222 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">人人理财师</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/></block>
+<block name="custom_top_js"></block>
+<block name="custom_content" >
+    <!--start: breadcrumb -->
+    <div class="container">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/User">个人中心</a></li>
+                <li class="active"><a href="">人人理财师</a></li>
+            </ol>
+        </div>
+    </div>
+    <!--end: breadcrumb -->
+    <div class="container">
+        <div class="ucenter clearfix">
+            <aside class="col-xs-2 col-md-2 aside">
+                <div class="aside-body">
+                    <dl class="box-shadow" sup="Account">
+                        <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-planner" />
+                    </dl>
+                </div>
+            </aside>
+            <article class="col-xs-10 col-md-10 article">
+                <div class="article-body box-shadow">
+                    <div class="padding-lg">
+                        <h2>人人理财师</h2>
+                        <hr />
+                      <present name="check_uid">
+                      <ul class="nav nav-tabs">
+                        <li><a href="/User/planner?xx={$Think.get.xx}">活动规则</a></li>
+                        <li><a href="/User/planner/invite?xx={$Think.get.xx}">邀请朋友</a></li>
+                        <li ><a href="/User/planner/recommend?xx={$Think.get.xx}">手动推荐</a></li>
+                        <li  class="active" ><a href="/User/planner/reward?xx={$Think.get.xx}">我的奖励</a></li>
+                        <li><a href="/User/planner/rank?xx={$Think.get.xx}">排行榜</a></li>
+                      </ul>
+                      <else/>
+                      <ul class="nav nav-tabs">
+                        <li><a href="/User/planner">活动规则</a></li>
+                        <li><a href="/User/planner/invite">邀请朋友</a></li>
+                        <li ><a href="/User/planner/recommend">手动推荐</a></li>
+                        <li  class="active" ><a href="/User/planner/reward">我的奖励</a></li>
+                        <li><a href="/User/planner/rank">排行榜</a></li>
+                      </ul>
+
+                      </present>
+
+                        <div class="tab-pane">
+                            <!--start: Span -->
+                            <p>受您影响加入永利宝并投资的朋友一共有：{$rNum|default=0}位，为此平台送您红利：{$reward|default='0.00'}元。(只统计人人理财师活动期间的数据)</p>
+                            <section class="tools">
+                                <if condition="$openNotify eq 1">
+                                    <form action="" name="notifyForm" method="post">
+                                        <em class="text-success">{$result}</em>
+                                        <input type="hidden" name="type" value="1">
+                                        <input type="submit" value="开启奖励短信通知" data-content="{$result}" data-placement="bottom" data-toggle="popover" class="btn btn-sm btn-info">
+                                    </form>
+                                    <else/>
+                                    <form action="" name="notifyForm" method="post">
+                                        <em class="text-success">{$result}</em>
+                                        <input type="hidden" name="type" value="2">
+                                        <input type="submit" value="关闭奖励短信通知" data-content="{$result}" data-placement="bottom" data-toggle="popover" class="btn btn-sm btn-info">
+                                    </form>
+                                </if>
+                            </section>
+                            <present name="reward">
+                                <div id="container" style="max-width:100%; height: 300px;"></div>
+                            </present>
+
+                            <div class="tables">
+                                <present name="showFriend1">
+                                    <table class="table table-ylb">
+                                        <caption>
+                                            <h3 class="mt0">我推荐的朋友：</h3>
+                                            <div>朋友总投资：<em class="text-warning">{$invest1|default='0.00'}</em>万元&nbsp;我的红利：<em class="text-warning">{$reward1|default='0.00'}</em>元</div>
+                                        </caption>
+                                        <tr>
+                                            <th>用户名</th>
+                                            <th>是否投资</th>
+                                            <th>投资次数</th>
+                                            <th>投资总金额</th>
+                                        </tr>
+                                        <foreach name="friends1" item="f">
+                                            <tr>
+                                                <td>{$f.account}</td>
+                                                <td>{$f.isInvest}</td>
+                                                <td>{$f.count|default=0}次</td>
+                                                <td>{$f.invest|default='0.00'}元</td>
+                                            </tr>
+                                        </foreach>
+                                    </table>
+                                </present>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <present name="showFriend2">
+                                        <table class="table table-ylb" border="0">
+                                            <caption>
+                                                <h3 class="mt0">朋友的朋友：</h3>
+                                                <p>他们总投资：<em class="text-warning">{$invest2|default='0.00'}</em>万元&nbsp;我的红利：<em class="text-warning">{$reward2|default='0.00'}</em>元</p>
+                                            </caption>
+                                            <tr>
+                                                <th>用户名</th>
+                                                <th>是否投资</th>
+                                                <th>投资次数</th>
+                                                <th>投资总金额</th>
+                                            </tr>
+                                            <foreach name="friends2" item="f">
+                                                <tr>
+                                                    <td>{$f.account|replaceStarFilter}</td>
+                                                    <td>{$f.isInvest}</td>
+                                                    <td>{$f.count|default=0}次</td>
+                                                    <td>{$f.invest|default='0.00'}元</td>
+                                                </tr>
+                                            </foreach>
+                                        </table>
+                                    </present>
+                                </div>
+                                <div class="col-md-5">
+                                    <present name="showFriend3">
+                                        <table class="table table-ylb" border="0">
+                                            <caption>
+                                                <h3 class="mt0">朋友的朋友的朋友：</h3>
+                                                <p>他们总投资：<em class="text-warning">{$invest3|default='0.00'}</em>万元&nbsp;我的红利：<em class="text-warning">{$reward3|default='0.00'}</em>元</p>
+                                            </caption>
+                                            <tr>
+                                                <th>用户名</th>
+                                                <th>是否投资</th>
+                                                <th>投资次数</th>
+                                                <th>投资总金额</th>
+                                            </tr>
+                                            <foreach name="friends3" item="f">
+                                                <tr>
+                                                    <td>{$f.account|replaceStarFilter}</td>
+                                                    <td>{$f.isInvest}</td>
+                                                    <td>{$f.count|default=0}次</td>
+                                                    <td>{$f.invest|default='0.00'}元</td>
+                                                </tr>
+                                            </foreach>
+                                        </table>
+                                    </present>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</block>
+
+<block name="custom_bottom_js" >
+    <script src="__PUBLIC__/site/bundles/highcharts.js"></script>
+    <script type="text/javascript">
+   $(function () {
+           $("#open-msg").popover({trigger:'focus'});
+           setTimeout(function(){$(".text-success").hide()},800);
+           /*$("#open-msg").popover({
+               html: true,
+               content: "<b style='white-space:nowrap'>扫二维码下载</b><div class='icon app-ma-android'></div>",
+               trigger: "hover"
+           });*/
+           $('#container').highcharts({
+               colors: ['#26A8DC', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+               title: {
+                   style: {
+                       color: '#26A8DC',
+                       fontFamily: 'Microsoft YaHei',
+                       fontSize: '18px',
+                       fontWeight: 'bold'
+                   },
+                   text: '近30天内的推荐奖励',
+                   x: -20 //center
+               },
+               subtitle: {
+                   text: '（仅记录活动期间的投资奖励）',
+                   x: -20
+               },
+               xAxis: {
+						 tickInterval: 2,
+                   categories: [
+						 <foreach name="dateRewards" item="v" key="k">
+						 '{$k}',
+						 </foreach>
+						 ]
+               },
+               yAxis: {
+                   title: {
+                       text: '奖励金额（元）'
+                   },
+						 min: 0,
+                   plotLines: [{
+                       value: 0,
+                       width: 1,
+                       color: '#808080'
+                   }]
+               },
+               tooltip: {
+                   valueSuffix: '元'
+               },
+               legend: {
+                   layout: 'vertical',
+                   align: 'right',
+                   verticalAlign: 'middle',
+                   borderWidth: 0,
+						 enabled: false
+               },
+               series: [{
+                   name: '奖励',
+                   data: [
+						 <foreach name="dateRewards" item="v" key="k">
+						 {$v},
+						 </foreach>
+						 ]
+               }]
+           });
+       });
+   </script>
+</block>
+

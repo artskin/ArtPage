@@ -1,0 +1,88 @@
+<if condition='$list'>
+<div class="new-project clearfix">
+    <dl class="dl-line">
+        <dt>
+            <i class="glyphicon glyphicon-bullhorn text-orange"></i> 最新项目：
+        </dt>
+        <dd>
+            <volist name="list" id="vo" offset="0" length='1'>
+                <ul class="list-inline">
+                    <li>{$vo.title}</li>
+                    <li>年化<strong class="text-orange text-lg"> {$vo.pro_rate}</strong>%</li>
+                    <li>周期 {$vo.days}天</li>
+                    <li>募资额 {$vo.int_pro_fund}万</li>
+                    <li><a href="/p/{$vo.id}.html" target="_blank">详情</a></li>
+                    <if condition="$user && $project.ispass neq 1">
+                        <li><a class="label label-primary label-lg" href="javascript:;" rel="artBox" data-pTitle="{$vo.title}" data-pid="{$vo.id}" data-pDays="{$vo.days}" data-pFund="{$vo.int_pro_fund}" data-maxfund="{$vo.max_fund}" data-status="$vo.status" data-pMoneyhave="{$moneys.money_have}">投资</a></li>
+                    <else />
+                        <li><a class="label label-primary label-lg" href="javascript:;" rel="artBox" data-pTitle="{$vo.title}" data-pid="{$vo.id}" data-pDays="{$vo.days}" data-pFund="{$vo.int_pro_fund}" data-maxfund="{$vo.max_fund}" data-status="$vo.status" data-pMoneyhave="{$moneys.money_have}">投资</a></li>
+                    </if>
+                </ul>
+                <div class="artBox" id="artBox{$vo.id}" style="display:none">
+                    <i class="artBox-close" onclick="oClose();">X</i>
+                    <h3 class="artBox-title">投资该项目</h3>
+                    <div class="artBox-body">
+                        <div class="artBox-html">
+                            <h5>{$vo.title}</h5>
+                            <hr />
+                            <if condition="$vo.max_fund AND $vo.max_fund neq '0.00'">
+                                <div class="alert alert-warning">
+                                    <b>此项目投资限额:{$vo.max_fund}元/每位客户</b>
+                                </div>
+                            </if>
+                            <form class="form-horizontal" action="/Project/Info/invest" method="post" id="invest_form">
+                                <div id="form">
+                                    <div class="form-group clearfix">
+                                        <label class="col-xs-4 col-sm-4 control-label" for="cash">帐户余额</label>
+                                        <div class="col-xs-8 col-sm-8 controls">
+                                            <strong class="important">{$usercash}</strong> 元
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <label class="col-xs-4 col-sm-4 control-label" for="cash">投资金额</label>
+                                        <div class="col-xs-8 col-sm-8 controls">
+                                            <input autocomplete="off" class="form-control width200 pull-left"
+                                                   id="cash"
+                                                   data-val="true"
+                                                   data-val-min="请输入您要投资的金额。"
+                                                   name="cash" type="text" value="{$account|default=''}"
+                                                   data-val-regex="请输入一个金额数字。"
+                                                   data-val-regex-pattern="[0-9.]*"
+                                                   data-val-remote-additionalfields="*.cash"
+                                                   data-val-remote-url="/Project/Info/check?pid={$vo.id}"
+                                                   data-val-required="请输入您要投资的金额。"
+                                                   min='100'
+                                            <if condition="$vo.max_fund AND $vo.max_fund neq '0.00'">
+                                                data-val-remote="1.项目金额或您的余额可能不足; <br />
+                                                2.投资金额需要为100的整数倍; <br />
+                                                3.此项目每个用户的投资限额度为{$vo.max_fund}元。"
+                                                max='{$vo.max_fund}'
+                                                <else/>
+                                                data-val-remote="1.项目金额或您的余额可能不足; <br />
+                                                2.投资金额需要为100的整数倍。"
+                                            </if>
+                                            <if condition="$vo.status gt 1">disabled</if> /> &nbsp;&nbsp;<em class="pull-left padding-xs">元</em>
+                                            <span class="help-block"><span class="field-validation-valid" data-valmsg-for="cash" data-valmsg-replace="true"></span></span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="projectId" value="{$vo.id}" />
+                                    <br />
+                                    <div class="form-group clearfix">
+                                        <div class="col-xs-offset-2 controls">
+                                            <if condition="$vo.status gt 1">
+                                                <button type="submit" id="act_register" class="btn btn-defaul col-md-7" style="margin:0 auto" disabled>项目已投满，请关注其他项目</button>
+                                                <else />
+                                                <button type="submit" id="act_register" class="btn btn-primary col-md-7" style="margin:0 auto" data-loading-text="加载中...">确认投资</button>
+                                            </if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </dd>
+    </dl>
+</div>
+</if>

@@ -1,0 +1,272 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">VIP专区</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/>
+</block>
+<block name="custom_content">
+<!--start: breadcrumb -->
+<div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/">首页</a></li>
+            <li><a href="/User">个人中心</a></li>
+            <li class="active"><a href="">VIP专区</a></li>
+        </ol>
+</div>
+<!--end: breadcrumb -->
+<div class="container">
+<div class="ucenter clearfix">
+<aside class="col-xs-2 col-md-2 aside" sup="Account">
+    <div class="aside-body">
+        <dl class="box-shadow">
+            <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-vip" />
+        </dl>
+    </div>
+</aside>
+<article class="col-xs-10 col-md-10 article">
+    <div class="article-body box-shadow">
+        <div class="padding-lg">
+        <!--start: Container -->
+            <h2>S-VIP专区</h2>
+            <hr class="dashed">
+            <div class="alert alert-warning">
+              <if condition="$minutes">
+              <span class="glyphicon glyphicon-heart"></span> 您的累计投资为: <strong class="fontsize-lg">{$invest_total}</strong>元, 您可以先于其他用户{$minutes}分钟，优先投资高收益项目。<br/>
+              　&nbsp;您累计投资越多，您的优先时间也会越多。
+              <else/>
+              <span class="glyphicon glyphicon-info-sign"></span> 您累计投资过低，您只能浏览下列项目，无法进入投资。<br/>
+              　&nbsp;请再接再厉，当您累计投资一定是数量时，您就可以优先投资高收益项目了。
+              </if>
+            </div>
+            <if condition="$list">
+              <foreach name="list" item="vo" >
+                <div class="project-summary well">
+                  <if condition="$vo.status gt 1">
+                  <div class="bid-completed-stamp"></div>
+                  </if>
+                  <div class="row">
+                    <div class="col-xs-9 col-md-9">
+                      <h4 class="well-title">
+                        <if condition="$vo.3rd_source eq 1">
+                        <a href="/Project/slist" ><span class="label label-primary">尊选</span></a>
+                        </if>
+                        <a href="javascript:void(0)" data-pid="{$vo.id}" title="优先投资时间结束后可查看项目详情">{$vo.title}</a>
+                        <small class="well-small">{$vo.str_refund_type}</small>
+                      </h4>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <if condition="$vo.fund_process lt 100">
+                          <div class="col-xs-6 col-md-5">
+                            <div class="row project-progress">
+                              <div class="progress progress-striped active">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{$vo.fund_process}" aria-valuemin="0" aria-valuemax="100" style="width: {$vo.fund_process}%;"></div>
+                                <span class="sr-only">{$vo.fund_process}% Complete</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xs-2 col-md-2">
+                            <div class="row">&nbsp;&nbsp;{$vo.fund_process}%</div>
+                          </div>
+                          <div class="col-xs-4 col-md-5 project-progress-desc">
+                            <div class="row">已投资金额 {$vo.str_funded_money}元</div>
+                          </div>
+                          <else />
+                          <div class="col-xs-6 col-md-5">
+                            <div class="row project-progress">
+                              <div class="progress progress-striped">
+                                <div class="progress-bar" style="width: {$vo.fund_process}%;"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xs-2 col-md-2">
+                            <div class="row">&nbsp;&nbsp;100%</div>
+                          </div>
+                          <div class="col-xs-4 col-md-5 project-progress-desc"><div class="row">已完成，投资金额 <strong class="important">{$vo.int_pro_fund}</strong> 万元</div></div>
+                          </if>
+                        </div>
+                      </div>
+                      <div class="data-list clearfix">
+                        <table class="table-bordered col-xs-12 col-md-12">
+                          <tr>
+                            <th>投资金额</th>
+                            <th>可投金额</th>
+                            <th>年化收益</th>
+                            <th>投资期限</th>
+                          </tr>
+                          <tr>
+                            <td><strong> {$vo.int_pro_fund}</strong> 万</td>
+                            <td><strong class="important">{$vo.str_fund_left_money}</strong> 元</td>
+                            <td><strong class="important data-tips" data-content="年化收益率 x 本金 / 365 x 投资天数 = 您的本次投资收益。" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">
+                                {$vo.int_pro_rate}%
+                                <i class="icon-info-sign icon-gray"></i>
+                            </strong></td>
+                            <td>
+                              <span class="data-tips" data-content="该项目还款日期为 {$vo.str_refund_end}" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">
+                                <strong>{$vo.days}</strong> 天
+                                <i class="icon-info-sign icon-gray"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="col-xs-3 col-md-3 project-summary-bin">
+                      <div class="row">
+                        <div class="project-tags">
+                          <if condition="$vo.allowTransfer eq 1">
+                          <span class="label label-success">可转让</span>
+                          </if>
+                          <switch name="vo.status" >
+                            <case value="1" break="1">
+                            <!--<span class="label label-info">{$vo.str_status}</span>-->
+                            </case>
+                            <case value="2" break="2">
+                            <span class="label label-warning">{$vo.str_status}</span>
+                            </case>
+                            <case value="3" break="3">
+                            <span class="label label-warning">{$vo.str_status}</span>
+                            </case>
+                            <case value="4" break="4">
+                            <span class="label ">{$vo.str_status}</span>
+                            </case>
+                            <default />
+                            <span class="label label-warning">项目准备中</span>
+                          </switch>
+                          <span class="label label-default tag" data-toggle="popover" data-placement="bottom"
+                            data-content="{$vo.str_pro_type_info}"
+                            data-trigger="hover" data-html="true">
+                            <switch name="vo.pro_type" >
+                              <case value="16"><i class="glyphicon glyphicon-screenshot"></i></case>
+                              <case value="17"><i class="glyphicon glyphicon-bookmark"></i></case>
+                              <case value="18"><i class="glyphicon glyphicon-check"></i> </case>
+                              <case value="19"><i class="glyphicon glyphicon-leaf"></i> </case>
+                              <case value="20"><i class="glyphicon glyphicon-user"></i></case>
+                            </switch>
+                            {$vo.str_pro_type}
+                          </span>
+                        </div>
+                        <!-- normal begin -->
+                        <if condition="$vo['id'] neq 126">
+                        <div class="text-info">
+                          <em class="gray"> 今天投资，明天就有利息 </em>
+                        </div>
+                        <div class="btn-block">
+                          <if condition="$vo.status lt 2">
+                            <if condition="$vo.pro_countdown lt 0">
+                              <a class="btn btn-lg-per90 btn-primary btn-svip-invest" rel="artBox" href="javascript:void(0);" data-pTitle="{$vo.title}" data-pid="{$vo.id}">我要投资</a>
+                            <else />
+                              <a class="btn btn-lg-per90 btn-warning btn-svip-invest"  rel="artBox" href="javascript:void(0);" data-pTitle="{$vo.title}" data-pid="{$vo.id}">{$vo.pro_countdown}分钟后可投资</a>
+                            </if>
+                          <else />
+                            <a class="btn btn-lg-per90 btn-default" href="javascript:void(0);" data-pid="{$vo.id}">已募满</a>
+                          </if>
+                        </div>
+                        <else />
+                        <!-- car begin -->
+                        <if condition="$vo.status lt 2">
+                          <div class="btn-block">
+                            <if condition="$vo.pro_countdown lt 0">
+                              <a class="btn btn-lg-per90 btn-primary btn-svip-invest" rel="artBox" href="javascript:void(0);" data-pTitle="{$vo.title}" data-pid="{$vo.id}">我要投资</a>
+                            <else />
+                              <a class="btn btn-lg-per90 btn-warning btn-svip-invest"  rel="artBox" href="javascript:void(0);" data-pTitle="{$vo.title}" data-pid="{$vo.id}">{$vo.pro_countdown}分钟后可投资</a>
+                            </if>
+                          </div>
+                        <else />
+                          <div class="text-info">
+                            <em class="gray"> 今天投资，明天就有利息 </em>
+                          </div>
+                          <div class="btn-block">
+                            <a class="btn btn-lg-per90 btn-default" href="javascript:void(0);" data-pid="{$vo.id}">已募满</a>
+                          </div>
+                        </if>
+                        <!-- car end -->
+                        </if>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="artBox" id="artBox-{$vo.id}" style="display:none">
+                        <i class="artBox-close" onclick="oClose();">X</i>
+                        <h3 class="artBox-title">投资该项目</h3>
+                        <div class="artBox-body">
+                            <div class="artBox-html">
+                                <h4>{$vo.title}</h4>
+                                <hr />
+                                <if condition="$vo.pro_deadline_countdown lt $minutes * 60">
+                                    <form class="form-horizontal" action="/Project/Info/invest" method="post" id="invest_form_{$vo.id}" novalidate="novalidate">
+                                        <div id="form-{$vo.id}">
+                                            <div class="form-group clearfix">
+                                                <label for="cash-{$vo.id}" class="col-xs-4 col-sm-4 control-label">帐户余额</label>
+                                                <div class="col-xs-8 col-sm-8 controls">
+                                                  <strong class="important">{$balance}</strong> 元
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label col-sm-4 text-right" for="cash-{$vo.id}">投资金额（元）</label>
+                                                <div class="col-sm-8 controls">
+                                                    <input autocomplete="off" class="col-md-6 form-control input-sm valid" style="width:80px" data-val="true" data-val-regex="请输入一个金额数字。" data-val-regex-pattern="[0-9.]*" data-val-remote-additionalfields="*.cash" data-val-remote-url="/Project/Info/check?pid={$vo.id}" data-val-required="请输入您要投资的金额。" min="100" data-val-remote="1.项目金额或您的余额可能不足; <br />2.投资金额需要为100的整数倍; " data-val-min="请输入您要投资的金额。" id="cash-{$vo.id}" name="cash" type="text" value="">
+                                                    <span class="help-block"><span class="field-validation-valid" data-valmsg-for="cash" data-valmsg-replace="true"></span></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-4 controls">
+                                                    <br />
+                                                    <input type="hidden" name="projectId" value="{$vo.id}">
+                                                    {__TOKEN__}
+                                                    <button type="submit" id="act_register-{$vo.id}" class="btn btn-primary btn-sm" style="margin:0 auto" data-loading-text="加载中...">确认投资</button>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <else/>
+                                    <br />
+                                    <div class="alert alert-warning">
+                                      <if condition="$minutes gt 0">
+                                        再过<span class="fontsize-lg text-red">{$vo.pro_countdown}</span>分钟后您才可以投资这个项目, 您可以继续在永利宝投资以获得更具优势的优先投资权。
+                                      <else/>
+                                        请等待{$vo.pro_countdown}分钟过后您才可以投资这个项目。
+                                      </if>
+
+                                    </div>
+                                    <div class="center">
+                                      <input type="button" class="btn btn-primary btn-sm" value="关闭" onclick="oClose();"/>
+                                    </div>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </foreach>
+            <else/>
+              <div class="well">
+                <tr>
+                  <td colspan="5" class="text-center">
+                    当前没有VIP项目... 请过会再看看吧
+                  </td>
+                </tr>
+              </div>
+            </if>
+
+        </div>
+    </div>
+</article>
+</div>
+</div>
+    <div id="artBox-project-con"></div>
+</block>
+
+<block name="custom_bottom_js" >
+<script src="/Public/static/js/ylb.ui.js"></script>
+<script type="text/javascript">
+    (function($){
+      /*$('.btn-svip-invest').on('click', function(){
+        $('.s-vip-invest-block').not('#sib-' + $(this).attr('data-pid')).slideUp();
+        $('#sib-' + $(this).attr('data-pid')).slideDown();
+        $('input#cash-' + $(this).attr('data-pid')).focus();
+      });*/
+      $("a[rel='artBox']").click(function(){
+          var projectTitle = $(this).attr('data-pTitle');
+          var pid = $(this).attr('data-pid');
+          //console.log("#artBox-html-" + pid);
+          oShow("artBox-" + pid,500,projectTitle,true,280);
+        });
+    })(window.jQuery)
+</script>
+</block>

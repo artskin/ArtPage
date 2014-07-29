@@ -1,0 +1,118 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header { *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150); }
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Recharge">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/Check/Alipay">支付宝充值记录</a></li>
+                        <li><a href="/Check/User/withdraw">提现管理</a></li>
+                        <li><a href="/Check/User/find">平台寻人</a></li>
+                        <li><a href="/Check/User/message">通知中心</a></li>
+                        <li><a href="/Check/User/mobCharge">手机充值</a></li>
+						      <li><a href="/Check/User/projectNotify">客服中心</a></li>
+								<li class="active"><a href="/Check/User/recommend">人人理财师</a></li>
+                        <li><a href="/Check/User/fixMoneyLog">神奇补账</a></li>
+                        <li><a href="/Check/User/creditAbuse">套现稽查</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+
+<div class="container">
+
+<div class="row">
+    <!--start: Span10 -->
+    <div class="span10">
+	 <div style="float:left; margin-left:50px;">
+    总计：<br/>
+    今日奖励总金额：{$today|default='0.00'}元<br/>
+    昨日奖励金额：{$yesterday|default='0.00'}元<br/>
+    7日内奖励金额：{$seven|default='0.00'}元<br/><br/>
+    </div>
+	 <div style="float:left; margin-left:150px;">
+    新增推荐关系<br/>
+    <form name="addForm" method="post" action="">
+        <input type="hidden" name="type" value="1"/>
+        <input type="text" name="uid" placeholder="id/用户名" />&nbsp;推荐了&nbsp;
+        <input type="text" name="rid" placeholder="id/用户名" />&nbsp;
+        <input type="submit" class="btn btn-primary btn-small" style="margin-top:-10px;" value="确定" /><br/><font color="blue">{$result1}</font>
+    </form>
+    解除推荐关系<br/>
+    <form name="delForm" method="post" action="">
+        <input type="hidden" name="type" value="2"/>
+        <input type="text" name="uid" placeholder="id/用户名" />&nbsp;不推荐&nbsp;
+        <input type="text" name="rid" placeholder="id/用户名" />&nbsp;
+        <input type="submit" class="btn btn-primary btn-small" style="margin-top:-10px;" value="确定" /><br/><font color="blue">{$result2}</font>
+    </form>
+    </div>
+	 <article class="span10"> 
+	 <hr/>
+	 <div style="float:left;">
+    <table>
+        <thead>
+            <tr>
+                <th width="200px;" style="text-align:left;">推荐人</th>
+                <th width="200px;" style="text-align:left;">被推荐人</th>
+                <th width="200px;" style="text-align:left;">操作</th>
+                <th width="200px;" style="text-align:left;">操作时间</th>
+                <th width="200px;" style="text-align:left;">操作人</th>
+            </tr>
+        </thead>
+        <tbody>
+            <foreach name="list" item="r">
+            <tr>
+                <td style="text-align:left;">{$r.uname}</td>
+                <td style="text-align:left;">{$r.rname}</td>
+                <td style="text-align:left;">{$r.type}</td>
+                <td style="text-align:left;">{$r.time|date='Y-m-d H:i:s',###}</td>
+                <td style="text-align:left;">{$r.operator}</td>
+            </tr>
+            </foreach>
+        </tbody>
+    </table>
+    </div>
+    </article>
+
+</div><!-- 顶部项目信息　-->
+            
+    
+</div>
+<!--end: Span10 -->
+
+</div>
+
+<!--end: Container -->
+
+
+</block>
+
+<block name="custom_bottom_js" >
+</block>
+
+
+

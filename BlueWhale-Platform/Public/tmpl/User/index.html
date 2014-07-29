@@ -1,0 +1,450 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">欢迎来到用户中心</block>
+<block name="custom_top_css" >
+<link href="__PUBLIC__/static/style/ylb-ucenter.css" rel="stylesheet"/>
+</block>
+<block name="custom_top_js" ></block>
+<block name="custom_content" >
+<!--start: breadcrumb -->
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li class="active"><a href="/User">个人中心</a></li>
+    </ol>
+</div>
+
+<!--end: breadcrumb -->
+<div class="container">
+    <div class="ucenter clearfix">
+        <aside class="col-xs-2 col-md-2 aside">
+            <div class="aside-body">
+                <dl class="box-shadow">
+                    <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-index" />
+                </dl>
+            </div>
+        </aside>
+        <article class="col-xs-10 col-md-10 article">
+            <div class="article-body box-shadow">
+                <div class="padding-lg">
+                <!--start: Container -->
+                    <div class="u-welcome">
+                        <p>
+                            <em class="text-lg">您好，</em>
+                            <if condition="$user.real_name neq '' ">
+                            <em class="text-orange text-lg">{$user.real_name}</em>&nbsp;。
+                            <elseif condition="$user.nickname neq '' " />
+                            <em class="text-orange text-lg">{$user.nickname}</em>&nbsp;。
+                            <else />
+                            <em class="text-lg">您还没有进行<a href="/User/Index/Real">实名认证</a></em>
+                            </if>
+
+                            <span class="everyday-tips">{$words}</span>
+
+                           <!-- 管理后台入口 START -->
+                           <if condition="$is_check eq 1">
+                               <a class="btn btn-primary btn-sm" href="/Check" target="_blank">神奇入口</a>
+                           </if>
+
+                           <if condition="$seorole eq 1">
+                               <a class="btn btn-primary btn-sm" href="/Check/News" target="_blank">SEO入口</a>
+                           </if>
+                           <!-- 管理后台入口 END -->
+
+                           <!-- <span class="text-gray">账号名：（{$user.account}）<a href="/User/Index/settings" id="">设置</a> </span>-->
+                        </p>
+                        <div class="mycode data-tips"  data-content="<h5 class='text-blue'><strong>邀请码</strong></h5> <p>邀请码是您用来邀请朋友加入永利宝<br />的代码，你会得到网站的奖励，详见<br />“人人理财师”。</p><h5 class='text-blue'><strong>充值码</strong></h5><p>充值码是您在使用支付宝充值时使用<br />的代码，详见“充值/提现”。</p>"
+                            data-toggle="popover" data-placement="left" data-trigger="hover" data-html="true">
+                            邀请码 / 充值码：<strong class="text-orange">{$rlink}</strong>
+                        </div>
+                    </div>
+
+                    <!-- xxxxx start -->
+                    <div class="portlet-body">
+                      <div class="row">
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                          <div class="row-stat">
+                            <p class="row-stat-label">昨日收益</p>
+                            <p><a href="/User/Show/invest?type=showearning"><span class="fontsize-lg text-black">¥ {$earnings}</span></a></p>
+                              <p class="data-tips" data-content="每天的收益，将随着你投资的项目每月派息到您的帐户余额中。" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true" data-original-title="" title="">
+                                收益何时到帐？
+                                <i class="glyphicon glyphicon-info-sign text-gray"></i>
+                              </p>
+                          </div> <!-- /.row-stat -->
+                        </div> <!-- /.col -->
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                          <div class="row-stat">
+                            <p class="row-stat-label">账户余额</p>
+                            <p><span class="fontsize-lg">¥ <i id="user-balance" style="font-style: normal;">{$moneys.money_have}</i></span></p>
+                            <span class="label label-success row-stat-badge">资产总额：<i id="user-value" style="font-style: normal;">{$moneys.money_all}</i></span>
+                            <br />
+                            <p ><a id="mob-charge" href="javascript:;">余额充话费</a></p>
+                          </div> <!-- /.row-stat -->
+                        </div> <!-- /.col -->
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                          <div class="row-stat">
+                            <p class="row-stat-label">待收收益</p>
+                            <p><span class="fontsize-lg">¥ {$my_earn.earning}</span></p>
+                            <span class="label label-success row-stat-badge">总收益：{$my_earn.earnTotal}</span>
+                            <br />
+                            <span class="label label-warning row-stat-badge">已收：{$my_earn.earned}</span>
+                          </div> <!-- /.row-stat -->
+                        </div> <!-- /.col -->
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                          <div class="row-stat">
+                            <p class="row-stat-label">投资中</p>
+                            <p><span class="fontsize-lg">¥ {$moneys.money_on}</span></p>
+                            <span class="label label-success row-stat-badge">总投资：{$moneys.invest_all}</span>
+                            <br />
+                            <span class="label label-warning row-stat-badge">已返本：{$moneys.investing}</span>
+                          </div> <!-- /.row-stat -->
+                        </div> <!-- /.col -->
+                      </div> <!-- /.row -->
+
+                    </div>
+                    <!-- xxxxx end -->
+
+
+                    <!-- 最新项目 -->
+                    {~R('Project/Newest/info', '', 'Widget')}
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 hidden-xs">
+                            <dl class="tab-project dl-item">
+                                <dt class="active" id="paixi">最近6次派息计划</dt>
+                                <dd class="paixi">
+                                    <table class="table-striped">
+                                        <tr>
+                                            <th><span class="padding-left-sm">金额(元)</span></th>
+                                            <th>日期</th>
+                                            <th>项目编号</th>
+                                        </tr>
+                                        <volist name="invest_list" id="u" offset="0" length="6" >
+                                            <tr>
+                                                <td><span class="padding-left-sm">￥{$u.payout_money}</span></td>
+                                                <td>{$u.payback_at|date="Y-m-d", ###}</td>
+                                                <td><a href="/p/{$u.pid}.html" target="_blank">{$u.pro_id}</a></td>
+                                            </tr>
+                                        </volist>
+                                    </table>
+                                </dd>
+                                <dt id="fanben">最近6次返本计划</dt>
+                                <dd class="fanben">
+                                    <table class="table-striped">
+                                        <tr>
+                                            <th><span class="padding-left-sm">金额(元)</span></th>
+                                            <th>日期</th>
+                                            <th>项目编号</th>
+                                        </tr>
+                                        <volist name="waitMoney_list" id="u" offset="0" length="6" >
+                                            <tr>
+                                                <td><span class="padding-left-sm">￥{$u.affirm_moeny}</span></td>
+                                                <td><span>{$u.refund_end|date="Y-m-d", ###}</span></td>
+                                                <td><a href="/p/{$u.pid}.html" target="_blank">{$u.pro_id}</a></td>
+                                            </tr>
+                                        </volist>
+                                    </table>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <dl class="dl-item">
+                                <dt>历史收益统计</dt>
+                                <dd>
+                                    <div class="highChart">
+                                        <div id="data-history"></div>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <dl class="dl-item">
+                                <dt>推荐好友返利</dt>
+                                <dd>
+                                    <if condition="$is_planner eq 1">
+                                        <table class="table table-border-shu">
+                                            <tr>
+                                                <th>我的邀请码</th>
+                                                <th>推荐朋友数量</th>
+                                                <th>推荐朋友们的投资额</th>
+                                                <th>推荐返利</th>
+                                                <present name="noPlanner">
+                                                    <else/>
+                                                    <th>您的理财师</th>
+                                                </present>
+                                            </tr>
+                                            <tr>
+                                                <td><strong  class="text-orange">{$rlink}</strong></td>
+                                                <td><strong>{$num|default=0}人</strong></td>
+                                                <td><strong>{$rInvest|default="0.00"}元</strong></td>
+                                                <td><strong class="text-orange">{$reward|default="0.00"}</strong><span>元</span></td>
+                                                <present name="noPlanner">
+                                                    <else/>
+                                                    <td><strong>{$planner}</strong></td>
+                                                </present>
+                                            </tr>
+                                        </table>
+                                        <else/>
+                                        <table class="table">
+                                            <tr>
+                                                <th>推荐码</th>
+                                                <th>推荐链接</th>
+                                                <th>推荐奖励</th>
+                                                <th>返利说明</th>
+                                            </tr>
+                                            <tr>
+                                                <td>{$rlink}</td>
+                                                <td><a href="/{$rlink}" title = "推广链接">www.yonglibao.com/{$rlink}</a></td>
+                                                <td>{$ward|default="0.00"}元（已推荐{$num|default=0}人）<a href="/User/Show/reward" >查看</a></td>
+                                                <td>
+                                                    推荐朋友使用您的推荐码(或者推荐链接)注册， <br />
+                                                    新朋友投资1000元即赢得20元，<br />
+                                                    朋友的朋友注册且投资1000元还有5元赠送。
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </if>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-4">
+                            <dl class="dl-item help">
+                                <dt>关于理财师</dt>
+                                <dd>
+                                    <a href="/User/planner">人人理财师活动介绍</a><br/>
+                                    <a href="/User/planner/invite">去推荐更多朋友，拿更多返利</a><br />
+                                    <a href="/User/planner/recommend">朋友没使用我的邀请码怎么办</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <!--start: Container -->
+        </article>
+    </div>
+</div>
+<!--openBox-start-->
+<div id="fee_phone" style="display:none;">
+    <form class="form-horizontal phone-push" method="POST" action="/User/Show/addMobCharge">
+        <input type="hidden" name="from_page" value="/User/">
+        <p>
+        在您提交充值请求过后, 我们将会在第一时间给您处理充值，您可以在<a href="/User/Show/listMobCharge">这里</a>看到您的充值记录。
+        </p>
+        <div class="form-group" style="padding-bottom:10px;">
+            <label class="col-sm-3 control-label">手机号： </label>
+            <div class="col-sm-9 controls">
+            <input style="width:160px;margin-bottom:0" type="text" name="phone_number" value="{$user.phone}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">金 额： </label>
+            <div class="col-sm-9 controls">
+                <label class="radio-inline"><input name="fee_much" id="fee_much_10" type="radio" value="10" checked>10 元 </label>
+                <label class="radio-inline"><input name="fee_much" id="fee_much_20" type="radio" value="20">20 元</label><br />
+                <label class="radio-inline"><input name="fee_much" id="fee_much_50" type="radio" value="50">50 元</label>
+                <label class="radio-inline"><input name="fee_much" id="fee_much_100" type="radio" value="100">100 元</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls col-sm-offset-3">
+                <input type="submit" class="btn btn-warning btn-small ajax-mobcharge" value="确认充值" />
+                <a id="fee_close" class="btn btn-small" href="javascript:" onclick="close_me()">关闭</a>
+            </div>
+        </div>
+    </form>
+</div>
+<!--openBox-end-->
+</block>
+
+<block name="custom_bottom_js" >
+<script src="__PUBLIC__/site/bundles/jquery.grumble.min.js"></script>
+<script src="__PUBLIC__/site/bundles/highcharts.js"></script>
+<script src="__PUBLIC__/static/js/underscore-min.js"></script>
+<script type="text/javascript">
+    //定义中文消息
+    var cnmsg = {
+        min: jQuery.format("单次最少投资 100 元")
+    };
+    jQuery.extend(jQuery.validator.messages, cnmsg);
+    function close_me(){
+        $('#mob-charge').popover('hide');
+    }
+	$(function(){
+        $("a[rel='artBox']").click(function(){
+            var projectTitle = $(this).attr('data-pTitle');
+            var pid = $(this).attr('data-pid');
+            oShow("artBox"+pid,500,projectTitle,true,280);
+        });
+
+        $('#moneya').grumble({
+			text: ''
+			+'<font color=white size=4>昨天永利宝帮您赚了：</font></h2><br />'
+			+'<h1 style="width:200px;line-height:50px;"><font color="yellow">{$earnings}元！</font></h1>',
+			angle: 85,
+			type: 'alt-',
+			distance: 100,
+			showAfter: 3,
+			hasHideButton: true,
+			buttonHideText: '关闭'
+		});
+
+        $('#mob-charge').popover({
+            html        : true,
+            title       : '手机充话费',
+            content     : function(){return $("#fee_phone").html() },
+            placement   : 'right',
+            trigger     : "click"
+        }).click(function(){
+            $.mobcharge();
+        });
+        $(".tab-project dt").click(function(){
+            $(this).next("dd").show().siblings("dd").hide();
+            $(this).addClass("active").siblings("dt").removeClass("active");
+        });
+
+        $(".data-invest-cake").highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '{point.name}: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '投资比例',
+                data: [
+                    ['待收本金',       500],
+                    ['已返本金',       360],
+        {
+            name: '资产总额',
+                    y: 2000,
+            sliced: true,
+                    selected: true
+        }
+        ]
+    }]
+    });
+
+        $(".data-earning-cake").highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '收益比例',
+                data: [
+                    ['昨日收益',     ],
+                    ['到账收益',     ],
+                    {
+                        name: '待收收益',
+                        y:'', 
+                        sliced: true,
+                        selected: true
+                    }
+                ]
+            }]
+        });
+
+        $('#data-history').highcharts({
+            chart: {
+                type: 'line'
+            },
+            title: {
+              <if condition="$userdayearnings eq 0">
+                text: '暂无收益信息'
+              <else/>
+                text: '{$userdayearnings.title.min} - {$userdayearnings.title.max} '
+              </if>
+
+            },
+            subtitle: {
+
+                text: ''
+            },
+            xAxis: {
+            categories: [
+                <volist name="userdayearnings" id="v" >
+                '{$v.btime}{$v.datetype}',
+                </volist>
+                ]
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                },
+                min:0
+            },
+            tooltip: {
+                enabled: false,
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+this.x +': '+ this.y +'°C';
+                }
+            },
+            plotOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: false
+                }
+            },
+            colors: ['#1e7ac2', '#fe6d00'],
+            series: [{
+                name: '收益（元）',
+                data: [
+                    <volist name="userdayearnings" id="v"  >
+                    {$v.charge_money},
+                    </volist>
+                ]
+            }]
+        });
+	});
+
+
+
+</script>
+<include file="./Public/tmpl/User/mob_charge_common.html" />
+ </block>

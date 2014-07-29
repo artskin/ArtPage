@@ -1,0 +1,73 @@
+<extend name="./Public/mobile_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" > </block>
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Account">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <h2 style="color:white;">生成充值申请中...</h2>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+
+
+<!--start: Container -->
+<div class="container">
+
+    <!--start: Row -->
+    <div class="row">
+        <!--start: Span6 -->
+            <div class="span8 offset2 ">
+                <div class="widget">
+                    <div class="widget-content">
+                        <h2> 正转向第三方支付接口。。。 </h2>
+                        <form action="https://www.gopay.com.cn/PGServer/Trans/WebClientAction.do" name="form1" method="POST">
+                            <input type="hidden" id="version" name="version" value="{$version}" size="50"/>
+                            <input type="hidden" id="charset" name="charset" value="{$charset}"  size="50"/>
+                            <input type="hidden" id="language" name="language" value="{$language}"  size="50"/>
+                            <input type="hidden" id="signType" name="signType" value="{$signType}"  size="50"/>
+                            <input type="hidden" id="tranCode" name="tranCode" value="{$tranCode}"  size="50"/>
+                            <input type="hidden" id="merchantID" name="merchantID" value="{$merchantID}"  size="50"/>
+                            <input type="hidden" id="merOrderNum" name="merOrderNum" value="{$merOrderNum}"  size="50" />
+                            <input type="hidden" id="tranAmt" name="tranAmt" value="{$tranAmt}"  size="50"/>
+                            <input type="hidden" id="feeAmt" name="feeAmt" value="{$feeAmt}"  size="50"/>
+                            <input type="hidden" id="currencyType" name="currencyType" value="{$currencyType}"  size="50"/>
+                            <input type="hidden" id="frontMerUrl" name="frontMerUrl" value="{$frontMerUrl}" size="50"/>
+                            <input type="hidden" id="backgroundMerUrl" name="backgroundMerUrl" value="{$backgroundMerUrl}"  size="50"/>
+                            <input type="hidden" id="tranDateTime" name="tranDateTime" value="{$tranDateTime}"  size="50"/>
+                            <input type="hidden" id="virCardNoIn" name="virCardNoIn" value="{$virCardNoIn}"  size="50"/>
+                            <input type="hidden" id="tranIP" name="tranIP" value="{$tranIP}"  size="50"/>
+                            <input type="hidden" id="isRepeatSubmit" name="isRepeatSubmit" value="{$isRepeatSubmit}" size="50"/>
+                            <input type="hidden" id="signValue" name="signValue" value="{$signValue}"  size="50"/>
+                            <input type="hidden" id="userType" name="userType" value="{$userType}"  size="50"/>
+                            <input type="hidden" id="gopayServerTime" name="gopayServerTime" value="{$gopayServerTime}"  size="50"/>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <!--end: Span6 -->
+
+    </div>
+    <!--end: Row -->
+
+</div>
+<!--end: Container -->
+</block>
+
+ <block name="custom_bottom_js" >
+ <script type="text/javascript">
+    setTimeout("document.form1.submit()",10);
+</script>
+ </block>
+

@@ -1,0 +1,55 @@
+<extend name="./Public/app_base.html" />
+<block name="title"><title>{$news.title}-永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+</block>
+
+<block name="custom_top_js" ></block>
+
+<block name="custom_header" >
+
+</block>
+
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Info">
+</div>
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+<div class="container" style="margin-top: 20px; text-align:center">
+    <div class="row">
+        <!--start: Span -->
+        <div class="span9 separate">
+            <h3>{$news.title}</h3>
+            <small class="muted">{$news.addtime|date="Y-m-d",###}</small>
+            <hr class="dashed">
+            <section>
+                {$news.content}
+            </section>
+        </article>
+        <!--end: Span -->
+        <!--
+        <div class="span3">
+            <h3>更多消息</h3>
+            <hr>
+            <foreach name="anno" item="i">
+            <h5><a href="/a/{$i.id}.html">{$i.title}</a></h5>
+            <hr class="dashed">
+            </foreach>
+
+        </div>
+        -->
+    </div>
+</div>
+<!--end: Container -->
+
+</block>
+
+<block name="custom_footer" >
+
+</block>

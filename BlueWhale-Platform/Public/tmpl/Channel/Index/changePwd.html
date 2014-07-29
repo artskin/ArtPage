@@ -1,0 +1,97 @@
+<extend name="./Public/channel_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="page-desc js-ignore-pagemark">
+    <!-- start:Page-desc-inner -->
+    <div class="page-desc-inner">
+        <div class="container">
+            <h3>修改登录密码。</h3>
+        </div>
+    </div>
+    <!-- end:Page-desc-inner -->
+</div>
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+<div class="container">
+    <!-- start:Row -->
+    <div class="row">
+        <!-- start:Wall -->
+        <div class="span4 offset4 control-panle">
+            <div class="control-panle-header">
+    <h4>修改密码</h4>
+</div>
+<hr>
+<if condition="$err neq ''">
+<div class="validation-summary-errors alert alert-error"><ul><li>{$err}</li>
+
+</ul></div>
+</if>
+<form action="/Channel/Index/pwdChange" method="post" novalidate="novalidate">    
+<div class="row-fluid form-horizontal">
+        
+      
+                                <div class="control-group" style="position: relative">
+                                    <label class="control-label" for="OldPass">旧密码</label>
+                                    <div class="controls">
+                                        <input autocomplete="off" class="span8" data-val="true" 
+                                        data-val-regex="密码只能为 6 - 32 位数字，字母及常用符号组成。" 
+                                        data-val-regex-pattern="^[A-Za-z0-9\^\$\.\+\*_@!#%&amp;~=-]{6,32}$" 
+                                        data-val-required="请填写登录密码。" id="OldPass" name="OldPass" type="password">
+                                        <span class="help-block"><span class="field-validation-valid" data-valmsg-for="OldPass" data-valmsg-replace="true"></span></span>
+                                    </div>
+                                </div>
+      
+                                <div class="control-group" style="position: relative">
+                                    <label class="control-label" for="Pass">新密码</label>
+                                    <div class="controls">
+                                        <input autocomplete="off" class="span10" data-val="true" data-val-regex="密码应该为 6 - 32 位数字，字母及常用符号组成。" data-val-regex-pattern="^[A-Za-z0-9\^\$\.\+\*_@!#%&amp;~=-]{6,32}$" data-val-required="请填写登录密码。" id="Pass" name="Pass" type="password">
+                                        <span class="help-block"><span class="field-validation-valid" data-valmsg-for="Pass" data-valmsg-replace="true"></span></span>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="Pass2">重复新密码</label>
+                                    <div class="controls">
+                                        <input autocomplete="off" class="span10" data-val="true" data-val-equalto="两次录入的密码不一致" data-val-equalto-other="*.Pass" data-val-required="请填写确认密码。" id="Pass2" name="Pass2" type="password">
+                                        <span class="help-block"><span class="field-validation-valid" data-valmsg-for="Pass2" data-valmsg-replace="true"></span></span>
+                                    </div>
+                                </div>
+
+
+
+        <hr>
+        <button type="submit" id="act_login" class="btn btn-primary span12" style="margin-left: 0" tabindex="4">修改</button>
+    </div>
+</form>
+        </div>
+        <!-- end:Wall -->
+    </div>
+    <!-- end:Row -->
+</div><!--end: Container -->
+
+
+</block>
+
+ <block name="custom_bottom_js" >
+ </block>
+
+
+

@@ -1,0 +1,110 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header { *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150); }
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Recharge">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/Check/Alipay">支付宝充值记录</a></li>
+                        <li><a href="/Check/User/withdraw">提现管理</a></li>
+                        <li><a href="/Check/User/find">平台寻人</a></li>
+                        <li><a href="/Check/User/message">通知中心</a></li>
+                        <li><a href="/Check/User/mobCharge">手机充值</a></li>
+						      <li class="active"><a href="">客服中心</a></li>
+						      <li><a href="/Check/User/recommend">人人理财师</a></li>
+                        <li><a href="/Check/User/fixMoneyLog">神奇补账</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+
+<div class="container">
+
+<div class="row">
+    <!--start: Span2 -->
+    <aside class="span3" role="menu">
+        <ul class="nav nav-tabs nav-stacked" id="message_type_list">
+          <li> <a href="/Check/User/reward">话费奖励名单</a> </li>
+          <li> <a href="/Check/User/projectNotify">新项目通知</a> </li>
+          <li> <a href="/Check/User/lost">充值失败后放弃用户名单</a> </li>
+          <li> <a href="/Check/User/balance">余额未投资用户名单</a> </li>
+          <li> <a href="/Check/User/today">最近五天注册用户</a> </li>
+          <li> <a href="/Check/User/duanwu">端午送话费活动</a> </li>
+          <li> <a href="/Check/User/transfer">债权转让</a> </li>
+
+        </ul>
+    </aside>
+    <!--end: Span2 -->
+    <!--start: Span10 -->
+    <div class="span8">
+   
+    <article class="span10"> 
+    <h4>余额大于100元且未投资用户名单</h4>
+        <table class="table table-responsive table_message" id="table-responsive-1">
+            <thead>
+                <tr>
+                    <th style="width: 50px;">用户id</th>
+                    <th style="width: 100px;">用户名</th>
+                    <th style="width: 100px;">真实姓名</th>
+                    <th style="width: 100px;">手机号</th>
+                    <th style="width: 100px;">Email</th>
+                    <th style="width: 160px;">余额</th>
+                </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="u">
+                    <tr>
+                        <td>{$u.id}</td>
+                        <td>{$u.account}</td>
+                        <td>{$u.real_name}</td>
+                        <td>{$u.phone}</td>
+                        <td>{$u.email}</td>
+                        <td>{$u.total_moeny}</td>
+                     </tr>
+            </foreach>
+            </tbody>
+        </table>
+    </article>
+
+</div><!-- 顶部项目信息　-->
+            
+    
+</div>
+<!--end: Span10 -->
+
+</div>
+
+<!--end: Container -->
+
+
+</block>
+
+<block name="custom_bottom_js" >
+</block>
+
+
+

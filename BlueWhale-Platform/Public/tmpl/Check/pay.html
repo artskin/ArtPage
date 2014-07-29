@@ -1,0 +1,132 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+
+    #table-responsive-1 td:nth-of-type(1):
+    #table-responsive-1 td:nth-of-type(2):
+    #table-responsive-1 td:nth-of-type(3):    
+    #table-responsive-1 td:nth-of-type(4):
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Account">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li class=""><a href="/Check">项目派息</a></li>
+                        <li class="active"><a href="">用户派息</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+
+<div class="container">
+
+    <!--start: Row -->
+    <div class="row">
+
+        <!--start: Span -->
+        <div class="span12 ">
+
+                <h4>用户派息记录</h4>
+            <hr class="dashed">
+            <table class="table table-hover" id="table-responsive-1">
+                <thead>
+                    <tr>
+                    <th >派息时间</th>
+                        <th >用户ID</th>
+                         <th >项目ID</th>
+                         <th >年化</th>
+                         
+                         <th class="text-right">投资时间</th>
+                         <th  class="text-right">计息天数</th>
+                        <th class="text-right">投资金额(元)</th>
+                        <th  class="text-right">派息金额(元)</th>
+                         <th  class="text-right">是否派息</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="payback" item="v">
+                    <if condition="$v.days neq 0">
+                    <tr>
+                        <td>{$v.payback_at|date='Y-m-d H:i:s', ###} </td>
+                        <td>{$v.user_id} </td>
+                        <td>{$v.project_id} </td>
+                        <td>{$v.pro_rate}% </td>
+                        <td class="text-right">{$v.buy_time|date='Y-m-d H:i:s', ###}</td>
+                        <td class="text-right">{$v.days}</td>
+                        <td class="text-right"><span style="color:#8B7840;"><b>{$v.affirm_money}</b></span></td>
+                        <td class="text-right">{$v.payout_money}</td>
+                        <td class="text-right">
+	                        <if condition="$v.status eq 1">是<else/>否</if>
+                        </td>
+                    </tr>
+                    <else />
+                     <tr>
+                        <td>{$v.payback_at|date='Y-m-d H:i:s', ###} </td>
+                        <td>{$v.user_id} </td>
+                        <td>{$v.project_id} </td>
+                        <td> - </td>
+                        <td class="text-right"> 旧派息算法 </td>
+                        <td class="text-right">－</td>
+                        <td class="text-right"><span style="color:#8B7840;"><b>{$v.affirm_money}</b></span></td>
+                        <td class="text-right">{$v.payout_money}</td>
+                        <td class="text-right">
+	                        <if condition="$v.status eq 1">是<else/>否</if>
+                        </td>
+                      
+                    </tr>
+                    </if>
+                    </foreach>
+
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+    <!--end: Span -->
+
+</div>
+
+<!--end: Container -->
+
+
+</block>
+
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+    $("#CaptchaImage").click(function() {
+            //console.log('y');
+            $("#CaptchaImage").attr("src", "/User/auth/verify/" + 1);
+            });
+</script>
+</block>
+
+
+

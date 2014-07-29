@@ -1,0 +1,23 @@
+<!-- page:start -->     
+<div class="pagination-centered">
+    <ul class="pagination">
+        <if condition=" $page_curr gt 1 ">
+        <li><a href="{$pageUrl}?p={$page_curr-1}">上一页</a></li>
+        <else /> <li class="disabled"><a href="#">上一页</a></li>
+        </if>
+        <for start="1" end="$page_count+1" step="1" name="i" >  
+        <if condition="$i neq $page_curr">   
+        <li><a href="{$pageUrl}?p={$i}">{$i}</a></li>     
+        <else />    
+        <li class="active"><a href="#">{$i}</a></li>
+        </if>
+
+        </for>
+        <if condition="$page_count neq $page_curr"> 
+        <li><a href="{$pageUrl}?p={$page_curr+1}">下一页</a></li>
+        <else />
+        <li class="disabled"><a href="#">下一页</a></li>
+        </if>
+    </ul>
+</div>
+<!-- page:end -->

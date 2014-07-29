@@ -1,0 +1,229 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<link href="__PUBLIC__/site/Content/grumble.css" rel="stylesheet"/>  
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Channel">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li ><a href="/Check/Channel/">充值财务确认</a></li>
+			 <li ><a href="/Check/Channel/offlinebrokerage">线下推荐佣金</a></li>
+                        <!-- <li ><a href="/Check/Channel/law">充值法务确认</a></li> -->
+                        <li ><a href="/Check/Channel/interest">线下投资派息</a></li>
+                        <li class="active"><a href="/Check/Channel/brokerage">线上推荐佣金</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+
+
+<!--start: Container -->
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <!--start: Span2 -->
+        <aside class="span2" role="menu" style="width:150px;"> 
+            <ul class="nav nav-tabs nav-stacked" id="message_type_list">
+            <foreach name="list" item="vo" >
+                <li class="">
+                    <a href="?mon={$vo.date}">{$vo.date}
+                      <span class="badge badge-info pull-right"><span class="message_count">{$vo.c}</span></span>
+                    </a>
+                </li>
+            </foreach>
+            </ul>
+        </aside>
+        <!--end: Span2 -->
+        <!--start: Span10 -->
+        <div class="span12" style="width:1300px;">
+
+<if condition="!$mon"> 
+<h4 class="important"> 请先在左侧选择要进行派发佣金的月份 O_O</h4>
+<else />
+<h3 class="important"> {$mon} </h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>起始时间</th>
+                        <th>截止时间</th>
+                        <th>渠道团队长</th>
+                        <th >银行</th>
+                        <th class="text-right">卡号</th>
+                        <th>团队推荐总金额(元)</th>
+                        
+                        <th>佣金金额(元)</th>
+                        <th class="text-right">统计时间</th>
+                        <th class="text-right">派发佣金</th>
+                        
+                        <th class="text-right">操作人</th>
+                        <th class="text-right">派发时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="brokerages" item="vo" >
+                    <tr>
+                        <td >
+                            <span >
+                                <if condition="$vo.stat_start eq 0">
+                                <else /> 
+                                   {$vo.stat_start|date="Y-m-d ",###}
+                                </if>
+                            </span>
+                        </td>
+                        <td >
+                            <span >
+                                <if condition="$vo.stat_end eq 0">
+                                <else /> 
+                                   {$vo.stat_end|date="Y-m-d ",###}
+                                </if>
+                            </span>
+                        </td>
+                        <td>{$vo.cname}</td>
+                        <td>{$vo.card_address}</td>
+                        <td class="text-right">{$vo.card_no}</td>
+                        <td class="text-right"> {$vo.total}</td>
+                        <td class="important text-right"> {$vo.brokerage}</td>
+                        <td class="text-right">{$vo.stat_time|date="Y/m/d H:i", ###}</td>
+                        
+                        <!-- 特殊的人特殊处理一下，临时方案 -->
+                        <if condition="$vo.channel_id eq 34">
+                        <td class="text-right">
+                            不派发给jakeshi(时晓杰)
+                        </td>
+                        <else />
+                        <td class="text-right">
+                            <if condition="$vo.status eq 1" >
+                            已派发
+                            <else />
+                            <a name="confirmu" class="btn btn-primary btn-small" data-toggle="modal" data-target="#myModal" style="cursor:pointer;" 
+                                myid={$vo.id} mydate="{$vo.stat_time|date="Y/m/d H:i", ###}" mymoney="{$vo.brokerage}"  myname='{$vo.cname}' >派发</a>
+                            </if>
+                        </td>
+                        </if>
+                        <td class="text-right"> {$vo.op} </td>
+                        <td class="text-right"> 
+                            <if condition="$vo.time eq 0">
+                            <else /> 
+                               {$vo.time|date="Y-m-d H:i",###}
+                            </if>
+                        </td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+</if>
+
+    </div><!-- 顶部项目信息　-->
+    </div>
+    <!--end: Span10 -->
+</div>
+<!--end: Container -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" style="display:none;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">佣金派发</h4>
+            </div>
+            <div class="modal-body">
+                <div class="widget ">
+                    <div class="widget-content payment-account" style="padding-bottom: 15px;">
+                        <h3></h3>
+                        <dl class="dl-horizontal" 　style="width:200px;">
+                            <form action="" method="POST" id="alipay" >
+                                <input name="cid" id="cid" type="hidden" value="0">
+                                <table style="margin:0 auto; float:left;">
+                                    <tbody><tr>
+                                            <td colspan="10">渠道商姓名： </td>
+                                            <td> <input name="cuser" id="cuser" type="text" value="0"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10"> 佣金金额： </td>
+                                            <td> <input name="camount" id="camount" type="text" value="0"> </td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="10"> 派发时间： </td>
+                                            <td> <input name="ctime" id="ctime" type="text" value="0"> </td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="10"> 财务确认人： </td>
+                                            <td class="important"> {$user['real_name']} </td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="10">  </td>
+                                            <td>
+                                                <br><input type="submit" value="派发" class="btn btn-warning btn-big" style="margin-top:-10px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</block>
+
+ <block name="custom_bottom_js" >
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a[name='confirmu']").click(function(){
+          $('#myModal').show();
+          $('#cid').val($(this).attr('myid'));
+            $('#cuser').val($(this).attr('myname'));
+            $('#ctime').val($(this).attr('mydate'));
+            $('#camount').val($(this).attr('mymoney'));
+        });
+        //提交确认
+        $("#btn_confirm").click(function(){
+            var myid    = $('#cid').val();
+            var myname  = $('#cuser').val();
+            var mydate  = $('#ctime').val();
+            var mymoney = $('#camount').val();
+            console.log(myid, myname, mydate, mymoney);
+
+            $.post("/", 
+                { "id"    : myid,
+                  "name"  : myname,
+                  "date"  : mydate,
+                  "money" : mymoney   
+                },
+                function(data){ console.log(data); }, "json");
+        });
+
+    });
+</script>
+ </block>

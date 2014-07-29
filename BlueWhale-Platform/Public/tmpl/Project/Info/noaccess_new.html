@@ -1,0 +1,225 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">{$project.title}</block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+<block name="custom_top_css" >
+    <link href="__PUBLIC__/static/style/ylb-inside.css" rel="stylesheet"/>
+</block>
+
+<block name="custom_content" >
+<!--start: breadcrumb -->
+<div class="breadcrumb-layer">
+    <div class="container">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/Project/List">投资列表</a></li>
+                <li class="active"><a href="">{$project.title}</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!--end: breadcrumb -->
+<div class="container">
+<div class="row">
+
+    <!--Start: Span -->
+    <article class="col-md-9 project-layer">
+        <div class="wall project-summary">
+            <div class="row">
+                <div class="col-md-9">
+                    <div style="min-height: 70px;">
+                        <h3>
+                          {$project.title} <small class="muted" style="margin-bottom: 0;white-space: nowrap;">{$project.str_refund_type}
+                           <if condition="$project.3rd_source eq 1"><span class="label label-info">尊选</span></if>
+                            <if condition="$project.3rd_source eq 2"><span class="label label-info">橙旗</span></if>
+                             <if condition="$project.3rd_source eq 3"><span class="label label-info">押车宝</span></if>
+                          </small>
+                        </h3>
+                        <div class="project-tags" style="margin-top:10px;">
+                            <switch name="project.status" >
+                                <case value="1" break="1">
+                                    <span class="label label-success">{$project.str_status}</span>
+                                </case>
+                                <case value="2" break="2">
+                                    <span class="label label-info">{$project.str_status}</span>
+                                </case>
+                                <case value="3" break="3">
+                                    <span class="label label-info">{$project.str_status}</span>
+                                </case>
+                                <case value="4" break="4">
+                                    <span class="label ">{$project.str_status}</span>
+                                </case>
+                                <default />
+                                <span class="label label-info">项目准备中</span>
+                            </switch>
+                            <span class="label label-default tag" data-toggle="popover" data-placement="right"
+                                  data-content="{$project.str_pro_type_info}"
+                                  data-trigger="hover" data-html="true">
+                                <switch name="project.pro_type" >
+                                    <case value="16"><i class="glyphicon glyphicon-screenshot"></i></case>
+                                    <case value="17"><i class="glyphicon glyphicon-bookmark"></i></case>
+                                    <case value="18"><i class="glyphicon glyphicon-check"></i> </case>
+                                    <case value="19"><i class="glyphicon glyphicon-leaf"></i> </case>
+                                    <case value="20"><i class="glyphicon glyphicon-user"></i></case>
+                                </switch>
+                                {$project.str_pro_type}
+                            </span> 
+                        </div>
+                    </div>
+
+                    <if condition="$project.fund_process lt 100">
+                        <div class="col-md-5">
+                            <div class="project-progress">
+                                <div class="progress progress-striped active">
+                                    <div class="progress-bar" style="width:{$project.fund_process}%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            投资进度：{$project.fund_process}%
+                        </div>
+                    <else />
+                    <div class="col-md-5">
+                        <div class="project-progress">
+                            <div class="progress progress-striped">
+                                <div class="progress-bar" style="width: {$project.fund_process}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        投资进度：{$project.fund_process}%
+                    </div>
+                </if>
+
+
+                </div>
+                <div class="col-md-3">
+                    <ul class="project-summary-items">
+                        <li><span class="title">投资金额</span> {$project.int_pro_fund} 万</li>
+                        <li>
+                            <span class="title">年化收益</span>
+                        <span title="" data-original-title="" class="important data-tips" data-content="可以使用年化收益率计算器（本页面底部）来计算您的收益。" data-toggle="popover" data-placement="top" data-trigger="hover" data-html="true">
+                            {$project.int_pro_rate}%
+                            <i class="icon-info-sign icon-gray"></i>
+                        </span>
+                        </li>
+                        <li>
+                            <span class="title">投资期限</span>
+                        <span title="" data-original-title="" class="data-tips" data-content="该项目还款日期为 {$project.str_refund_end}" data-toggle="popover" data-placement="top" data-trigger="hover" data-html="true">
+                            {$project.days} 天
+                            <i class="icon-info-sign icon-gray"></i>
+                        </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <hr class="dashed">
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="">
+                        <span class="title">可投金额</span> <strong class="important">{$project.str_fund_left_money}</strong> 元
+                        <p class="project-progress-desc hidden-phone">已投资 {$project.str_funded_money} 元</p>
+                        <p style="margin-bottom: 0; margin-top: 10px" class="hidden-phone">
+                            <i class="icon-red icon-star" style="margin-top: 3px"></i>
+                            今日投资，明日计息，投资越早，收益越高。
+                            <!--每万元预期收益
+                            即刻投资收益自 {$project.str_refund_start} 起算。
+                            <span style="font-size: 16px; color: #ff8f24">1000</span>
+                            元-->
+                        </p>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        <span class="important">
+                            <h3>该项目已经结束，<br />
+                                为了保护借款人信息，<br />
+                                只允许该项目的投资人查看。</h3>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+            <!--
+            <div class="wall project-banner">
+                <a href="/Event/duanwu" target="_blank"><img src="__PUBLIC__/static/images/banner/banner-duanwu-sm.jpg" alt="端午活动 大力放粽"/></a>
+            </div>
+            -->
+
+    <!--Start: pvinfo-content -->
+        <div class="pvinfo-Container">
+        <!--PV: Project Info -->
+
+        <!--Start: ProjectInfo -->
+        <div id="ProjectInfo" class="wall">
+            <h3 >项目信息</h3>
+            <hr class="dashed">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="dl-horizontal">
+                        <dt>项目名称</dt>
+                        <dd>{$project.title}</dd>
+                        <dt>项目类型</dt>
+                        <dd>{$project.str_pro_type}</dd>
+                        <dt>年化利率</dt>
+                        <dd>{$project.int_pro_rate}%</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="dl-horizontal">
+                        <dt>投资金额</dt>
+                        <dd>{$project.pro_fund} 万元</dd>
+                        <dt>已投资金额</dt>
+                        <dd>{$project.str_funded_money} 元</dd>
+                        <dt>预期还款日期</dt>
+                        <dd>{$project.str_refund_end}</dd>
+                        <dt>预期投标截止时间</dt>
+                        <dd>{$project.str_deadline_end} 23:59:59</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <!--End: ProjectInfo -->
+    </div>
+
+        </article>
+        <!--End: Span -->
+        <!--Start: Span -->
+
+    <aside class="col-md-3 side">
+        <div style="margin-top: 18px">
+        </div>
+        <include file="./Public/tmpl/anno.html" />
+
+
+        </aside>
+        <!--End: Span -->
+    </div>
+    <!--End: Row -->
+
+</div>
+<!--end: Container -->
+
+</block>
+
+
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+    //定义中文消息
+var cnmsg = {
+
+min: jQuery.format("单次最少投资 100 元")
+};
+jQuery.extend(jQuery.validator.messages, cnmsg);
+</script>
+</block>
+
+
+
+

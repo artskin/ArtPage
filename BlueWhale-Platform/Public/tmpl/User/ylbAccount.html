@@ -1,0 +1,115 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">设置永利宝独立账号和密码</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/></block>
+<block name="custom_content">
+    <!--start: breadcrumb -->
+    <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/User">个人中心</a></li>
+                <li class="active"><a href="">设置永利宝独立账号和密码</a></li>
+            </ol>
+    </div>
+    <!--end: breadcrumb -->
+    <div class="container">
+        <div class="ucenter clearfix">
+            <aside class="col-xs-2 col-md-2 aside" sup="Account">
+                <div class="aside-body">
+                    <dl class="box-shadow">
+                        <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-safelv" />
+                    </dl>
+                </div>
+            </aside>
+            <article class="col-xs-10 col-md-10 article">
+                <div class="article-body box-shadow">
+                    <div class="padding-lg">
+                        <h2>设置永利宝独立账号和密码<a href="/User/Index/safe" class="more"><i class="glyphicon glyphicon-share-alt"></i>返回</a></h2>
+                        <hr />
+                        <div class="padding-lg">
+                            <form action="/User/Index/ylbAccount" method="post" >
+                                <div class="form-horizontal" id="form">
+                                    <if condition="$rerr eq 1">
+                                        <div class="validation-summary-errors alert alert-error"><ul><li>{$err}</li></ul></div>
+                                    </if>
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="UserName">用户名</label>
+                                        <div class="col-xs-4 controls">
+                                            <input autocomplete="off" class="form-control" data-val="true"
+                                                   data-val-regex="用户名只允许字母、数字、下划线、横线组成，首位只能为字母，且至少需要 6 个字符。"
+                                                   data-val-regex-pattern="(?!^\d[A-Za-z0-9]*$)^[A-Za-z0-9_-]{6,25}$" data-val-remote="用户名已存在。"
+                                                   data-val-remote-additionalfields="*.UserName"
+                                                   data-val-remote-url="/User/Register/checkUserName"
+                                                   data-val-required="请填写用户名。"
+                                                   id="UserName" name="UserName" type="text" value="{$user.account|default=''}">
+                                            <span class="help-block"><span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="true"></span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="position: relative">
+                                        <label class="col-xs-2 control-label" for="LoginPass">登录密码</label>
+                                        <div class="col-xs-4 controls">
+                                            <input autocomplete="off" class="form-control" data-val="true" data-val-regex="密码只能为 6 - 32 位数字，字母及常用符号组成。" data-val-regex-pattern="^[A-Za-z0-9\^\$\.\+\*_@!#%&amp;~=-]{6,32}$" data-val-required="请填写登录密码。" id="LoginPass" name="LoginPass" type="password">
+                                            <span class="help-block"><span class="field-validation-valid" data-valmsg-for="LoginPass" data-valmsg-replace="true"></span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xs-2 control-label" for="LoginPass2">确认密码</label>
+                                        <div class="col-xs-4 controls">
+                                            <input autocomplete="off" class="form-control" data-val="true" data-val-equalto="两次录入的密码不一致" data-val-equalto-other="*.LoginPass" data-val-required="请填写确认密码。" id="LoginPass2" name="LoginPass2" type="password">
+                                            <span class="help-block"><span class="field-validation-valid" data-valmsg-for="LoginPass2" data-valmsg-replace="true"></span></span>
+                                        </div>
+                                    </div>
+
+                                    <!--
+                                    <div class="form-group">
+                                        <label class="control-label" for="Mobile">手机号码</label>
+                                        <div class="controls">
+                                            <input autocomplete="off" class="span6" data-val="true"
+                                            data-val-regex="请您填写有效的手机号码。"
+                                            data-val-regex-pattern="^[1][0-9]{10}$"
+                                            data-val-remote="手机号已经被注册过。"
+                                            data-val-remote-additionalfields="*.Mobile"
+                                            data-val-remote-url="/User/Register/checkUserMobile"
+                                            data-val-required="请填写手机号码。"
+                                            id="Mobile" name="Mobile" type="text" value="{$phone|default=''}">
+                                            <span class="help-block">
+                                                <span class="field-validation-valid" data-valmsg-for="Mobile" data-valmsg-replace="true"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    -->
+
+                                    <!--<div class="form-group">
+                                    <label class="control-label" for="Email">邮箱</label>
+                                    <div class="controls">
+                                        <input class="span9" data-val="true"
+                                        data-val-regex="请您填写有效的邮件地址。"
+                                        data-val-regex-pattern=".*"
+                                        data-val-required="请填写邮件地址。"
+                                        data-val-remote="邮箱已经被注册过。"
+                                        data-val-remote-additionalfields="*.Email"
+                                        data-val-remote-url="/User/Register/checkUserEmail"
+                                        data-val-required="请填写邮件地址。"
+                                        id="Email" name="Email" type="text" value="{$email|default=''}">
+                                        <span class="help-block">
+                                            <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                        </span>
+                                    </div>
+                                </div>-->
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="col-xs-4 col-xs-offset-2 controls">
+                                            <button type="submit" id="act_register" class="btn btn-primary">设置</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</block>

@@ -1,0 +1,102 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<link href="__PUBLIC__/site/Content/grumble.css" rel="stylesheet"/>  
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+    #upload{ 
+        font-size:12px; 
+        overflow:hidden; 
+        position:absolute;
+    } 
+    #file{ 
+        position:absolute; 
+        z-index:100; 
+        margin-left:-180px; 
+        font-size:60px;
+        opacity:0;
+        filter:alpha(opacity=0); 
+        margin-top:-5px;
+    } 
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Check">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/Check">项目派息</a></li>
+                        <li ><a href="#">项目管理</a></li>
+                        <li><a href="/Check/Project/addnew">项目发布</a></li>
+                        <li><a href="/Check/Project/attachment">项目附件</a></li>
+                        <li><a href="/Check/Project/period">周期调整</a></li>
+                         <li class="active"><a href="#">债权协议</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+
+
+<!--start: Container -->
+        <!--start: Span2 -->
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">债权协议</a></li>
+
+</ul>
+ <table class="table table-striped table-hover">
+     <tbody>
+         <tr>
+             <th>受让人id</th>
+             <th>受让项目</th>
+             <th>受让人真实姓名</th>
+             <th>受让人手机号</th>
+             <th>受让金额</th>
+             <th>转让人id</th>
+             <th>转让人真实姓名</th>
+             <th>协议</th>
+         </tr>
+         <foreach name="transfer_list" item="vo" >
+         <tr >
+           <td> 
+             {$vo.buyuserid}
+             </td>
+             <td><a href="/p/{$vo.projectid}.html" target="_blank">{$vo.title}</td>
+               <td> {$vo.buyusername}</td>
+               <td> {$vo.buyuserphone}</td>
+               <td> {$vo.money}</td>
+               <td> {$vo.selluserid}</td>
+               <td> {$vo.sellusername}</td>
+               <td><a href="transferprotocol?selluid={$vo.selluserid}&buyuid={$vo.buyuserid}&buyinfoid={$vo.buyinfoid}&projectid={$vo.projectid}" target="_blank">协议</a></td>
+             </tr>
+             </foreach>
+
+           </tbody>
+ </table>
+
+</block>
+
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+    $('.textarea').wysihtml5();
+</script>
+</block>
+

@@ -1,0 +1,178 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<link href="__PUBLIC__/site/Content/grumble.css" rel="stylesheet"/>  
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+    #upload{ 
+        font-size:12px; 
+        overflow:hidden; 
+        position:absolute;
+    } 
+    #file{ 
+        position:absolute; 
+        z-index:100; 
+        margin-left:-180px; 
+        font-size:60px;
+        opacity:0;
+        filter:alpha(opacity=0); 
+        margin-top:-5px;
+    } 
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Check">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/Check">项目派息</a></li>
+                        <li><a href="/Check/Project/manager">项目管理</a></li>
+                        <li class="active"><a href="#">项目发布</a></li> 
+                        <li><a href="/Check/Project/attachment">项目附件</a></li>
+                        <li><a href="/Check/Project/period">周期调整</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+
+
+<!--start: Container -->
+<div class="container">
+    <div class="row">
+        <!--start: Span2 -->
+        <aside class="span2" role="menu">
+            <ul class="nav nav-tabs nav-stacked" id="message_type_list">
+                <li><a href="/Check/Project/addnew">正常项目</a></li>
+                <li><a href="#"><b>秒标项目</b></a> </li>
+            </ul>
+        </aside>
+        <!--end: Span2 -->
+        <!--start: Span10 -->
+        <div class="span10">
+        <div class="widget ">
+			<div class="widget-content payment-account" style="padding-bottom: 15px;">
+                <h3>添加秒标项目</h3>
+                <font color=red>募集限额用户不可见，募集满项目自动结束;  活动开始与结束不在同一天，会产生大于2天的利息。</font>
+				<hr />
+
+                    <dl class="dl-horizontal" 　style="width:200px;">
+                        <present name="result">
+                        <h1> {$result} !!!!!! <a href=""> 返回</a></h1>
+                        <else />
+                            <table style="margin:0 auto; float:left;">
+                                <form action="" method="POST" id="alipay" novalidate="novalidate">
+                                    <tbody><tr>
+                                        <td colspan="10"> 活动标题： </td>
+                                        <td> <input name="title" type="text" value="新手秒标活动第一期" /> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10"> 年化收益： </td>
+                                        <td> <input name="pro_rate" type="text" value="{$pro_rate}" style="width:30px;" >% </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 募集总限额： </td>
+                                        <td> <input name="max" type="text" value="{$max}" style="width:30px;">万元 </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 用户投资限制： </td>
+                                        <td> <input name="limit" type="text" value="{$limit}" style="width:60px;" />元 </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 活动规则： </td>
+                                        <td> 
+                                            <textarea id="info_value" class="textarea" name="info" rows="5" style="resize:none;width:500px;">不需要填写，内容会自动生成。</textarea> 
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 截止时间： </td>
+                                        <td> <input name="start" type="text" value="{$start}" /> ~
+                                        <input name="end" type="text" value="{$end}" /> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 派息时间： </td>
+                                        <td> <input name="payout" type="text" value="{$payout}" /> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10">本金返还时间： </td>
+                                        <td> <input name="payback" type="text" value="{$payback}" /> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 操作用户： </td>
+                                        <td> {$user.real_name} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <br><input type="submit" value="发布" class="btn btn-primary btn-big" style="margin-top:-10px;">
+                                        </td>
+                                    </tr>
+                                
+                            </tbody>
+                        </form>
+                    </table>
+                    </present>
+                </dl>
+			</div>
+        </div>
+                
+           <article class="span10">
+           <hr />
+            <h4>上传记录</h4>
+                
+            <table class="table table-responsive table_message" id="table-responsive-1">
+                <thead>
+                    <tr>
+                        <th style="width: 10px;">id</th>
+                        <th style="width: 300px;">项目标题</th>
+                        <th style="width: 200px;">上线日期</th>
+                        <th style="width: 200px;">结束日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <foreach name="list" item="vo">
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.title}</td>
+                            <td>{$vo.pro_start|date="Y-m-d H:i:s",###}</td>
+                            <td>{$vo.pro_end|date="Y-m-d H:i:s",###}</td>
+                         </tr>
+                </foreach>
+                </tbody>
+            </table>
+            
+
+        </article>
+                
+    </div><!-- 顶部项目信息　-->
+                
+        
+    </div>
+    <!--end: Span10 -->
+</div>
+<!--end: Container -->
+
+</block>
+
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+    $('.textarea').wysihtml5();
+</script>
+</block>
+

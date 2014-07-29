@@ -1,0 +1,72 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">奖励记录</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/></block>
+<block name="custom_content">
+    <!--start: breadcrumb -->
+    <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="/">首页</a></li>
+                <li><a href="/User">个人中心</a></li>
+                <li class="active"><a href="">奖励记录</a></li>
+            </ol>
+    </div>
+    <!--end: breadcrumb -->
+    <div class="container">
+        <div class="ucenter clearfix">
+            <aside class="col-xs-2 col-md-2 aside" sup="Account">
+                <div class="aside-body">
+                    <dl class="box-shadow">
+                        <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-planner" />
+                    </dl>
+                </div>
+            </aside>
+            <article class="col-xs-10 col-md-10 article">
+                <div class="article-body box-shadow">
+                    <div class="padding-lg">
+                        <!--
+                        <ul class="pull-left">
+                            <li><a href="/Fund/Activity">收支明细</a></li>
+                            <li class="selected"><a href="/entity/Charge">充值记录</a></li>
+                            <li><a href="/entity/Cash">提现记录</a></li>
+                        </ul>
+                        -->
+                        <h2>奖励记录</h2>
+                        <hr>
+                        <table class="table table-hover border-solid" id="table-responsive-1">
+                            <thead>
+                                <tr>
+                                    <th style="width: 150px">时间</th>
+                                    <th style="width: 100px;" class="text-left">类型</th>
+                                    <th style="width: 100px;" class="text-right">奖励金额(元)</th>
+                                    <th style="width: 100px;" class="text-right">您推荐用户</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="list" item="v">
+                                <tr>
+                                    <td>{$v.time|date='Y-m-d H:i:s', ###} </td>
+                                    <td class="text-left"> <if condition="$v.reward eq 5"> 间接推荐新用户 <else /> 直接推荐新用户 </if> </td>
+                                    <td class="text-right">{$v.reward}</td>
+                                    <td class="text-right"> {$v.nickname} </td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</block>
+
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+    $("#CaptchaImage").click(function() {
+            //console.log('y');
+            $("#CaptchaImage").attr("src", "/User/auth/verify/" + 1);
+            });
+</script>
+</block>
+
+
+

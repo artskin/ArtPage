@@ -1,0 +1,237 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<link href="__PUBLIC__/site/Content/grumble.css" rel="stylesheet"/>  
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+   	
+	 }
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Channel">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li ><a href="/Check/Channel/">充值财务确认</a></li>
+			 <li ><a href="/Check/Channel/offlinebrokerage">线下推荐佣金</a></li>
+                        <!-- <li ><a href="/Check/Channel/law">充值法务确认</a></li> -->
+                        <li class="active"><a href="/Check/Channel/interest">线下投资派息</a></li>
+                        <li ><a href="/Check/Channel/brokerage">线上推荐佣金</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+
+
+<!--start: Container -->
+
+<!--<div >-->
+<div class="container-fluid">
+    
+
+    <div class="row-fluid">
+
+        <!--start: Span2 -->
+        <aside class="span2" style="width:150px;" role="menu">
+            <ul class="nav nav-tabs nav-stacked" id="message_type_list">
+            <foreach name="date_list" item="vo" key='k'>
+                <li class="">
+                <a href="?d={$k}">{$k}
+                                <span class="badge badge-info pull-right"><span class="message_count">{$vo}</span></span>
+                    </a>
+                </li>
+            </foreach>
+            </ul>
+        </aside>
+        <!--end: Span2 -->
+        <!--start: Span10 -->
+
+        <div class="span13">
+
+
+<if condition="!$date"> 
+<h4 class="important"> 请先在左侧选择要进行派息的日期 O_O</h4>
+<else />
+<h3 class="important"> {$date} </h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>  
+                        <th>单号</th> 
+                        <th>投资人</th>
+                        <th>产品</th>
+                        <th>期限(月)</th>
+                        <th>年化(%)</th>
+                        <th>协议开始</th>
+                        <th>协议结束</th>
+                        <th>银行</th>
+                        <th class="text-center">卡号</th>
+                        <th class="text-right">充值时间</th>
+                        <th class="text-center">本金(元)</th>
+                        <th class="text-center">利息(元)</th>
+                        <th class="text-center">应派发时间</th>
+                        <th class="text-center">派发金额(元)</th>
+                        <th class="text-right">操作</th>
+                        <th class="text-right">操作人</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="interests" item="vo" >
+                    <tr>
+                        <td><a href="/Check/Channel/interestInfo?cid={$vo.charge_id}">&nbsp;{$vo.charge_id} &nbsp;查看</a></td>
+                        <td>{$vo.name}</td>
+                        <td ><span >
+                                <if condition="($vo.invest_method  eq 1 )">
+                                乾利宝
+                                <elseif condition="($vo.invest_method  eq 2 )"/>
+                                单季金
+                                <elseif condition="($vo.invest_method  eq 3 )"/>
+                                乾运丰
+                                <elseif condition="($vo.invest_method  eq 4 )"/>
+                                月月金
+                                <elseif condition="($vo.invest_method  eq 5 )"/>
+                                乾满盈
+                                <elseif condition="($vo.invest_method  eq 6 )"/>
+                                乾运通(月付息)
+                                <elseif condition="($vo.invest_method  eq 7 )"/>
+                                乾运通(年付息)
+                                <else />
+                                </if>
+                        </span></td>
+                        <td ><span >{$vo.invest_period}</span></td>
+                        <td ><span >{$vo.accord_rate}</span></td>
+
+                        <td>{$vo.start_time|date="Y/m/d", ###}</td>
+                        <td>{$vo.end_time|date="Y/m/d", ###}</td>
+                        <td >{$vo.card_address}</td>
+                        <td class="text-center">{$vo.card_no}</td>
+                        <td class="text-right">{$vo.charge_time|date="Y/m/d H:i", ###}</td>
+                        <td class="text-center"> {$vo.principal|number_format=###,2}</td>
+                        <td class="text-center"> {$vo.interest|number_format=###,2}</td>
+                        <td class="important" width='80'>{$vo.interest_end|date="Y/m/d ", ###}</td> 
+                        <td class="important" class="text-right"> {$vo.total|number_format=###,2}</td>
+                        <td class="text-right">
+                            <if condition="$vo.status eq 1" >
+                            已派发
+                            <else />
+                            <a name="confirmu" class="btn btn-primary btn-small" data-toggle="modal" data-target="#myModal" style="cursor:pointer;" 
+                                myid={$vo.inid} mydate="{$vo.interest_end|date="Y/m/d H:i:s", ###}" mymoney="{$vo.total}"  myname='{$vo.name}' >派发</a>
+                            </if>
+                        </td>
+                        <td class="text-right"> {$vo.op} </td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+</if>
+
+    </div><!-- 顶部项目信息　-->
+    </div>
+    <!--end: Span10 -->
+</div>
+<!--end: Container -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" style="display:none;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">派息确认</h4>
+            </div>
+            <div class="modal-body">
+                <div class="widget ">
+                    <div class="widget-content payment-account" style="padding-bottom: 15px;">
+                        <h3></h3>
+                        <dl class="dl-horizontal" 　style="width:200px;">
+                            <form action="" method="POST" id="alipay" >
+                                <input name="cid" id="cid" type="hidden" value="0">
+                                <table style="margin:0 auto; float:left;">
+                                    <tbody><tr>
+                                            <td colspan="10">投资人姓名： </td>
+                                            <td> <input name="cuser" id="cuser" type="text" value="0"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10"> 利息： </td>
+                                            <td> <input name="camount" id="camount" type="text" value="0"> </td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="10"> 派息时间： </td>
+                                            <td><input name="ctime" id="ctime" type="text" value="0" disabled>
+                                                
+                                            </td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="10"> 派息操作人： </td>
+                                            <td class="important"> {$user['real_name']} </td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="10">  </td>
+                                            <td>
+                                                <br><input type="submit" value="确认派息" class="btn btn-warning btn-big" style="margin-top:-10px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</block>
+
+ <block name="custom_bottom_js" >
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("a[name='confirmu']").click(function(){
+          $('#myModal').show();
+          $('#cid').val($(this).attr('myid'));
+            $('#cuser').val($(this).attr('myname'));
+            $('#ctime').val($(this).attr('mydate'));
+            $('#camount').val($(this).attr('mymoney'));
+        });
+        //提交确认
+        $("#btn_confirm").click(function(){
+            var myid    = $('#cid').val();
+            var myname  = $('#cuser').val();
+            var mydate  = $('#ctime').val();
+            var mymoney = $('#camount').val();
+            console.log(myid, myname, mydate, mymoney);
+
+            $.post("/", 
+                { "id"    : myid,
+                  "name"  : myname,
+                  "date"  : mydate,
+                  "money" : mymoney   
+                },
+                function(data){ console.log(data); }, "json");
+        });
+
+    });
+</script>
+ </block>

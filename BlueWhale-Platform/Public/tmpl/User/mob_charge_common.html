@@ -1,0 +1,101 @@
+<script>
+  (function($){
+    bootbox.setDefaults({ locale: 'zh_CN'});
+    Number.prototype.number_format = function(decimals, dec_point, thousands_sep){
+          number = this;
+          var n = !isFinite(+number) ? 0 : +number,
+          prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+          sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+          dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+          s = '',
+          toFixedFix = function(n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + (Math.round(n * k) / k)
+            .toFixed(prec);
+          };
+          s = (prec ? toFixedFix(n, prec) : '' + Math.round(n))
+          .split('.');
+          if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+          }
+          if ((s[1] || '')
+              .length < prec) {
+                s[1] = s[1] || '';
+                s[1] += new Array(prec - s[1].length + 1)
+                .join('0');
+              }
+              return s.join(dec);
+    };
+    $.date_format = function( f ){
+      t = new Date;
+      return f.replace(/[YymdHis]/g, function(i){
+        if(i=="Y") return t.getFullYear().toString();
+        else if(i=="y") return t.getFullYear().toString().substr(2);
+        else if(i=="m") return (t.getMonth().toString().length > 1) ? ( t.getMonth() + 1 ) : ( '0' + ( t.getMonth() + 1 ) );
+        else if(i=="d") return (t.getDate().toString().length > 1) ? t.getDate() : ( '0' + t.getDate() );
+        else if(i=="H") return (t.getHours().toString().length > 1) ? t.getHours() : ( '0' + t.getHours() );
+        else if(i=="i") return (t.getMinutes().toString().length > 1) ? t.getMinutes() : ( '0' + t.getMinutes() );
+        else if(i=="s") return (t.getSeconds().toString().length > 1) ? t.getSeconds() : ( '0' + t.getSeconds() );
+      });
+    };
+    $.mobcharge = function(){
+      $('.ajax-mobcharge').on('click', function(){
+        phone_number = $('input[name="phone_number"]').val();
+        fee_much = $('input[name="fee_much"]:checked').val();
+          var offTop = ($(window).height() - 50)/2;
+          console.log(offTop);
+          $(".bootbox").css(top,offTop);
+        if( $('#mob-charge').length > 0 ) $('#mob-charge').popover('hide');
+        //bootbox.confirm("确定给" + phone_number + "充值" + fee_much + "元?", function(result) {
+        //console.log(result);
+       //   if(result){
+            $.post('/User/Show/addMobCharge', 'phone_number=' + phone_number + '&fee_much=' + fee_much + '&ret=json&__ylb_=' + $('meta[name="__ylb_"]').attr('content'), function(json){
+              eval('var json='+json);
+              if(json.code==200){
+                bootbox.alert(json.data);
+                if( $('#user-balance').length && $('#user-value').length ){
+                  userValue = Number( $('#user-value').html().replace(/,/g,'') );
+                  userBalance = Number( $('#user-balance').html().replace(/,/g,'') );
+                  userValue -= Number( fee_much );
+                  userBalance -= Number( fee_much );
+                  $('#user-value').html( userValue.number_format(2) );
+                  $('#user-balance').html( userBalance.number_format(2) );
+                }else{
+                  //如果在列表页充值, 先隐藏最后一条, 在插入当前数据到第一条
+                  if($('.load-more:visible').length > 0){
+                    $('.mobcharge-list tr').not('.pre-load').eq(-1).remove();
+                  }
+                  $('.mobcharge-list tr').eq(2).before(
+                    $.tpl.mobcharge_list( {
+                      code:200,
+                      data:[
+                        {
+                          detail_time:$.date_format('Y-m-d H:i:s'),
+                          time:$.date_format('Y-m-d'),
+                          phone_number:phone_number,
+                          much:fee_much.toString() + '.00',
+                          is_charged:0
+                        }
+                      ]
+                    } )
+                  );
+                  $('.never-charge').remove();
+                }
+              }else if(json.code==400){
+                bootbox.alert("您登陆状态已超时,请重新登陆.", function(){
+                  location.href="/User/Login";
+                });
+              }else{
+                bootbox.alert("提交充值失败, 服务器返回:[code:" + json.code + " / data:" + json.data + ']');
+              }
+              return false;
+            });
+         // }
+         // return result;
+        //});
+        return false;
+      });
+      return false;
+    }
+  })(window.jQuery);
+</script>

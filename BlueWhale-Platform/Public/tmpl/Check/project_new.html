@@ -1,0 +1,331 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<link href="__PUBLIC__/site/Content/grumble.css" rel="stylesheet"/>  
+<style type="text/css">
+    header {
+        *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150);
+    }
+    #upload{ 
+        font-size:12px; 
+        overflow:hidden; 
+        position:absolute;
+    } 
+    #file{ 
+        position:absolute; 
+        z-index:100; 
+        margin-left:-180px; 
+        font-size:60px;
+        opacity:0;
+        filter:alpha(opacity=0); 
+        margin-top:-5px;
+    } 
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+
+<block name="custom_content" >
+
+<if condition="$edit neq 1" >
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Check">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/Check">项目派息</a></li>
+                        <li><a href="/Check/Project/manager">项目管理</a></li>
+                        <li class="active"><a href="#">项目发布</a></li> 
+                        <li><a href="/Check/Project/attachment">项目附件</a></li>
+                        <li><a href="/Check/Project/period">周期调整</a></li>
+                         <li><a href="/Check/Project/transfer">债权协议</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+<!--end: Sub-nav -->
+</if>
+
+
+<!--start: Container -->
+<div class="container">
+    <div class="row">
+        <if condition="$edit neq 1" >
+        <!--start: Span2 -->
+        <aside class="span2" role="menu">
+        <ul class="nav nav-tabs nav-stacked" id="message_type_list">
+            <li><a href="#"><b>正常项目</b></a></li>
+            <li><a href="/Check/Project/add">秒标项目</a> </li>
+        </ul>
+        </aside>
+        </if>
+        <!--end: Span2 -->
+        <!--start: Span10 -->
+        <div class="span10">
+            <div class="widget ">
+                <div class="widget-content payment-account" style="padding-bottom: 15px;">
+                    <if condition="$edit eq 1" >
+                    <h3>修改项目</h3>
+                    <else />
+                    <h3>添加项目</h3>
+                    </if>
+                    <font color=red></font>
+                    <hr />
+
+                    <dl class="dl-horizontal" 　style="width:200px;">
+                        <present name="result">
+                        <h1> {$result} !!!!!! <a href=""> 返回</a></h1>
+                        <else />
+                        <table style="margin:0 auto; float:left;">
+                            <form action="/Check/Project/addnew" method="POST" id="alipay" novalidate="novalidate">
+                                <input type="hidden" name="project_token" value="{$Think.session.project_token}" />
+                                <input type="hidden" name="project_token_time" value="{$Think.session.project_token_time}" />
+                                <tbody>
+                                    <tr>
+                                        <td colspan="10"> 项目名称： </td>
+                                        <td> <input name="title" type="text" style="width:400px;" value="{$info.title}" /> </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="10"> 项目编号： </td>
+                                        <td> <input name="pro_id" type="text" id="pro_id" style="width:400px;" value="{$info.pro_id}" onclick="makeproid();"/> 
+                                          <div style="display:none;" id='showproid'>
+                                            <select name='projecttype' id='projecttype' onchange="makeproid();">
+                                              <option value='ZY'>自营</option>
+                                              <option value='HZ'>合作</option>
+                                            </select>
+
+                                            <select name='moneytype' id='moneytype' onchange="makeproid();">
+                                              <option value='CD'>车贷</option>
+                                              <option value='FD'>房贷</option>
+                                              <option value='DB'>担保</option>
+                                            </select>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="10"> VIP项目?： </td>
+                                        <td> <input name="pro_vip" type="checkbox" value="1" <if condition="$info.s_vip eq 1">checked</if> />VIP  </td>
+                                      </tr>
+                                    <tr>
+                                        <td colspan="10"> 项目类型： </td>
+                                        <td align="left" style="background-color: rgb(255, 255, 255); height:30px; line-height:30px;">
+                                            <input name="pro_type" type="radio" value="20" <if condition="$info.pro_type eq 20">checked</if> > 担保认证标 &nbsp;
+                                            <input name="pro_type" type="radio" value="19" <if condition="$info.pro_type eq 19">checked</if> > “小担当”认证标 &nbsp;
+                                            <input name="pro_type" type="radio" value="18" <if condition="$info.pro_type eq 18">checked</if> > 抵押认证标 &nbsp;
+                                            <input name="pro_type" type="radio" value="17" <if condition="$info.pro_type eq 17">checked</if> > 信用认证标 &nbsp;
+                                            <input name="pro_type" type="radio" value="16" <if condition="$info.pro_type eq 16">checked</if> > 实地认证标 &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10"> 项目借款人： </td>
+                                        <td> <select name="borrower_id" id="borrower_id">
+                                                <option selected="selected" value="">=请选择项目借款人=</option>
+                                                <option value="34" <if condition="$info.borrower_id eq 34">selected </if>>宋站平</option>
+                                                <option value="33" <if condition="$info.borrower_id eq 33">selected </if>>王明玉</option>
+                                                <option value="32" <if condition="$info.borrower_id eq 32">selected </if>>陈印权</option>
+                                                <option value="31" <if condition="$info.borrower_id eq 31">selected </if>>董希文</option>
+                                                <option value="30" <if condition="$info.borrower_id eq 30">selected </if>>郑洪水</option>
+                                                <option value="29" <if condition="$info.borrower_id eq 29">selected </if>>杨佳</option>
+                                                <option value="28" <if condition="$info.borrower_id eq 28">selected </if>>沈军</option>
+                                                <option value="27" <if condition="$info.borrower_id eq 27">selected </if>>徐珊</option>
+                                                <option value="26" <if condition="$info.borrower_id eq 26">selected </if>>孙义洲</option>
+                                                <option value="25" <if condition="$info.borrower_id eq 25">selected </if>>薛现连</option>
+                                                <option value="24" <if condition="$info.borrower_id eq 24">selected </if>>张继峰</option>
+                                                <option value="23" <if condition="$info.borrower_id eq 23">selected </if>>张秀凤</option>
+                                                <option value="22" <if condition="$info.borrower_id eq 22">selected </if>>傅凯</option>
+                                                <option value="21" <if condition="$info.borrower_id eq 21">selected </if>>郑阶军</option>
+                                                <option value="20" <if condition="$info.borrower_id eq 20">selected </if>>杜娟</option>
+                                                <option value="19" <if condition="$info.borrower_id eq 19">selected </if>>北京乾道融投投资管理中心（有限合伙）</option>
+                                                <option value="18" <if condition="$info.borrower_id eq 18">selected </if>>陈凤玲</option>
+                                                <option value="17" <if condition="$info.borrower_id eq 17">selected </if>>宁德：崔兴源</option>
+                                                <option value="16" <if condition="$info.borrower_id eq 16">selected </if>>宁德：陈清增</option>
+                                                <option value="15" <if condition="$info.borrower_id eq 15">selected </if>>宁德中资投资有限公司</option>
+                                                <option value="14" <if condition="$info.borrower_id eq 14">selected </if>>陈厚平：上海舟航工贸发展有限公司</option>
+                                                <option value="13" <if condition="$info.borrower_id eq 13">selected </if>>廊坊市欣坊房地产开发有限公司</option>
+                                                <option value="12" <if condition="$info.borrower_id eq 12">selected </if>>上海铎捷汽车销售咨询服务有限公司</option>
+                                                <option value="11" <if condition="$info.borrower_id eq 11">selected </if>>张XX：上海某装潢公司</option>
+                                                <option value="10" <if condition="$info.borrower_id eq 10">selected </if>>张杰：上海同昌生物医药科技有限公司</option>
+                                                <option value="9"  <if condition="$info.borrower_id eq 9">selected </if>>林锋：按摩器厂</option>
+                                                <option value="8"  <if condition="$info.borrower_id eq 8">selected </if>>刘璨：服装店</option>
+                                                <option value="7"  <if condition="$info.borrower_id eq 7">selected </if>>蔡万虎：汽车保养维修项目</option>
+                                                <option value="6"  <if condition="$info.borrower_id eq 6">selected </if>>吴菲菲：上海荻亚国际货物代理运输公司</option>
+                                                <option value="5"  <if condition="$info.borrower_id eq 5">selected </if>>测试借款公司</option>
+                                                <option value="4"  <if condition="$info.borrower_id eq 4">selected </if>>借款人</option>
+                                        </select> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10"> 项目担保人： </td>
+                                        <td> 
+                                            <select name="bondsman_id" id="bondsman_id">
+                                                <option selected="selected" value="">=请选择项目担保人=</option>
+                                                <option value="12" <if condition="$info.bondsman_id eq 12"> selected </if> >兴业投资担保公司</option>
+                                                <option value="11" <if condition="$info.bondsman_id eq 11"> selected </if> >河北融投担保集团有限公司</option>
+                                                <option value="10" <if condition="$info.bondsman_id eq 10"> selected </if> >无</option>
+                                                <option value="9"  <if condition="$info.bondsman_id eq 9"> selected </if> >河北融投中瑞担保有限公司</option>
+                                                <option value="8"  <if condition="$info.bondsman_id eq 8"> selected </if> >上海铎臻汽车销售有限公司</option>
+                                                <option value="7"  <if condition="$info.bondsman_id eq 7"> selected </if> >宁德市创银金融服务有限公司</option>
+                                                <option value="6"  <if condition="$info.bondsman_id eq 6"> selected </if> >西安海联典当行有限公司</option>
+                                                <option value="5"  <if condition="$info.bondsman_id eq 5"> selected </if> >上海威派投资咨询有限公司</option>
+                                            </select> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10"> 第三方标识： </td>
+                                        <td>
+                                            <select name="3rd_source" id="3rd_source">
+                                                <option selected="selected" value="0">=请选择第三方标识=</option>
+                                                <option value="0">无</option>
+                                                <foreach name="third_list" item="v">
+                                                <option value="{$key}" <if condition="$info.3rd_source eq $key" > selected </if> >{$v}标识</option>
+                                                </foreach>
+                                            </select>
+                                        </td>
+                                      </tr>
+                                        <tr>
+                                        <td colspan="10"> 借款类型： </td>
+                                        <td>
+                                            <select name="borrower_type" id="borrower_type">
+                                              <option selected="selected" value="0">=请选择借款类型=</option>
+                                                <foreach name="borrower_list" item="v">
+                                                <option value="{$key}" <if condition="$info.borrower_type eq $key" > selected </if> >{$v}</option>
+                                                </foreach>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="10"> 借款人： </td>
+                                        <td> <input name="borrower" type="text" value="{$info.borrower}" style="width:100px;"></td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 省份： </td>
+                                        <td> <input name="province" type="text" value="{$info.province}" style="width:100px;"></td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 城市： </td>
+                                        <td> <input name="city" type="text" value="{$info.city}" style="width:100px;"></td>
+                                    </tr> 
+                                    <tr> <td colspan="11"> <hr /> </td> </tr> 
+                                    <tr>
+                                        <td colspan="10"> 募集总金额： </td>
+                                        <td> <input name="pro_fund" type="text" value="{$info.pro_fund}" style="width:30px;">万元 </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 年化收益： </td>
+                                        <td> <input name="pro_rate" type="text"  style="width:30px;" value="{$info.pro_rate}" >% </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 投资限额： </td>
+                                        <td> <input name="max_fund" type="text"  style="width:60px;" value='{$info.max_fund}' >元 （0为不限制每个用户的投资额度）</td>
+                                    </tr>  
+                                    <tr> <td colspan="11"> <hr /> </td> </tr>
+
+                                    <tr>
+                                        <td colspan="10"> 募集截止时间： </td>
+                                        <td> 
+                                            <input name="time_start" type="text" value="{$time_start}" /> ~
+                                            <input name="time_end" type="text" value="{$time_end}" />  
+                                            <font color=red >募集期开始，项目会自动上线</font></td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 本金返还时间： </td>
+                                        <td> <input name="time_back" type="text" value="{$time_back}" /> <font color=red >这一天系统会返还本金</font></td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 项目还款方式： </td>
+                                        <td align="left" style="background-color: rgb(255, 255, 255);">
+                                            <input name="refund_type" type="radio" value="1" <if condition="$info.refund_type eq 1"> checked </if> > 一次性还本付息&nbsp;
+                                            <input name="refund_type" type="radio" value="2" <if condition="$info.refund_type eq 2"> checked </if> > 按日计息，按月付息，到期还本&nbsp;
+                                            <!-- 暂不支持以下类型
+                                            <input name="refund_type" type="radio" value="3"> 按日计息，按季付息，到期还本&nbsp;
+                                            <input name="refund_type" type="radio" value="4"> 按日计息，按月等额等息&nbsp;
+                                            <input name="refund_type" type="radio" value="5"> 按日计算，按季等额本息&nbsp;
+                                            -->
+                                        </td>
+
+                                    </tr>  
+                                    <tr> <td colspan="11"> <hr /> </td> </tr>
+
+                                    <tr>
+                                        <td colspan="10"> 项目说明： </td>
+                                        <td> <textarea id="info_value" class="textarea" name="content" rows="20" style="width:700px;"> {$info.content}</textarea> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 资金用途： </td>
+                                        <td> <textarea  class="textarea" name="fund_use" rows="15" style="width:700px;"> {$info.fund_use}</textarea> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 还款来源： </td>
+                                        <td> <textarea  class="textarea" name="fund_from" rows="10" style="width:700px;"> {$info.fund_from}</textarea> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 风险保障措施： </td>
+                                        <td> <textarea  class="textarea" name="safeguard" rows="10" style="width:700px;"> {$info.safeguard}</textarea> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 实际借款人信息： </td>
+                                        <td> <textarea  class="textarea" name="real_bor_info" rows="10" style="width:700px;"> {$info.real_bor_info}</textarea> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 担保人信息： </td>
+                                        <td> <textarea  class="textarea" name="guarantee_info" rows="10" style="width:700px;"> {$info.guarantee_info}</textarea> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="10"> 添加人： </td>
+                                        <td> {$info.account} - {$user.real_name} 
+                                            <if condition="$edit eq 1" >
+                                            <input type="hidden" name="project_id" value="{$info.id}" />
+                                            <input type="hidden" name="ispass" value="{$info.ispass}" />
+                                            <input type="hidden" name="editor" value="{$info.account} - {$user.real_name} " />
+                                            </if>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <if condition="$edit eq 1" >
+                                            <br><input type="submit" value="保存" class="btn btn-primary btn-big" style="margin-top:-10px;">
+                                            <else />
+                                            <br><input type="submit" value="添加到项目池" class="btn btn-primary btn-big" style="margin-top:-10px;">
+                                            </if>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </form>
+                        </table>
+                        </present>
+                    </dl>
+                </div>
+            </div>
+        </div><!-- 顶部项目信息　-->
+    </div>
+    <!--end: Span10 -->
+</div>
+<!--end: Container -->
+
+</block>
+
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+  $('.textarea').wysihtml5();
+</script>
+<script type="text/javascript">
+  function makeproid()
+  {
+    var pro_id = "YLB"; 
+    var status  =    $("#showproid").show();
+    var projecttype = $("#projecttype").val();
+    var moneytype = $("#moneytype").val();
+    $("#pro_id").val(pro_id+"-"+projecttype+"-"+moneytype+"-0"+{$projectid});
+  }
+</script>
+  </block>
+

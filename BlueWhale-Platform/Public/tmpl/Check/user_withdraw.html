@@ -1,0 +1,222 @@
+<extend name="./Public/admin_base.html" />
+<block name="title"><title>永利宝-创新型PCP投资平台，低风险、稳回报</title></block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+
+<block name="custom_top_css" >
+<style type="text/css">
+    header { *margin-bottom: 0; border-top: 4px solid rgb(150, 150, 150); }
+    #table-responsive-1 td:nth-of-type(1):
+    #table-responsive-1 td:nth-of-type(2):
+    #table-responsive-1 td:nth-of-type(3):    
+    #table-responsive-1 td:nth-of-type(4):
+
+</style>
+</block>
+
+<block name="custom_top_js" ></block>
+ 
+<block name="custom_content" >
+
+<!--start: Sub-nav -->
+<div class="sub-nav" sup="Recharge">
+    <div class="sub-nav-inner">
+        <div class="container">
+            <!--start: Navigation -->
+            <div class="navbar navbar-inverse">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/Check/Alipay">支付宝充值记录</a></li>
+                        <li class="active"><a href="#">提现管理</a></li>
+                        <li><a href="/Check/User/find">平台寻人</a></li>
+                        <li><a href="/Check/User/message">通知中心</a></li>
+                        <li><a href="/Check/User/mobCharge">手机充值</a></li>
+						<li><a href="/Check/User/projectNotify">客服中心</a></li>
+						<li><a href="/Check/User/recommend">人人理财师</a></li>
+                        <li><a href="/Check/User/fixMoneyLog">神奇补账</a></li>
+                        <li><a href="/Check/User/creditAbuse">套现稽查</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--end: Navigation -->
+        </div>
+    </div>
+</div>
+
+<!--end: Sub-nav -->
+
+<!--start: Container -->
+<div class="container">
+    <div class="row">
+        <!--start: Span -->
+        <if condition="$result eq 1">
+            <h4><font color="blue">提现审核成功！</font></h4>
+        </if>
+        <aside class="span2" role="menu">
+            <ul class="nav nav-tabs nav-stacked" id="message_type_list">
+            <foreach name="menu" item="v">
+                <li class="">
+                    <a href="?d={$v.date}">
+                        <span class="pull-left"><span class="message_count"> {$v.date}&nbsp;</span></span>
+                        <span class="badge badge-success" style="padding:2px 4px;"><span class="message_count">&times;{$v.total}</span></span>&nbsp;
+                        <if condition="$v.wait GT 0">
+                            <span class="badge badge-warning" style="padding:2px 4px;"><span class="message_count">&times;{$v.wait}</span></span>
+                        </if>
+                    </a>
+                </li>
+            </foreach>
+            </ul>
+        </aside>
+        <div class="span10">
+            <table class="table table-bordered" >
+                <thead>
+                    <tr>
+                        <th style="width: 20px;">订单</th>
+                        <th style="width: 40px;">姓名(ID)</th>
+                        <th style="width: 50px;">提现金额</th>
+                        <th style="width: 300px;">提现银行 ,开户行城市,开户行地址,提现账号--<a href="?imp=1&d={$d}" target="_blank">导出待提现Excel</a></th>
+                        <th style="width: 100px;">申请时间</th>
+                        <th style="width: 120px;">操作 <a href="?d={$d}&op=mass" onclick="return confirm('确认状态为处理中的都已经提现完成了吗?')">全处理成功</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <foreach name="list" item="v">
+                    <tr>
+                        <td>{$v.id}</td>
+                        <td>{$v.real_name} #{$v.accountId}</td>
+                        <td>{$v.money} </td>
+                        <td> {$v.bankName} ,
+                            {$v.bankcity} ,
+                            {$v.bankaddtress} ,
+                            {$v.bankaccount}</td>
+                        <td>{$v.reg_time|date="Y/m/d H:i:s", ###}</td>
+                        <td>
+                            <!-- 通联支付处理中 -->
+                            <if condition="$v.allinpay_status eq 1" >
+                               第三方正在处理中 
+                               <a name="allinpay_query" role="button" class="btn btn-info" href="/Check/User/withdrawAllinpay?type=1&sn={$v.req_sn}" >查询</a> 
+                            <else />
+
+                                <!-- 提现情况 -->
+                                <switch name="v.status" >
+                                <case value="0" >
+
+                                    <!-- 通联支付处理失败 -->
+                                    <if condition="$v.resp_msg neq ''">
+                                    <span class="data-tips" data-content="通联单号：<br />{$v.req_sn} <br /><br />提交时间：{$v.submit_time|date='Y-m-d H:i:s', ###}<br /><br /> 返回信息：<br />{$v.resp_msg}" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">
+                                            <i class="icon-info-sign icon-red"></i>
+                                            自动已失败/打回
+                                        </span>
+                                    <else />
+                                        已失败/打回
+                                    </if>
+                                </case>
+
+                                <case value="1">
+                                <a href="?id={$v.id}" onclick="return confirm('确定手动提现成功了吗?')">提现</a> , 
+                                <a href="?back=1&bid={$v.id}" onclick="return confirm('确定要打回嗎?')">打回</a> , 
+                                <a name="autou" role="button" class="btn btn-warning" data-toggle="modal" href="#myModal" wid="{$v.id}" uid="{$v.accountId}" umoney="{$v.money}">自动</a> 
+                                </case>
+                                <case value="2" >已提现</case>
+                                <default />出问题了{$v.status}
+                                </switch>
+                            </if>
+                        </td>
+                    </tr>
+                    </foreach>
+                </tbody>
+            </table>
+            </div>
+    </div>
+</div>
+            <a href="#myModal" role="button" class="btn" data-toggle="modal">查看演示案例</a>
+             
+            <!-- Modal -->
+            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h2 id="myModalLabel">自动提现（通联支付）</h2>
+                <hr />
+                <h3>自动审计结果：<font name="u-result"></font></h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>操作</th>
+                                <th>金额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-table">
+                            <tr> <td>Mark</td> <td>Otto</td> <td>@TwBootstrap</td> </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn btn-primary" name='send-cmd' data-loading-text="正在打款...">发送打款命令</button>
+                </div>
+            </div>
+            <!-- end model -->
+</block>
+<block name="custom_bottom_js" >
+<script type="text/javascript">
+    $(function(){
+            var check_wid = 0;
+            $('a[name=autou]').click(function(){
+
+                var d_table  = $('#detail-table');
+                var withdraw =  parseFloat($(this).attr('umoney'));
+
+                d_table.html('');
+                $('font[name=u-result]').html('');
+
+                check_wid = $(this).attr('wid');
+                $.get("/Check/User/journal?id=" + $(this).attr('uid'), function(result){
+
+                    var money    = -1;  //初始为-1
+                    var check    = 0;
+                    var html_t   = '';
+                    $.each(result, function(i, c){
+                            switch(c.o)
+                            {
+                                case '1' : money = c.e; break;
+                                default : html_t += "<tr> <td>" + c.d + "</td> <td>" + c.i + "</td> <td>" + c.e + "</td> </tr>";
+                                check += parseFloat(c.e);
+                                break;
+                            }
+
+                    });
+
+                    check = check - withdraw;
+                    if(check < 0){
+                        $('font[name=u-result]').html('不正常(' + check + ')');
+                        $('font[name=u-result]').css("color","red");
+                    }
+                    else{
+                        $('font[name=u-result]').html('正常');
+                        $('font[name=u-result]').css("color","green");
+                    }
+                    d_table.html(html_t);
+                    });
+            });
+
+
+            $('button[name=send-cmd]').click(function(){
+                var btn = $(this)
+                btn.button('loading');
+                setTimeout(function(){
+                    btn.button('reset');
+                }, 3000); // I don'T know how to triger this function onlu if there is submit post requsting, so tmp using a setTimeout...
+                window.location.href="/Check/User/withdrawAllinpay?wid=" + check_wid;
+            });
+
+
+    });
+
+
+</script>
+</block>

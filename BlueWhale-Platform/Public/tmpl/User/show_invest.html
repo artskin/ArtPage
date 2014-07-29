@@ -1,0 +1,205 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">投资/收益记录</block>
+<block name="custom_top_css"><link href="/Public/static/style/ylb-ucenter.css" rel="stylesheet"/></block>
+<block name="custom_content">
+<!--start: breadcrumb -->
+<div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/">首页</a></li>
+            <li><a href="/User">个人中心</a></li>
+            <li class="active"><a href="">投资/收益</a></li>
+        </ol>
+</div>
+<!--end: breadcrumb -->
+<div class="container">
+<div class="ucenter clearfix">
+<aside class="col-xs-2 col-md-2 aside" sup="Account">
+    <div class="aside-body">
+        <dl class="box-shadow">
+            <include file="./Public/tmpl/User/aside-menu.html" keywords="side-menu-invest" />
+        </dl>
+    </div>
+</aside>
+<article class="col-xs-10 col-md-10 article">
+    <div class="article-body box-shadow">
+        <div class="padding-lg">
+        <!--start: Container -->
+            <!--
+            <ul class="pull-left">
+                <li><a href="/Fund/Activity">收支明细</a></li>
+                <li class="selected"><a href="/entity/Charge">充值记录</a></li>
+                <li><a href="/entity/Cash">提现记录</a></li>
+            </ul>
+            -->
+            <h2>投资/收益</h2>
+            <hr class="dashed">
+            <div class="tab-pro">
+                <ul class="nav nav-tabs">
+                    <li class="showinvest active"><a data-toggle="tab" href="#showinvest">投资记录</a></li>
+                    <li class="showearning"><a data-toggle="tab" href="#showearning">收益/回款</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="showinvest" class="tab-pane active">
+                        <table class="table table-hover border-solid" id="table-responsive-1">
+                            <thead>
+
+                            <tr>
+                                <th style="width: 100px">投资日期</th>
+                                <th style="width: 125px;">金额(元)</th>
+                                <th style="width: 530px;">项目名称</th>
+                                <th style="width: 100px">返本时间</th>
+                                <th style="width: 60px;" class="text-right">预计收益(元)</th>
+                                <th style="width: 160px;" class="text-right">相关协议</th>
+                                <!--<th style="width: 80px;">下载协议</th>
+                                <th style="width: 80px;">查看协议</th>-->
+                                <th style="width:60px;" class="text-right">详情</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <foreach name="list" item="v">
+                              <if condition="$v.invest_noview neq 1">
+
+                            <tr>
+                              <td>{$v.buy_time|date='Y-m-d', ###}</td>
+                              <td>{$v.affirm_moeny} 
+                              </td>
+                              <td><a href="/p/{$v.id}.html" target="_blank">{$v.title}</a>
+                                <if condition="$v.is_buy_transfer eq 1">
+                                <font color=red>(购买债权)</font>
+                                </if>
+                                <if condition="$v.is_sell_transfer eq 1">
+                                <a href="transfer?type=3"><font color=red><br>(转让债权&nbsp;成功:{$v.transferred_money})</font></a>
+                                </if>
+                                <if condition="$v.3rd_source eq 1">
+                                <span class="label label-info">尊选</span>
+                                </if>
+
+                                <if condition="$v.3rd_source eq 2">
+                                <span class="label label-info">橙旗</span>
+                                </if>
+                                <if condition="$v.3rd_source eq 3">
+                                <span class="label label-info">押车宝</span>
+                                </if>
+
+                              </td>
+                                <td> {$v.refund_end|date='Y-m-d', ###}</td>
+                                <td align="right">{$v.earnings_money}</td>
+                                <td class="text-right"> <if condition="$v.isDownload eq 1">
+                                    <a href="download?id={$v.projectId}">正式</a>
+                                    <else />
+                                    <span>扫描中</span>
+                                </if>
+                                    <a href="/xieyi/{$v.xieyi}">原始</a>
+                                    <if condition="$v.transfer_status eq 0">
+                                        <a href="showagreement?ownerid={$v.ownerId}&projectid={$v.projectId}&uid={$v.buyid}">债权</a>
+                                    </if></td>
+                                <td class="text-right">
+                                  <a href="javascript:;" title="查看详细" rel="{$v.projectId}" data-buytime="{$v.buy_time}" data-projectTitle="{$v.title}" class="view-detail">查看</a>
+                                </td>
+                              </tr>
+                              </if>
+                            </foreach>
+
+                            </tbody>
+                        </table>
+
+                        <include file="./Public/page/pager_invest.html" />
+                    </div>
+
+                    <div id="showearning" class="tab-pane">
+                        <table class="table table-hover border-solid">
+                            <thead>
+                            <tr>
+                                <th style="width: 180px">日期</th>
+                                <th style="width: 180px;" class="text-left">已经回款(元)</th>
+                                <th style="width: 180px;" class="text-left">待收回款(元)</th>
+                                <th style="width: 100px;" class="text-right">总金额(元)</th>
+                                <th style="width: 60px;" class="text-right">详细</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="earnings_list" item="v">
+                                <tr>
+                                    <td>{$v.btime|date='Y年m月', ###} </td>
+                                    <td class="text-left">{$v.money}</td>
+                                    <td class="text-left">{$v.waitmoney}</td>
+                                    <td class="text-right">{$v.totalmoney}</td>
+                                    <td class="text-right"><a href="javascript:;" title="查看详细" rel="{$v.btime}" data-projectTitle="{$v.btime|date='Y年m月', ###}" class="view-earnings">查看</a></td>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</article>
+</div>
+</div>
+    <div id="artBox-project-con"></div>
+</block>
+
+<block name="custom_bottom_js" >
+<script src="/Public/static/js/ylb.ui.js"></script>
+<script type="text/javascript">
+    (function($){
+        var hf = window.location.href;
+        var tabActive = hf.substring(hf.lastIndexOf('=')+1,hf.length);
+        if(/\=/.test(location.search)){
+            $("."+tabActive).addClass('active').siblings().removeClass('active');
+            $("#"+tabActive).addClass('active').siblings().removeClass('active');
+        }
+    })(window.jQuery);
+    $(function(){
+        $(".view-detail").click(function(){
+          var projectTitle = $(this).attr('data-projecttitle');
+          var buy_time = $(this).attr('data-buytime');
+          $.getJSON("showearningslist?xx={$Think.get.xx}&projectid="+$(this).attr('rel')+"&buy_time="+buy_time, function(json){
+
+                var listDetail ='';
+                for(var i=0;i<json.item.length;i++){
+                  if(json.item[i].is_sell_transfer){
+
+                    listDetail += "<tr><td></td><td>"+json.item[i].status+"</td><td>"+json.item[i].money+"</td></tr>";
+                  }else{
+                    listDetail += "<tr><td>"+json.item[i].time+"</td><td>"+json.item[i].status+"</td><td class='text-right'>"+json.item[i].money+"</td></tr>";
+                  }
+                }
+                listDetail += "<tr><td>&nbsp;</td><td>收益合计:</td><td class='text-right'>"+json.totalmoney+"</td></tr>";
+                var projectDetail = "<table class='table'><thead><tr><th>时间</th><th>操作类型</th><th class='text-right'>金额(元)</th></tr></thead><tbody class='project-detail-list'>"+listDetail+"</tbody></table>";
+
+                $("#artBox-project-con").hide().html(projectDetail);
+                oShow('#artBox-project-con',500,projectTitle);
+            });
+        });
+
+        //earnings
+
+        $(".view-earnings").click(function(){
+            var projectTitle = $(this).attr('data-projecttitle');
+            $.getJSON("showearningsdetails?xx={$Think.get.xx}&time="+$(this).attr('rel'), function(json){
+                var listDetail ='';
+                for(var i=0;i<json.item.length;i++){
+                    listDetail += "<tr><td>"+json.item[i].showtime+"</td><td>"+json.item[i].status+"</td><td>"+json.item[i].title+"</td><td class='text-right'>"+json.item[i].money+"</td></tr>";
+                }
+                listDetail += "<tr><td>&nbsp;</td><td></td><td align='right'>合计:</td><td class='text-right'>"+json.totalmoney+"</td></tr>";
+                var projectDetail = "<table class='table'><thead><tr><th>时间</th><th>操作类型</th><th>项目详情<th class='text-right'>金额(元)</th></tr></thead><tbody class='project-detail-list'>"+listDetail+"</tbody></table>";
+
+                $("#artBox-project-con").hide().html(projectDetail);
+                oShow('#artBox-project-con',800,projectTitle+"回款详情");
+            });
+        });
+
+
+
+
+
+    });
+    $("#CaptchaImage").click(function() {
+        //console.log('y');
+        $("#CaptchaImage").attr("src", "/User/auth/verify/" + 1);
+    });
+</script>
+</block>

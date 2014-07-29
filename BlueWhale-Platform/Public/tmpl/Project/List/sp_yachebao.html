@@ -1,0 +1,209 @@
+<extend name="./Public/tmpl/index_base.html" />
+<block name="title">押车宝专区</block>
+<block name="keywords"><meta name="keywords" content="永利宝、P2P" /></block>
+<block name="description"><meta name="description" content="永利宝：国内PCP概念首创者，致力于为睿智的投资人提供低风险、稳回报的网络投资平台。" /></block>
+<block name="author"><meta name="author" content="永利宝" /></block>
+<block name="custom_top_css" >
+<style type="text/css"></style>
+</block>
+<block name="custom_top_js" >	</block>
+<block name="custom_content" >
+
+<div class="banner-zone" id="banner-ycb">
+</div>
+
+<div class="container">
+
+    <!-- end:Row -->
+    <div class="row">
+        <article class="col-md-9 project-layer">
+        <section class="corp-intro">
+            <h3 class="title3">公司简介</h3>
+            <hr class="dashed" />
+
+            <h4 class="important">押车宝：</h4>
+            <p>　　押车宝是知名的汽车抵押借贷咨询服务机构，提供二手车抵押借款，评估咨询、汽车变现、汽车质押借款、融资借款咨询服务，客户可用机动车辆的所有权为抵押，获得便利快捷的短期融资，期限 灵活，费率合理。 </p>
+            <p>　　公司拥有自营的二手车交易公司和专业的车辆保管仓库。保证您的合理贷款额度及车辆安全。</p>
+
+            <h4 class="important">移交类 - 抵押借款咨询服务：</h4>
+            <p>　　客户车辆办理抵押登记手续后须存放至指定车库保管。借款额度可高达车辆估值的150%。</p>
+        </section>
+        <h3 class="title3">合作项目</h3>
+        <hr class="dashed" />
+
+        <foreach name="list" item="vo" >
+        <div class="well project-summary">
+            <if condition="$vo.status gt 1">
+            <div class="bid-completed-stamp"></div>
+            </if>
+
+            <div class="row">
+                <div class="col-xs-9 col-md-9">
+                    <h4 class="well-title">
+                        <a href="/p/{$vo.id}.html">{$vo.title}</a>
+                        <small class="well-small"> {$vo.str_refund_type}</small>
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <if condition="$vo.fund_process lt 100">
+                            <div class="col-xs-6 col-md-5">
+                                <div class="row project-progress">
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar" style="width: {$vo.fund_process}%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-md-2">
+                                <div class="row">&nbsp;&nbsp;{$vo.fund_process}%</div>
+                            </div>
+                            <div class="col-xs-4 col-md-5 project-progress-desc">
+                                <div class="row">已投资金额 {$vo.str_funded_money}元</div>
+                            </div>
+                            <else />
+                            <div class="col-xs-6 col-md-5">
+                                <div class="row project-progress">
+                                    <div class="progress progress-striped">
+                                        <div class="progress-bar" style="width: {$vo.fund_process}%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-md-2">
+                                <div class="row">&nbsp;&nbsp;100%</div>
+                            </div>
+                            <div class="col-xs-4 col-md-5 project-progress-desc">
+                                <div class="row">投标已完成，投资金额 <strong class="important">{$vo.int_pro_fund}</strong> 万元</div>
+                            </div>
+                            </if>
+                        </div>
+                    </div>
+                    <div class="data-list clearfix">
+                        <table class="table-bordered col-xs-12 col-md-12">
+                            <tr>
+                                <th>投资金额</th>
+                                <th>可投金额</th>
+                                <th>年化收益</th>
+                                <th>投资期限</th>
+                            </tr>
+                            <tr>
+                                <td><strong> {$vo.int_pro_fund}</strong> 万</td>
+                                <td><strong class="important">{$vo.str_fund_left_money}</strong> 元</td>
+                                <td><strong class="important data-tips" data-content="可以使用年化收益率计算器（本页面底部）来计算您的收益。" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">
+                                        {$vo.int_pro_rate}%
+                                        <i class="icon-info-sign icon-gray"></i>
+                                </strong></td>
+                                <td>
+                                    <span class="data-tips" data-content="该项目还款日期为 {$vo.str_refund_end}" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-html="true">
+                                        <strong>{$vo.days}</strong> 天
+                                        <i class="icon-info-sign icon-gray"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-md-3 project-summary-bin">
+                    <div class="project-tags">
+                        <switch name="vo.status" >
+                        <case value="1" break="1">
+                        <span class="label label-success">{$vo.str_status}</span>
+                        </case>
+                        <case value="2" break="2">
+                        <span class="label label-warning">{$vo.str_status}</span>
+                        </case>
+                        <case value="3" break="3">
+                        <span class="label label-warning">{$vo.str_status}</span>
+                        </case>
+                        <case value="4" break="4">
+                        <span class="label ">{$vo.str_status}</span>
+                        </case>
+                        <default />
+                        <span class="label label-info">项目准备中</span>
+                        </switch>
+
+                        <span class="label label-default tag" data-toggle="popover" data-placement="bottom"
+                            data-content="{$vo.str_pro_type_info}"
+                            data-trigger="hover" data-html="true">
+                            <switch name="vo.pro_type" >
+                            <case value="16"><i class="glyphicon glyphicon-screenshot"></i></case>
+                            <case value="17"><i class="glyphicon glyphicon-bookmark"></i></case>
+                            <case value="18"><i class="glyphicon glyphicon-check"></i> </case>
+                            <case value="19"><i class="glyphicon glyphicon-leaf"></i> </case>
+                            <case value="20"><i class="glyphicon glyphicon-user"></i></case>
+                            </switch>
+                            {$vo.str_pro_type}
+                        </span>
+                    </div>
+                    <div class="text-info">
+                        <em class="gray"> 今天投资，明天就有利息 </em>
+                    </div>
+                    <div class="btn-block">
+                        <if condition="$vo.status lt 2">
+                        <a class="btn btn-lg-per90 btn-primary" href="/p/{$vo.id}.html">我要投资</a>
+                        <else />
+                        <a class="btn btn-lg-per90 btn-default" href="/p/{$vo.id}.html">查看详情</a>
+                        </if>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </foreach>
+
+<!-- page:start -->  
+<div class="pagination-centered">
+    <ul class="pagination pagination-sm">
+
+        <if condition=" $page_curr gt 1 "> 
+            <li><a href="/Project/slist/yachebao?p={$page_curr-1}">上一页</a></li>
+            <else /> <li class="disabled"><a href="#">上一页</a></li>
+            </if>
+            <for start="1" end="$page_count+1" step="1" name="i" >  
+            <if condition="$i neq $page_curr">   
+            <li><a href="/Project/slist/yachebao?p={$i}">{$i}</a></li>     
+            <else />    
+            <li class="active"><a href="#">{$i}</a></li>
+            </if>
+
+            </for>
+            <if condition="$page_count gt $page_curr"> 
+            <li><a href="/Project/slist/yachebao?p={$page_curr+1}">下一页</a></li>
+            <else />
+            <li class="disabled"><a href="#">下一页</a></li>
+        </if>
+    </ul>
+</div>
+<!-- page:end -->
+        </article>
+
+        <aside class="col-md-3 side">
+        <br />
+        <br />
+        <include file="./Public/tmpl/anno.html" />
+
+        <div class="Ranking">
+            <!--
+            <h3>投标情况</h3>
+            <hr class="dashed" />
+            <div class="investmentedList">
+                <div id="investments_area" style="display:none;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>投资人</th>
+                                <th style="text-align: right">投标金额</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div style="text-align:right;" id="more_investment"><a class="no-link" href="#"> 显示更多</a></div>
+                </div>
+                <p id="no_investment" style="display:none;">该项目暂无投标，抢个头彩吧！</p>
+            </div>
+            -->
+        </div>
+
+        </aside>
+    </div>
+</div>
+
+</block>
