@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>AutoStatic</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<!-- build:css styles/vendor.css -->
+	<!-- bower:css -->
+	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+	<!-- endbower -->
+	<!-- endbuild -->
+	<!-- build:css(.tmp) styles/ylblogo.css -->
+	<link rel="stylesheet" href="styles/ylblogo.css">
+	<!-- endbuild -->
+	<!-- build:css(.tmp) styles/master.css -->
+	<link rel="stylesheet" href="styles/master.css">
+	<!-- endbuild -->
+    <style type="text/css">
+        .ddd{border-radius: 50%;background: #ccc;width: 200px;height: 200px;padding: 14px;overflow:hidden;
+            word-break:break-all;
+            word-wrap:break-word;
+        }
+    </style>
+</head>
+<body>
+    <!--[if lt IE 10]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container">
+        <h2>永利宝Logo</h2>
+        <hr/>
+        <div class="ylb-logo">
+            <i class="squares"></i>
+            <b class="border-lt"></b>
+            <b class="border-lr"></b>
+            <b class="border-br"></b>
+            <b class="border-bl"></b>
+        </div>
+        <div class="ylb-logo-title">
+            <h1>永利宝</h1>
+            <span>http://www.yonglibao.com</span>
+        </div>
+    </div>
+    <div class="ddd">
+        112 212s dsadafdfdgdgd ghgftr1 121212sd sadafdfdgdgdghgf tr1121212 sdsa da fdfdgd gdghg ftr1121212 sdsadafdf dgdgdghgftr11 21212sd sadafd fdgd gdgh gf tr 1121212 sdsadafd 
+    </div>
+    <div id="time">3</div>
+    <!-- bower:js -->
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- endbower -->
+    <script type="text/javascript">
+        //var timeNum = 10;
+        var timeNum = 10;
+        function delayURL(url) {
+            var domTime = document.getElementById("time");
+            domTime.innerHTML =timeNum;
+            var href = url;
+            console.log(url);
+            setTimeout("delayURL()",1000);
+            timeNum--;
+            if (timeNum == 0) {
+                window.opener = null;
+                window.location.href = href;
+            }
+        }
+        //delayURL("/error/html");
+        //delayURL("time",10,"url");
+
+    </script>
+</body>
+</html>

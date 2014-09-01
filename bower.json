@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-	"jquery": "~1.11.1",
+    "jquery": "~1.11.1",
     "bootstrap": "~3.2.0",
     "animate.css": "*",
     "mocha": "*",
-    "bxSlider": "4.1.2"
+    "bxSlider": "4.1.2",
+    "pure": "~0.5.0",
+    "underscore": "~1.7.0",
+    "backbone": "~1.1.2"
   },
   "devDependencies": {}
 }

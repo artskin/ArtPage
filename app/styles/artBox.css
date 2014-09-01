@@ -17,3 +17,25 @@
 *html,*html body{background:url(about:blank) fixed;height:100%;}
 *html .artBox-overlay{position:absolute;top:expression(documentElement.scrollTop + documentElement.clientHeight - this.offsetHeight);}
 /*visibility:hidden;-*/
+
+
+
+.Dropdown-caretInner, .Dropdown-caretOuter {
+    display: inline-block;
+    left: 0;
+    margin-left: -1px;
+    position: absolute;
+    top: -10px;
+}
+.Dropdown-caretOuter {
+    border-bottom: 10px solid rgba(0, 0, 0, 0.1);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+.Dropdown-caretInner {
+    border-bottom: 9px solid rgba(255, 255, 255, 0.98);
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    left: 1px;
+    top: 1px;
+}

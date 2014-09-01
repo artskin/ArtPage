@@ -26,6 +26,7 @@
     "grunt-contrib-less": "*",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.6.1",
+    "grunt-ejs-static": "^0.4.3",
     "grunt-mocha": "^0.4.11",
     "grunt-newer": "~0.7.0",
     "grunt-rev": "~0.1.0",

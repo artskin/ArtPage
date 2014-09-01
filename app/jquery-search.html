@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜索高亮标注</title>
+<script type="text/javascript" src="http://www.css88.com/wp-includes/js/jquery/jquery.js?ver=1.11.0"></script>
+<script type="text/javascript" src="http://www.css88.com/demo/highlight/jquery.highlight.js"></script>
+<script type="text/javascript" src="js/searchbox.js"></script>
+<link href="http://css.sodao.com/dialog/jquery.dialog.css" rel="stylesheet" type="text/css" />
+<link href="http://css.sodao.com/home/css/reset.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+span.highlight { color:#F00; font-weight:700
+    }
+</style>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$('#fancy-input').keyup(function(){
+		$('#fancy-text').highLight();
+		if($(this).val() != '') {
+			$('#fancy-text').highLight($(this).val());
+		}
+	});
+	$('#link').toggle(function(event){
+		$('#fancy-text').highLight();
+		$('#fancy-text').highLight("mode");
+		//event.preventDefault();
+	},function(event){
+		$('#fancy-text').highLight();
+		//event.preventDefault();
+	});
+
+	$('input.search').searchbox();
+	$('input.search').searchbox({
+	  url: 'http://localhost:9010/data.txt',
+	  param: 'q',
+	  dom_id: '#thumbnails',
+	  delay: 250,
+	  loading_css: '#spinner'
+	})
+});
+</script>
+</head>
+<body>
+<input type='text' class="search"/>
+<div id="thumbnails">11</div>
+<div id="spinner">222</div>
+<div></div>
+<div style="margin:10px">输入搜索词：<input type='text' id='fancy-input'/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="link">将“mode”高亮</a> </div>
+<div id="fancy-text" class="loc-add-select" style="width: 800px; margin:0 10px;">
+  页面模块化实现的很大的受制于页面的结构和表现；一个统一的页面结构和表现能很好的实现页面的模块话。
+
+比如一个“网友评论”模块这个会在很多地方使用到，比如日志，照片，等等，如果这个“网友评论”模块结果和表现是统一的那么我们就不用重复劳动去重新设计制作页面甚至是行为等等，包括后台的数据存贮。
+
+《<a href="http://www.css88.com/archives/2381" target="_blank">页面模块化（设想）</a>》上面总结了页面模块化的优点，《<a href="http://www.baiduux.com/blog/2010/02/24/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" target="_blank">前端模块化设计思路</a>》也提到要做到模块化的前提条件：
+<blockquote>为了做到这一点，我们需要有一个设计规则，所有的模块都在这个规则下进 行设计。良好的设计规则，会把耦合密集的设计参数进行归类作为一个模块，并以此划分工作任务。而模块之间彼此通过一个固定的接口（所谓的可见参数）进行交互，除此之外的内部实现（所谓的隐参数）则由模块的开发团队进行自由发挥。</blockquote>
+我们应给怎么样建立一套设计规则呢？
+
+<strong>首先我们要从页面的表现开始，视觉上我们要采用统一的视觉设计规则，比如：</strong>
+<ol>
+	<li>应用网页栅格化来确定网页布局；</li>
+	<li>页面标题栏，字体大小，文本间距统一；</li>
+	<li>表单类的表现统一，比如按钮，文本框等；</li>
+	<li>图片规格统一；</li>
+	<li>行为类的弹窗，浮层等表现统一；</li>
+	<li>等等...</li>
+</ol>
+<strong>其次为模块编写统一的html结构，</strong>
+<ol>
+	<li>要合理使用语言化的标签；</li>
+	<li>可以保存成代码片段或者单独的html文件等，</li>
+	<li>如果需要可以加上适当的注释；</li>
+	<li>考虑扩张性和维护性；</li>
+</ol>
+<strong><!--more-->再次编写为模块编写统一的css，比如：</strong>
+<ol>
+	<li>要有统一的命名规则（<a href="http://www.cssforest.org/blog/index.php?id=143" target="_blank">查看鬼哥的命名规则</a>），当然建议加上模块的命名规则，不过我的建议是在模块的命名规则前加上mode_前缀，例如：
+<ul>
+	<li>弹出 mode_pop</li>
+	<li>公共 mode_global,mode_gb</li>
+	<li>标题 mode_title,mode_tit</li>
+	<li>提示 mode_hint</li>
+	<li>菜单 mode_menu</li>
+	<li>信息 mode_info</li>
+	<li>预览 mode_pvw</li>
+	<li>Tips mode_tips</li>
+	<li>导航 mode_nav</li>
+</ul>
+当然你也可以根据你们团队重新命名一套规则；合适的才是最好的</li>
+	<li>做好基类和拓展类的设计,做好在不同页面模块变化的差异性；比如同一模块在A页面标题的字体是粗体，在B页面标题的字体是细体等等；</li>
+	<li>将每个模块的css保存成独立的独立的css文件；</li>
+	<li>如果需要可以加上适当的注释；</li>
+	<li>考虑扩张性和维护性</li>
+</ol>
+<strong>接下了为该模块添加行为（js），编写层面向对象的js，提高代码的复用率等等；</strong>
+
+<strong>最后审视模块间的耦合问题，</strong>比如，留言模块和发日志，填表单都会使用到表单元素，按钮，文本框等，那么我认为我们应该把表单样式作为一个独立的css模块，html和js模块还是在原来的模块中。这需要我们对这些模块归类，从而更好，跟方便的的拼装我们的页面，
+
+html模块可以布局模块和功能模块等，比如
+<ul>
+	<li>按功能分的功能模块，比如：
+<ol>
+	<li>日志模块：日志列表，日志详细，日志评论（引用评论模块等等），日志发布（引用表单模块等等），日志管理等等</li>
+	<li>评论模块：评论列表，发表评论（引用表单模块等等），评论管理等等</li>
+	<li>相册模块：......</li>
+	<li>工具条模块：......</li>
+	<li>......等等；</li>
+</ol>
+</li>
+	<li>按布局分的布局模块：比如栅格化中的一堆布局组合；</li>
+</ul>
+css模块比较复杂大致的
+<ul>
+	<li>按类别分的公共模块：重置模块（css reset），表单模块，字体模块，文字、图片、图文列表模块，弹窗模块，标题模块，提示模块,应用小图标模块等等；这里模块绝大多数作为功能模块的部件，融入在各个模块中；</li>
+	<li>布局模块和功能模块可以参照html里的功能模块的拆分；</li>
+</ul>
+行为js模块可能就相对简单一点,库模块，功能模块等，功能模块可以参照html里的功能模块的拆分；
+
+合理的模块拆分和拼装在实现页面模块化中其中相对重要的作用，模块拆分和拼装的好可以大大的提高开发和维护的效率，反正甚至会影响到网页模块化的成败，给开发和维护带来相对重大的影响。
+
+这样我们就有了网页模块化的基本实现思路，当然这是建立在设计规则上的，如果我们没有完备的设计规则，那么网页模块化就会变成网页魔鬼化，呵呵。
+
+</div>
+<script type="text/javascript"> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script> 
+<script type="text/javascript"> 
+try {
+var pageTracker = _gat._getTracker("UA-3448069-1");
+pageTracker._trackPageview();
+} catch(err) {}</script> 
+</body>
+</html>
