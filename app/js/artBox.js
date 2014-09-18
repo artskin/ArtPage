@@ -72,3 +72,29 @@ var myObject ={
     }
 };
 myObject.func();
+
+
+
+    
+    function artSlide(el){
+        var timer;
+        var sideDom = $(el);
+        function autoRun(){
+            timer=setInterval(function(){
+                lastHight=sideDom.find("li:last").height();
+                sideDom.animate({marginTop:lastHight+3+"px"},1e3,function(){
+                    sideDom.find("li:last").prependTo(sideDom),
+                    sideDom.find("li:first").hide(),
+                    sideDom.css({marginTop:0}),
+                    sideDom.find("li:first").fadeIn(1e3)
+                })
+            },3e3)
+        }
+        autoRun();
+        sideDom.hover(function(){
+            clearInterval(timer)
+        },function(){
+            autoRun();
+        });
+    }
+    artSlide('#rcslider');

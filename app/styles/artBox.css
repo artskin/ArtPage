@@ -39,3 +39,10 @@
     left: 1px;
     top: 1px;
 }
+
+/* sidebar comments */
+.r_comments{position:relative; height:262px;float: left;overflow: hidden;border: 1px solid #ccc;background: #3599ba;font-size: 14px;font-family: Microoft YaHei;}
+.r_comments ul{list-style:none outside none; margin-left:0px; border-top:1px dashed #298bab;padding-left: 0}
+.r_comments ul li{padding:5px 0px; line-height:20px; border-bottom:1px dashed #107495; border-top:1px dashed #4aaaca;}
+.r_comments ul li a{color: #fff;}
+.r_comments li img{background:#FFF; border:1px solid #1e7e9d; height:32px; float:left; padding:1px; margin:4px 4px 0 0;}

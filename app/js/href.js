@@ -13,6 +13,7 @@
     function sizeZoom(size){
         $(".newstext").css({"font-size":size+"px","line-height":(size*2-2) + "px"});
     }
+
 	/*
 	function browserRedirect(){
 		var sUserAgent = navigator.userAgent.toLowerCase();

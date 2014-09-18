@@ -10,7 +10,8 @@
     "bxSlider": "4.1.2",
     "pure": "~0.5.0",
     "underscore": "~1.7.0",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "jquery-qrcode": "*"
   },
   "devDependencies": {}
 }

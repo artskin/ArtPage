@@ -20,7 +20,24 @@
 	</p>
 
 </div>
+<div class="r_comments">
+	<ul id="rcslider" style="margin-top: 0px;">
+		<li><a title="发表在： Swipe JS - 移动WEB页面内容触摸滑动类库" href="http://www.jiawin.com/swipe-mobile-touch-slider/#comment-72787">Aaron:<br>关于移动设备，zepto.js touc</a><br></li>
+		<li><a title="发表在： 30个免费的优秀商业名片PSD模板" href="http://www.jiawin.com/30-business-cards-psd-templates/#comment-72569">红博客:<br>确实漂亮，这个模本不错，谢谢分享。【</a><br></li>
+		<li><a title="发表在： CSS3创意样式按钮" href="http://www.jiawin.com/creative-button-styles/#comment-75549">风水网:<br>很好，学习了! www.xinfanwa</a><br></li>
+		<li><a title="发表在： 沐浴阳光" href="http://www.jiawin.com/weiran/%e6%b2%90%e6%b5%b4%e9%98%b3%e5%85%89/#comment-75374">fthtr:<br>trthr添加评论添加评论添加评论</a><br></li>
+			<li><a title="发表在： Swipe JS - 移动WEB页面内容触摸滑动类库" href="http://www.jiawin.com/swipe-mobile-touch-slider/#comment-72787">Aaron:<br>关于移动设备，zepto.js touc</a><br></li>
+		<li><a title="发表在： 30个免费的优秀商业名片PSD模板" href="http://www.jiawin.com/30-business-cards-psd-templates/#comment-72569">红博客:<br>确实漂亮，这个模本不错，谢谢分享。【</a><br></li>
+		<li><a title="发表在： CSS3创意样式按钮" href="http://www.jiawin.com/creative-button-styles/#comment-75549">风水网:<br>很好，学习了! www.xinfanwa</a><br></li>
+		<li><a title="发表在： 沐浴阳光" href="http://www.jiawin.com/weiran/%e6%b2%90%e6%b5%b4%e9%98%b3%e5%85%89/#comment-75374">fthtr:<br>trthr添加评论添加评论添加评论</a><br></li><li><a title="发表在： Swipe JS - 移动WEB页面内容触摸滑动类库" href="http://www.jiawin.com/swipe-mobile-touch-slider/#comment-72787">Aaron:<br>关于移动设备，zepto.js touc</a><br></li>
+		<li><a title="发表在： 30个免费的优秀商业名片PSD模板" href="http://www.jiawin.com/30-business-cards-psd-templates/#comment-72569">红博客:<br>确实漂亮，这个模本不错，谢谢分享。【</a><br></li>
+		<li><a title="发表在： CSS3创意样式按钮" href="http://www.jiawin.com/creative-button-styles/#comment-75549">风水网:<br>很好，学习了! www.xinfanwa</a><br></li>
+		<li><a title="发表在： 沐浴阳光" href="http://www.jiawin.com/weiran/%e6%b2%90%e6%b5%b4%e9%98%b3%e5%85%89/#comment-75374">fthtr:<br>trthr添加评论添加评论添加评论</a><br></li>
+	</ul>
+</div>
 
+        <div class="feat_bottom_line"></div>
+	</ul>
 <input type="text" id="text-show" />
 <textarea name="" id="text-output" cols="30" rows="10"></textarea>
 
@@ -29,16 +46,15 @@
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="js/artBox.js"></script>
 <script type="text/javascript">
-$(function(){
-	$("#text-show").keyup(function(){
-		$("#text-output").val($(this).val())
-	})
-	$("a[rel='artBox']").click(function(){
-		var artBoxtitle = $(this).attr('data-pTitle');
-		artBox(".artBox-con",artBoxtitle,500,false,false);
+	$(function(){
+		$("#text-show").keyup(function(){
+			$("#text-output").val($(this).val())
+		})
+		$("a[rel='artBox']").click(function(){
+			var artBoxtitle = $(this).attr('data-pTitle');
+			artBox(".artBox-con",artBoxtitle,500,false,false);
+		});
 	});
-})
-
 </script>
 </body>
 </html>

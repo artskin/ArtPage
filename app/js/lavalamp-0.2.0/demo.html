@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="lavalamp_test.css" type="text/css" media="screen">
     <script type="text/javascript" src="jquery-1.2.3.min.js"></script>
     <script type="text/javascript" src="jquery.easing.min.js"></script>
-    <script type="text/javascript" src="jquery.lavalamp.min.js"></script>
+    <script type="text/javascript" src="jquery.lavalamp.js"></script>
     <script type="text/javascript">
         $(function() {
-            $("#1, #2, #3").lavaLamp({
+            $("#l1, #l2, #l3").lavaLamp({
                 fx: "backout",
                 speed: 700,
                 click: function(event, menuItem) {
@@ -22,7 +22,7 @@
 <body>
 
 <h3>With Image</h3>
-<ul class="lavaLampWithImage" id="1">
+<ul class="lavaLampWithImage" id="l1">
     <li class="current"><a href="#">Home</a></li>
     <li><a href="#">Plant a tree</a></li>
     <li><a href="#">Travel</a></li>
@@ -32,7 +32,7 @@
 <br><br><br>
 
 <h3>No Image</h3>
-<ul class="lavaLampNoImage" id="2">
+<ul class="lavaLampNoImage" id="l2">
     <li class="current"><a href="#">Home</a></li>
     <li><a href="#">Plant a tree</a></li>
     <li><a href="#">Travel</a></li>
@@ -42,7 +42,7 @@
 <br><br><br>
 
 <h3>Bottom Style</h3>
-<ul class="lavaLampBottomStyle" id="3">
+<ul class="lavaLampBottomStyle" id="l3">
     <li class="current"><a href="#">Home</a></li>
     <li><a href="#">Plant a tree</a></li>
     <li><a href="#">Travel</a></li>
