@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<title>ArtPage</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="artcss,GLQ">
+	<style>
+    .imgslide{width:200px;height:200px;overflow:hidden;position: relative;}
+    .imgslide ul{height:200px;list-style:none;padding:0;margin:0;position:relative;left:0;top:0;}
+    .imgslide ul li{width:98px;height:98px;background:#ccc;float:left;border:1px solid #f00;}
+    .imgslide .pager{position:absolute;left:0;bottom:0;}
+</style>
+</head>
+<body>
+<h3>欢迎来到永利宝</h3>
+
+<div class="imgslide">
+    <ul>
+        <li><a href=""><img src="" alt="1"/></a></li>
+        <li><a href=""><img src="" alt="2"/></a></li>
+        <li><a href=""><img src="" alt="3"/></a></li>
+        <li><a href=""><img src="" alt="4"/></a></li>
+        <li><a href=""><img src="" alt="5"/></a></li>
+        <li><a href=""><img src="" alt="6"/></a></li>
+        <li><a href=""><img src="" alt="7"/></a></li>
+        <li><a href=""><img src="" alt="8"/></a></li>
+        <li><a href=""><img src="" alt="9"/></a></li>
+        <li><a href=""><img src="" alt="10"/></a></li>
+    </ul>
+    <div class="pager">
+        <em class="prev">上一张</em>
+        <em class="next">下一张</em>
+    </div>
+</div>
+<!-- Le javascript==================================================-->
+<script src="http://test.artcss.com/js/jquery.min.js"></script>
+<script>
+	$(function(){
+        var imgnum = $(".imgslide ul li").length;
+        var totalIndex = Math.ceil(imgnum/4);
+        var ulWidth = 100*totalIndex;
+        var thisIndex = 0;
+
+        $(".imgslide ul").css("width",ulWidth+"%");
+        $(".prev").click(function(){
+            if(thisIndex < 0){
+                thisIndex ++;
+                $(".imgslide ul").animate({"left":thisIndex*100+"%"});
+            }
+        });
+
+        $(".next").click(function(){
+            if(Math.abs(thisIndex) < (totalIndex-1)){
+                thisIndex --;
+                $(".imgslide ul").animate({"left":thisIndex*100+"%"});
+            }
+        });
+	});
+</script>
+</body>
+</html>

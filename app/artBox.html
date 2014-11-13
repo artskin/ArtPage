@@ -41,7 +41,24 @@
 <input type="text" id="text-show" />
 <textarea name="" id="text-output" cols="30" rows="10"></textarea>
 
-	
+<div class="imgslide">
+    <ul>
+        <li><a href=""><img src="" alt="1"/></a></li>
+        <li><a href=""><img src="" alt="2"/></a></li>
+        <li><a href=""><img src="" alt="3"/></a></li>
+        <li><a href=""><img src="" alt="4"/></a></li>
+        <li><a href=""><img src="" alt="5"/></a></li>
+        <li><a href=""><img src="" alt="6"/></a></li>
+        <li><a href=""><img src="" alt="7"/></a></li>
+        <li><a href=""><img src="" alt="8"/></a></li>
+        <li><a href=""><img src="" alt="9"/></a></li>
+        <li><a href=""><img src="" alt="10"/></a></li>
+    </ul>
+    <div class="pager">
+        <em class="prev">上一张</em>
+        <em class="next">下一张</em>
+    </div>
+</div>
 <!-- Le javascript==================================================-->
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="js/artBox.js"></script>
@@ -49,11 +66,35 @@
 	$(function(){
 		$("#text-show").keyup(function(){
 			$("#text-output").val($(this).val())
-		})
+		});
+
 		$("a[rel='artBox']").click(function(){
 			var artBoxtitle = $(this).attr('data-pTitle');
 			artBox(".artBox-con",artBoxtitle,500,false,false);
 		});
+
+        var imgnum = $(".imgslide ul li").length;
+        var totalIndex = Math.ceil(imgnum/4);
+        var ulWidth = 100*totalIndex;
+        var thisIndex = 0;
+
+        $(".imgslide ul").css("width",ulWidth+"%");
+
+        $(".prev").click(function(){
+            if(thisIndex < 0){
+                thisIndex ++;
+                $(".imgslide ul").animate({"left":thisIndex*100+"%"});
+            }
+        });
+
+        $(".next").click(function(){
+            if(Math.abs(thisIndex) < (totalIndex-1)){
+                thisIndex --;
+                $(".imgslide ul").animate({"left":thisIndex*100+"%"});
+            }
+        });
+
+
 	});
 </script>
 </body>

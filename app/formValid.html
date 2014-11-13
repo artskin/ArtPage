@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>基本样例</title>
+	<link rel="stylesheet" type="text/css" href="styles/formValid.css">
+</head>
+<body>
+	<div id="form-content">
+		<h2 class="title">jQuery.form上面进行校验参数预绑定[render]，即可通过表单校验 </h2>
+ 		<form id="form0">
+ 			<div class="fm-item">
+ 				<label class="i-label">申请金额：</label>
+ 				<input class="i-text" name="amount" id="amount">
+ 			</div>
+ 			<div class="fm-item">
+ 				<label class="i-label">姓名：</label>
+ 				<input class="i-text" name="name" id="name">
+ 			</div>
+ 			<div class="fm-item">
+ 				<label class="i-label">出生日期：</label>
+ 				<input class="i-text" name="birth" id="birth">
+ 			</div>
+ 			<div class="fm-item">
+ 				<input type="submit" value="提交" id="submit">
+ 			</div>
+ 		</form>
+	</div>
+	<script src="bower_components/jquery/dist/jquery.min.js" ></script>
+	<script src="js/formValid.js" ></script>
+	<script>
+		/**jQuery.form上面进行校验参数预绑定[render]，即可通过表单校验 */
+		jQuery.form.render({
+			"#amount":{
+				defaultTip:"您期望的申请金额",
+				option: 'blur keyup',
+				regexp: /^\d{1,7}$/, // 匹配1-7位的纯数字
+				errorTip: "请输入不超过7位的纯数字",
+				required: true
+			},
+			"#name":{
+				option: 'blur',
+				minlen: 2,
+				maxlen: 20,
+				lenTip: '姓名的长度必须为2-20位',
+				type: 'chinese',
+				regexp: /\d+/,
+				errorTip: '姓名必须为纯汉字'
+			},
+			"#birth":{
+				required: true
+			}
+		});
+		jQuery("#form0").submit(function(){
+			return jQuery("#form0").formValid();
+		});
+	</script>
+</body>
+</html>

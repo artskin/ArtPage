@@ -46,3 +46,9 @@
 .r_comments ul li{padding:5px 0px; line-height:20px; border-bottom:1px dashed #107495; border-top:1px dashed #4aaaca;}
 .r_comments ul li a{color: #fff;}
 .r_comments li img{background:#FFF; border:1px solid #1e7e9d; height:32px; float:left; padding:1px; margin:4px 4px 0 0;}
+
+.imgslide{width:200px;height:200px;overflow:hidden;}
+.imgslide ul{height:200px;list-style:none;padding:0;margin:0;position:relative;left:0;top:0;}
+.imgslide ul li{width:100px;height:100px;background:#ccc;float:left;border:1px solid #f00;}
+
+.imgslide .pager{position:absolute;left:0;bottom:0;}
