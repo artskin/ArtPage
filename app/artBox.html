@@ -58,12 +58,29 @@
         <em class="prev">上一张</em>
         <em class="next">下一张</em>
     </div>
+    
 </div>
+<div class="sub" data-goto="www.baidu.com">6</div>
+    <a class="goto" href="/">立即跳转</a>
 <!-- Le javascript==================================================-->
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="js/artBox.js"></script>
 <script type="text/javascript">
 	$(function(){
+		var timer;
+		function timestep(){
+			var s = $(".sub").html();//console.log(s);
+			s--;
+			$(".sub").html(s);
+			timer = setTimeout(timestep, 1000);
+			if ( s <= 0 ){
+				s = 6;
+				//window.location.href = "www.baidu.com";
+				clearTimeout(timer);
+			}
+		}
+		timestep();
+
 		$("#text-show").keyup(function(){
 			$("#text-output").val($(this).val())
 		});
@@ -93,9 +110,27 @@
                 $(".imgslide ul").animate({"left":thisIndex*100+"%"});
             }
         });
-
-
 	});
+</script>
+<script>
+(function(){
+	var a="www.baidu.com",
+	b=$(".sub");
+	if(!a)return;
+	var c=null,
+	d=function(){
+		c=setTimeout(function(){
+			b.innerHTML--,
+			b.innerHTML==0?location.href=a:
+			d()
+		},1e3)
+	},
+	e=function(){
+		c&&clearTimeout(c)
+	};
+	d();
+	//document.getElement("#go_notifier .go").addEvent("click",e)
+})()
 </script>
 </body>
 </html>

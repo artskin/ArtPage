@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="styles/formValid.css">
 </head>
 <body>
+	<input type="text" name="stockid" id="aa" />
 	<div id="form-content">
 		<h2 class="title">jQuery.form上面进行校验参数预绑定[render]，即可通过表单校验 </h2>
  		<form id="form0">
@@ -25,35 +26,114 @@
  				<input type="submit" value="提交" id="submit">
  			</div>
  		</form>
+<div id="Countdown">3</div>
 	</div>
-	<script src="bower_components/jquery/dist/jquery.min.js" ></script>
-	<script src="js/formValid.js" ></script>
-	<script>
-		/**jQuery.form上面进行校验参数预绑定[render]，即可通过表单校验 */
-		jQuery.form.render({
-			"#amount":{
-				defaultTip:"您期望的申请金额",
-				option: 'blur keyup',
-				regexp: /^\d{1,7}$/, // 匹配1-7位的纯数字
-				errorTip: "请输入不超过7位的纯数字",
-				required: true
-			},
-			"#name":{
-				option: 'blur',
-				minlen: 2,
-				maxlen: 20,
-				lenTip: '姓名的长度必须为2-20位',
-				type: 'chinese',
-				regexp: /\d+/,
-				errorTip: '姓名必须为纯汉字'
-			},
-			"#birth":{
-				required: true
-			}
-		});
-		jQuery("#form0").submit(function(){
-			return jQuery("#form0").formValid();
-		});
-	</script>
+<script src="bower_components/jquery/dist/jquery.min.js" ></script>
+<script src="js/formValid.js" ></script>
+<script>
+	var reStr="582123456.23元"
+　　var regexStr = /(\d{1,3})(?=(\d{3})+(?:$|\.))/g;
+　　var resultStr = reStr.replace(regexStr, "$1,");
+	console.log(resultStr );//582,123,456.23
+
+	var testStr="582,123,456.23元";
+	var reStr2 = testStr.replace(/,/g, "");
+	//console.log(Number(reStr2);//582123456.23
+		$("#Calculator").modal({keyboard:!1,backdrop:"static",show:!1});
+	var n=function(){
+		var i=$("#Cal-Amount").val(),
+			t=$("#Cal-Income"),
+			r=$("#Cal-InterestRate").val()/100,
+			u=$("#Cal-FinancingMaturity").val(),
+			n;
+			n=(i*r*u/365).toFixed(2);
+			t.html("");
+			isNaN(n)||t.html(n)
+		};
+		$("#cal").on("click",function(){n()});
+		$(window).on("keydown",function(t){
+			t.keyCode==13&&$("#Calculator").css("display")=="block"&&n()
+		})
+	},
+	RefreshCaptcha:function(){
+		$("#CaptchaImage").on("click",function(n){
+			n.preventDefault();
+			$.getJSON($(this).attr("data-href"),function(n){
+				$("#CaptchaDeText").attr("value",n.CaptchaDeText);
+				$("#CaptchaImage").attr("src",n.CaptchaImage)
+			})
+		})
+	}
+
+	$(function(){
+		function Countdown(){
+			console.log("1");
+		    var Countdown_el = $("#Countdown").html();
+		    if(Countdown_el == 0){
+		        oClose();
+		        return false;
+		    }
+		    if(Countdown_el>0){
+		    	Countdown_el --;
+		    }
+		    $("#Countdown").html(Countdown_el);
+		    
+		}
+		window.setInterval(Countdown(),1000);
+		listen();
+	})
+
+	function submitByEnter(e) {
+		e = e || window.event;
+		var key = e ? (e.charCode || e.keyCode) : 0;
+		console.log(key);
+		if(key == 13) {
+			console.log('Enter key pressed!');
+		    submitData();
+		    //这儿是你的提交函数
+		}
+	}
+	submitByEnter();
+
+	function submitData(){
+		alert("已提交");
+	}
+
+	function listen() {
+		var aa = document.getElementById('aa');
+		try{console.log("ff");
+			aa.addEventListener('onkeydown',submitByEnter(),true);
+		} catch(ex) {
+			aa.attachEvent('onkeyup', submitByEnter());
+		}
+	}
+
+
+	/**jQuery.form上面进行校验参数预绑定[render]，即可通过表单校验 */
+	jQuery.form.render({
+		"#amount":{
+			defaultTip:"您期望的申请金额",
+			option: 'blur keyup',
+			regexp: /^\d{1,7}$/, // 匹配1-7位的纯数字
+			errorTip: "请输入不超过7位的纯数字",
+			required: true
+		},
+		"#name":{
+			option: 'blur',
+			minlen: 2,
+			maxlen: 20,
+			lenTip: '姓名的长度必须为2-20位',
+			type: 'chinese',
+			regexp: /\d+/,
+			errorTip: '姓名必须为纯汉字'
+		},
+		"#birth":{
+			required: true
+		}
+	});
+	jQuery("#form0").submit(function(){
+		return jQuery("#form0").formValid();
+	});
+</script>
 </body>
 </html>
