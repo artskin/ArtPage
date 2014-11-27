@@ -38,7 +38,7 @@
 
         <div class="feat_bottom_line"></div>
 	</ul>
-<input type="text" id="text-show" />
+<input type="text" id="text-show" placeholder="凤飞飞" />
 <textarea name="" id="text-output" cols="30" rows="10"></textarea>
 
 <div class="imgslide">
@@ -62,10 +62,66 @@
 </div>
 <div class="sub" data-goto="www.baidu.com">6</div>
     <a class="goto" href="/">立即跳转</a>
+
+    <div id="countUp-profit1">888</div>
+    <div id="countUp-profit2">666</div>
 <!-- Le javascript==================================================-->
 <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="js/artBox.js"></script>
 <script type="text/javascript">
+countUp : function(target){
+	// var i = 0,
+	// 	n = 0.01,
+	// 	et = target.data('n'),
+	// 	that = this,
+	// 	s = parseInt(speed*n/et, 10);
+
+	// var interval = setInterval(function(){
+	// 	target.html(that.d2(i))
+	// 	if((et - i)<0.000000001) clearInterval(interval)
+	// 	else i += n
+	// }, s)
+	var st = parseInt($('#'+target).html()),
+		ed = $('#'+target).data('n');
+
+	if(!!st) return
+
+	var options = {
+	  useEasing : true, 
+	  useGrouping : true, 
+	  separator : ',', 
+	  decimal : '.' ,
+	  prefix : '' ,
+	  suffix : '' 
+	}
+	var demo = new countUp(target, st, ed, 2, 2, options);
+	demo.start()
+},
+$(window).on("scroll", function () {
+
+	var scrollTop = $(this).scrollTop();
+
+	if (scrollTop >= 0) {
+		table.countUp('countUp-profit1')
+		table.countUp('countUp-beishu1')
+
+		!table.flightflying  &&  animate_flight()
+	}
+	
+	if (scrollTop > 600) {
+		table.countUp('countUp-profit2')
+		table.countUp('countUp-beishu2')
+	}
+
+	sideLeft(scrollTop)
+
+	if(!-[1,]&&!window.XMLHttpRequest) return
+
+	if(scrollTop>1500){
+		!table.supermanflying  &&  animate_superman(1)
+	}
+
+}).scroll();
 	$(function(){
 		var timer;
 		function timestep(){
