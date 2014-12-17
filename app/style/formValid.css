@@ -1,0 +1,70 @@
+@charset "utf-8"
+
+html, legend { color: #333; background: #fff; }
+body { font: 12px/1.5 Tahoma,Helvetica,Arial,'宋体',sans-serif; }
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    overflow-y: scroll;
+}
+body {
+    color:#333
+}
+
+/* ---------- clearfix hack ---------- */
+.clearfix:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
+.clearfix { display: inline-block; }
+/* exlude MacIE5 \*/
+*html .clearfix { height: 1% }
+.clearfix {display:block;}
+/* end MacIE5 */
+
+#form-content{
+	width: 840px;
+	background: #fff;
+	margin: 30px auto;
+}
+#form-content .fm-item{
+	line-height: 30px;
+	padding-left: 150px;
+	height: 30px;
+	overflow: visible;
+	position: relative;
+}
+#form-content .fm-item .i-label{
+	display: block;
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 150px;
+	height: 30px;
+	text-align: right;
+}
+#form-content .fm-item .i-text{
+	width: 170px;
+}
+
+#form-content .fm-item .i-radio{
+	margin-left: 10px;
+}
+
+
+.tip-error{
+	font-size: 12px;
+	padding-left: 8px;
+	color: #c00;
+}
+.tip-default{
+	font-size: 12px;
+	padding-left: 8px;
+	color: #666;
+}
+.title{
+	text-align: center;
+	line-height: 60px;
+	font-family: 'Microsoft Yahei';
+}

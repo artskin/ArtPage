@@ -1,0 +1,36 @@
+/************************
+Author:GLQ
+Date:2013-12-23
+************************/
+
+//sass style---------------
+$bodyBgColor:           #fff !default;
+$textColor:             #333 !default;
+$baseFontSize:			14px;
+$baseFontFamily:"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu,helvetica,verdana,san-serif;
+$marginSize: 10px;
+
+//css------
+
+body,input,button,textarea,select{
+  font:normal 14px/1.5 $baseFontFamily;
+  -webkit-text-size-adjust:none;
+  outline:0;
+  color:$textColor
+}
+.news-con{padding:$marginSize;}
+.news-text{border-top:1px solid #ccc;padding:15px 0;}
+h2{font-size:$baseFontSize+4;padding:10px;}
+p{
+  text-indent:2em;
+  margin-bottom:20px;
+  text-align:justify;
+  line-height:1.5em;
+  color:$textColor;
+  font-size:$baseFontSize+2;
+
+}
+p.img{text-align:center;text-indent:0;}
+p.img img{max-width:98%;}
+
+#cb_title span{color:#999;padding:$marginSize;padding-top:0;display:inline-block;font-size:$baseFontSize - 2;}
